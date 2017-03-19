@@ -19,4 +19,14 @@ class TRACSClient {
             return completion(Announcement(dict: parsed!))
         }
     }
+    
+    static func fetchCurrentUserId(completion:@escaping (String?)->Void) {
+        let sessionurl = baseurl+"/session/current.json"
+        Utils.fetchJSON(url: sessionurl) { (parsed) in
+            if parsed != nil {
+                completion(parsed?["userId"] as? String)
+            }
+            completion(nil)
+        }
+    }
 }

@@ -17,6 +17,7 @@
 		09F10E081E7F25FF00303A96 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E051E7F25FF00303A96 /* Announcement.swift */; };
 		09F10E091E7F25FF00303A96 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E061E7F25FF00303A96 /* Notification.swift */; };
 		09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E071E7F25FF00303A96 /* TRACSClient.swift */; };
+		09F10E0C1E7F3C3400303A96 /* TRACSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E0B1E7F3C3400303A96 /* TRACSObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		09F10E051E7F25FF00303A96 /* Announcement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Announcement.swift; path = Data/Announcement.swift; sourceTree = "<group>"; };
 		09F10E061E7F25FF00303A96 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Notification.swift; path = Data/Notification.swift; sourceTree = "<group>"; };
 		09F10E071E7F25FF00303A96 /* TRACSClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRACSClient.swift; path = Data/TRACSClient.swift; sourceTree = "<group>"; };
+		09F10E0B1E7F3C3400303A96 /* TRACSObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRACSObject.swift; path = Data/TRACSObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				09F10E051E7F25FF00303A96 /* Announcement.swift */,
 				09F10E061E7F25FF00303A96 /* Notification.swift */,
 				09F10E071E7F25FF00303A96 /* TRACSClient.swift */,
+				09F10E0B1E7F3C3400303A96 /* TRACSObject.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -167,6 +170,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09F10E0C1E7F3C3400303A96 /* TRACSObject.swift in Sources */,
 				09F10E081E7F25FF00303A96 /* Announcement.swift in Sources */,
 				099C81711E7CBFDD00529530 /* WebViewController.swift in Sources */,
 				09F10E091E7F25FF00303A96 /* Notification.swift in Sources */,

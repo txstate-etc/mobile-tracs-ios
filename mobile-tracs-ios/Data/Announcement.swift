@@ -8,13 +8,12 @@
 
 import Foundation
 
-class Announcement {
-    public var id: String = ""
+class Announcement : TRACSObject {
     public var title: String = ""
     public var body: String = ""
     
-    init(dict:[String:Any]) {
-        id = dict["id"] as! String
+    override init(dict:[String:Any]) {
+        super.init(dict: dict)
         title = dict["title"] as! String
         body = dict["body"] as! String
     }

@@ -14,6 +14,9 @@
 		099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099C81771E7DEEB600529530 /* NotificationViewController.xib */; };
 		09B527FD1E7CBD6500BACF81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */; };
 		09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09B528031E7CBD6500BACF81 /* Assets.xcassets */; };
+		09F10E081E7F25FF00303A96 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E051E7F25FF00303A96 /* Announcement.swift */; };
+		09F10E091E7F25FF00303A96 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E061E7F25FF00303A96 /* Notification.swift */; };
+		09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E071E7F25FF00303A96 /* TRACSClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +30,9 @@
 		09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09B528031E7CBD6500BACF81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		09B528081E7CBD6500BACF81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09F10E051E7F25FF00303A96 /* Announcement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Announcement.swift; path = Data/Announcement.swift; sourceTree = "<group>"; };
+		09F10E061E7F25FF00303A96 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Notification.swift; path = Data/Notification.swift; sourceTree = "<group>"; };
+		09F10E071E7F25FF00303A96 /* TRACSClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRACSClient.swift; path = Data/TRACSClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +65,7 @@
 		09B527FB1E7CBD6500BACF81 /* mobile-tracs-ios */ = {
 			isa = PBXGroup;
 			children = (
+				09DAC4011E7F1FA20065C5DB /* Data */,
 				099C816F1E7CBE4100529530 /* mobile-tracs-ios.entitlements */,
 				09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */,
 				09B528031E7CBD6500BACF81 /* Assets.xcassets */,
@@ -70,6 +77,16 @@
 				099C81771E7DEEB600529530 /* NotificationViewController.xib */,
 			);
 			path = "mobile-tracs-ios";
+			sourceTree = "<group>";
+		};
+		09DAC4011E7F1FA20065C5DB /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				09F10E051E7F25FF00303A96 /* Announcement.swift */,
+				09F10E061E7F25FF00303A96 /* Notification.swift */,
+				09F10E071E7F25FF00303A96 /* TRACSClient.swift */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,10 +167,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09F10E081E7F25FF00303A96 /* Announcement.swift in Sources */,
 				099C81711E7CBFDD00529530 /* WebViewController.swift in Sources */,
+				09F10E091E7F25FF00303A96 /* Notification.swift in Sources */,
 				09B527FD1E7CBD6500BACF81 /* AppDelegate.swift in Sources */,
 				099C81781E7DEEB600529530 /* NotificationViewController.swift in Sources */,
 				099C81751E7DD19600529530 /* Utils.swift in Sources */,
+				09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

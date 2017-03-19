@@ -13,9 +13,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let wvc = WebViewController(nibName: "WebViewController", bundle: nil)
+        wvc.urlStringToLoad = "https://tracs.txstate.edu"
+        let nav = UINavigationController()
+        nav.navigationBar.barStyle = UIBarStyle.blackOpaque
+        nav.navigationBar.isTranslucent = false
+        nav.navigationBar.barTintColor = Utils.darkred
+        nav.viewControllers = [wvc]
+        window?.rootViewController = nav
+        window?.backgroundColor = UIColor.white
+        window?.makeKeyAndVisible()
         return true
     }
 

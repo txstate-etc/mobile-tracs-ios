@@ -7,20 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		099C81711E7CBFDD00529530 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C81701E7CBFDD00529530 /* WebViewController.swift */; };
+		099C81731E7CC94500529530 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099C81721E7CC94500529530 /* WebViewController.xib */; };
+		099C81751E7DD19600529530 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C81741E7DD19600529530 /* Utils.swift */; };
+		099C81781E7DEEB600529530 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C81761E7DEEB600529530 /* NotificationViewController.swift */; };
+		099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099C81771E7DEEB600529530 /* NotificationViewController.xib */; };
 		09B527FD1E7CBD6500BACF81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */; };
-		09B527FF1E7CBD6500BACF81 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B527FE1E7CBD6500BACF81 /* ViewController.swift */; };
-		09B528021E7CBD6500BACF81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09B528001E7CBD6500BACF81 /* Main.storyboard */; };
 		09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09B528031E7CBD6500BACF81 /* Assets.xcassets */; };
-		09B528071E7CBD6500BACF81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09B528051E7CBD6500BACF81 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		099C816F1E7CBE4100529530 /* mobile-tracs-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "mobile-tracs-ios.entitlements"; sourceTree = "<group>"; };
+		099C81701E7CBFDD00529530 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		099C81721E7CC94500529530 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
+		099C81741E7DD19600529530 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		099C81761E7DEEB600529530 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		099C81771E7DEEB600529530 /* NotificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationViewController.xib; sourceTree = "<group>"; };
 		09B527F91E7CBD6500BACF81 /* mobile-tracs-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mobile-tracs-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		09B527FE1E7CBD6500BACF81 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		09B528011E7CBD6500BACF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		09B528031E7CBD6500BACF81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		09B528061E7CBD6500BACF81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		09B528081E7CBD6500BACF81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,12 +59,15 @@
 		09B527FB1E7CBD6500BACF81 /* mobile-tracs-ios */ = {
 			isa = PBXGroup;
 			children = (
+				099C816F1E7CBE4100529530 /* mobile-tracs-ios.entitlements */,
 				09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */,
-				09B527FE1E7CBD6500BACF81 /* ViewController.swift */,
-				09B528001E7CBD6500BACF81 /* Main.storyboard */,
 				09B528031E7CBD6500BACF81 /* Assets.xcassets */,
-				09B528051E7CBD6500BACF81 /* LaunchScreen.storyboard */,
 				09B528081E7CBD6500BACF81 /* Info.plist */,
+				099C81701E7CBFDD00529530 /* WebViewController.swift */,
+				099C81721E7CC94500529530 /* WebViewController.xib */,
+				099C81741E7DD19600529530 /* Utils.swift */,
+				099C81761E7DEEB600529530 /* NotificationViewController.swift */,
+				099C81771E7DEEB600529530 /* NotificationViewController.xib */,
 			);
 			path = "mobile-tracs-ios";
 			sourceTree = "<group>";
@@ -96,7 +104,13 @@
 				TargetAttributes = {
 					09B527F81E7CBD6500BACF81 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = KV5755TZAS;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -123,9 +137,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09B528071E7CBD6500BACF81 /* LaunchScreen.storyboard in Resources */,
+				099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */,
 				09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */,
-				09B528021E7CBD6500BACF81 /* Main.storyboard in Resources */,
+				099C81731E7CC94500529530 /* WebViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,31 +150,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09B527FF1E7CBD6500BACF81 /* ViewController.swift in Sources */,
+				099C81711E7CBFDD00529530 /* WebViewController.swift in Sources */,
 				09B527FD1E7CBD6500BACF81 /* AppDelegate.swift in Sources */,
+				099C81781E7DEEB600529530 /* NotificationViewController.swift in Sources */,
+				099C81751E7DD19600529530 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		09B528001E7CBD6500BACF81 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				09B528011E7CBD6500BACF81 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		09B528051E7CBD6500BACF81 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				09B528061E7CBD6500BACF81 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		09B528091E7CBD6500BACF81 /* Debug */ = {
@@ -260,6 +257,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "mobile-tracs-ios/mobile-tracs-ios.entitlements";
+				DEVELOPMENT_TEAM = KV5755TZAS;
 				INFOPLIST_FILE = "mobile-tracs-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.txstate.mobile.mobile-tracs-ios";
@@ -272,6 +272,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "mobile-tracs-ios/mobile-tracs-ios.entitlements";
+				DEVELOPMENT_TEAM = KV5755TZAS;
 				INFOPLIST_FILE = "mobile-tracs-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.txstate.mobile.mobile-tracs-ios";
@@ -299,6 +302,7 @@
 				09B5280D1E7CBD6500BACF81 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

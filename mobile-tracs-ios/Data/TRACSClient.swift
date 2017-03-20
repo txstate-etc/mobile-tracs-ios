@@ -12,6 +12,7 @@ class TRACSClient {
     static let baseurl = "https://tracs.txstate.edu/direct"
     static let announcementurl = baseurl+"/announcement"
     static var announcementcache: [String:Announcement] = [:]
+    public static var userid = ""
     
     static func fetchAnnouncement(id:String, completion:@escaping (Announcement?)->Void) {
         Utils.fetchJSON(url: announcementurl+"/"+id+".json") { (parsed) in

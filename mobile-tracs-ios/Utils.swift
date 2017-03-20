@@ -39,4 +39,61 @@ class Utils {
             completion(nil)
         }
     }
+    
+    static func paramsToString(params:[String:String])->String {
+        var pairs: [String] = []
+        for (key,value) in params {
+            pairs.append(key.addingPercentEncoding(withAllowedCharacters: [])!+"="+value.addingPercentEncoding(withAllowedCharacters: [])!)
+        }
+        return pairs.joined(separator: "&")
+    }
+    
+    static func post(url: String, params: [String:String], completion:@escaping(Any?, Bool)->Void) {
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        let body = paramsToString(params: params)
+        request.httpBody = body.data(using: .utf8)
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if error != nil {
+                NSLog("could not post %@", error!.localizedDescription)
+                return completion(nil, false)
+            }
+            if response is HTTPURLResponse {
+                let httpresponse = response as! HTTPURLResponse
+                let success = httpresponse.statusCode >= 200 && httpresponse.statusCode < 300
+                if data != nil {
+                    let parsed = try? JSONSerialization.jsonObject(with: data!, options: [])
+                    if parsed != nil { return completion(parsed, success) }
+                }
+                return completion(data, success)
+            }
+        }.resume()
+    }
+    
+    static func delete(url: String, params: [String:String], completion:@escaping(Any?,Bool)->Void) {
+        let withquery = url+"?"+paramsToString(params: params)
+        var request = URLRequest(url: URL(string: withquery)!)
+        request.httpMethod = "DELETE"
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if error != nil {
+                NSLog("could not delete %@", error!.localizedDescription)
+                return completion(nil, false)
+            }
+            if response is HTTPURLResponse {
+                let httpresponse = response as! HTTPURLResponse
+                let success = httpresponse.statusCode >= 200 && httpresponse.statusCode < 300
+                if data != nil {
+                    let parsed = try? JSONSerialization.jsonObject(with: data!, options: [])
+                    if parsed != nil { return completion(parsed, success) }
+                }
+                return completion(data, success)
+            }
+        }.resume()
+    }
+    
+    static func alert(vc: UIViewController, message:String) {
+        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        vc.present(alert, animated: true, completion: nil)
+    }
 }

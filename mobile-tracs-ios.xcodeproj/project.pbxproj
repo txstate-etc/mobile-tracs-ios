@@ -18,6 +18,7 @@
 		09F10E091E7F25FF00303A96 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E061E7F25FF00303A96 /* Notification.swift */; };
 		09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E071E7F25FF00303A96 /* TRACSClient.swift */; };
 		09F10E0C1E7F3C3400303A96 /* TRACSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E0B1E7F3C3400303A96 /* TRACSObject.swift */; };
+		09F10E0F1E7F629A00303A96 /* IntegrationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E0E1E7F629A00303A96 /* IntegrationClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		09F10E061E7F25FF00303A96 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Notification.swift; path = Data/Notification.swift; sourceTree = "<group>"; };
 		09F10E071E7F25FF00303A96 /* TRACSClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRACSClient.swift; path = Data/TRACSClient.swift; sourceTree = "<group>"; };
 		09F10E0B1E7F3C3400303A96 /* TRACSObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRACSObject.swift; path = Data/TRACSObject.swift; sourceTree = "<group>"; };
+		09F10E0E1E7F629A00303A96 /* IntegrationClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntegrationClient.swift; path = Data/IntegrationClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 				09F10E061E7F25FF00303A96 /* Notification.swift */,
 				09F10E071E7F25FF00303A96 /* TRACSClient.swift */,
 				09F10E0B1E7F3C3400303A96 /* TRACSObject.swift */,
+				09F10E0E1E7F629A00303A96 /* IntegrationClient.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 				09F10E091E7F25FF00303A96 /* Notification.swift in Sources */,
 				09B527FD1E7CBD6500BACF81 /* AppDelegate.swift in Sources */,
 				099C81781E7DEEB600529530 /* NotificationViewController.swift in Sources */,
+				09F10E0F1E7F629A00303A96 /* IntegrationClient.swift in Sources */,
 				099C81751E7DD19600529530 /* Utils.swift in Sources */,
 				09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */,
 			);

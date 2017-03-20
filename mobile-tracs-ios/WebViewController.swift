@@ -19,7 +19,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
 
     public var urlStringToLoad: String = ""
     var documentInteractionController: UIDocumentInteractionController?
-    let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+    let documentsPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
     let stop = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(pressedRefresh(sender:)))
     
     override func viewDidLoad() {
@@ -74,7 +74,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
             do {
                 try tmp!.write(to: downloadurl, options: [Data.WritingOptions.atomicWrite])
             } catch {
-                NSLog("Failed to save the file to disk.")
+                NSLog("Failed to save the file to disk. %@", error.localizedDescription)
                 return
             }
             
@@ -106,6 +106,14 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     }
     func webViewDidFinishLoad(_ webView: UIWebView) {
         updateButtons()
+        if TRACSClient.userid.isEmpty {
+            TRACSClient.fetchCurrentUserId { (userid) in
+                if !(userid ?? "").isEmpty {
+                    TRACSClient.userid = userid!
+                    IntegrationClient.register()
+                }
+            }
+        }
     }
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         updateButtons()
@@ -151,6 +159,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     func documentInteractionControllerDidDismissOptionsMenu(_ controller: UIDocumentInteractionController) {
         do {
             try FileManager.default.removeItem(at: controller.url!)
+            NSLog("deleted temporary file at %@", controller.url?.absoluteString ?? "nil")
         } catch {
             NSLog("documentInteractionController was unable to clean up after itself")
         }

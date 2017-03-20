@@ -31,13 +31,14 @@ class Utils {
                 return completion(nil)
             }
             if data != nil {
+                NSLog("got data from request: %@", String(data: data!, encoding: .utf8) ?? "")
                 let parsed = try? JSONSerialization.jsonObject(with: data!, options: []) as! [String:Any]
                 if parsed != nil {
                     completion(parsed);
                 }
             }
             completion(nil)
-        }
+        }.resume()
     }
     
     static func paramsToString(params:[String:String])->String {
@@ -55,7 +56,7 @@ class Utils {
         request.httpBody = body.data(using: .utf8)
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if error != nil {
-                NSLog("could not post %@", error!.localizedDescription)
+                NSLog("could not post: %@", error!.localizedDescription)
                 return completion(nil, false)
             }
             if response is HTTPURLResponse {

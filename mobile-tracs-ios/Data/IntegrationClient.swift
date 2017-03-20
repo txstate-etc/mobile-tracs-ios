@@ -25,6 +25,7 @@ class IntegrationClient {
             // register with the integration server
             let reg = ["app_id": "tracs_ios", "user_id": TRACSClient.userid, "device_id":deviceToken]
             Utils.post(url: registrationurl, params: reg, completion: { (data, success) in
+                NSLog("attempted registration with integration server")
                 if success {
                     // save the registration details so that we don't have to do this often
                     UserDefaults.standard.set(["userId":TRACSClient.userid, "deviceToken":deviceToken], forKey: "registration")

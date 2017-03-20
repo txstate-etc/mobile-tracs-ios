@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
+        HTTPCookieStorage.shared.cookieAcceptPolicy = .always
         let wvc = WebViewController(nibName: "WebViewController", bundle: nil)
         wvc.urlStringToLoad = "https://tracs.txstate.edu"
         let nav = UINavigationController()
@@ -29,10 +30,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         window?.makeKeyAndVisible()
         
         // register for push notifications
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
-            NSLog("requestAuthorization completion block")
-            if error == nil && granted { application.registerForRemoteNotifications() }
+        if #available(iOS 10, *) {
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
+                NSLog("requestAuthorization completion block")
+                if error == nil && granted { application.registerForRemoteNotifications() }
+            }
+        } else {
+            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+            application.registerForRemoteNotifications()
         }
         
         return true

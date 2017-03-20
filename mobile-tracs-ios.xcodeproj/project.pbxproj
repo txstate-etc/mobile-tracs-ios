@@ -289,6 +289,7 @@
 				CODE_SIGN_ENTITLEMENTS = "mobile-tracs-ios/mobile-tracs-ios.entitlements";
 				DEVELOPMENT_TEAM = KV5755TZAS;
 				INFOPLIST_FILE = "mobile-tracs-ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.txstate.mobile.mobile-tracs-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -304,6 +305,7 @@
 				CODE_SIGN_ENTITLEMENTS = "mobile-tracs-ios/mobile-tracs-ios.entitlements";
 				DEVELOPMENT_TEAM = KV5755TZAS;
 				INFOPLIST_FILE = "mobile-tracs-ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.txstate.mobile.mobile-tracs-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";

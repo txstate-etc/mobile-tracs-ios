@@ -19,6 +19,7 @@
 		09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E071E7F25FF00303A96 /* TRACSClient.swift */; };
 		09F10E0C1E7F3C3400303A96 /* TRACSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E0B1E7F3C3400303A96 /* TRACSObject.swift */; };
 		09F10E0F1E7F629A00303A96 /* IntegrationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E0E1E7F629A00303A96 /* IntegrationClient.swift */; };
+		2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		09F10E071E7F25FF00303A96 /* TRACSClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRACSClient.swift; path = Data/TRACSClient.swift; sourceTree = "<group>"; };
 		09F10E0B1E7F3C3400303A96 /* TRACSObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRACSObject.swift; path = Data/TRACSObject.swift; sourceTree = "<group>"; };
 		09F10E0E1E7F629A00303A96 /* IntegrationClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntegrationClient.swift; path = Data/IntegrationClient.swift; sourceTree = "<group>"; };
+		2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				099C81741E7DD19600529530 /* Utils.swift */,
 				099C81761E7DEEB600529530 /* NotificationViewController.swift */,
 				099C81771E7DEEB600529530 /* NotificationViewController.xib */,
+				2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */,
 			);
 			path = "mobile-tracs-ios";
 			sourceTree = "<group>";
@@ -130,6 +133,9 @@
 						DevelopmentTeam = KV5755TZAS;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -160,6 +166,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */,
 				099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */,
 				09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */,
 				099C81731E7CC94500529530 /* WebViewController.xib in Resources */,

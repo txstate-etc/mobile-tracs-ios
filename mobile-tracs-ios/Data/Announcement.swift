@@ -14,7 +14,13 @@ class Announcement : TRACSObject {
     
     override init(dict:[String:Any]) {
         super.init(dict: dict)
-        title = dict["title"] as! String
-        body = dict["body"] as! String
+        title = dict["title"] as? String ?? ""
+        body = dict["body"] as? String ?? ""
+        site_id = dict["siteId"] as? String ?? ""
+        table_title = title
+    }
+    
+    public func getUrl()->String {
+        return site?.announcementurl ?? ""
     }
 }

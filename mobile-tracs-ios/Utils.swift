@@ -23,7 +23,7 @@ class Utils {
         container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0.0))
     }
     
-    static func fetchJSON(url:String, completion:@escaping ([String:Any]?)->Void) {
+    static func fetchJSON(url:String, completion:@escaping (Any?)->Void) {
         let targeturl = URL(string: url)
         URLSession.shared.dataTask(with:targeturl!) { (data, response, error) in
             if error != nil {
@@ -39,6 +39,18 @@ class Utils {
             }
             completion(nil)
         }.resume()
+    }
+    
+    static func fetchJSONObject(url:String, completion:@escaping([String:Any]?)->Void) {
+        fetchJSON(url: url) { (ret) in
+            completion(ret as? [String:Any])
+        }
+    }
+    
+    static func fetchJSONArray(url:String, completion:@escaping([Any]?)->Void) {
+        fetchJSON(url: url) { (ret) in
+            completion(ret as? [Any])
+        }
     }
     
     static func paramsToString(params:[String:String])->String {

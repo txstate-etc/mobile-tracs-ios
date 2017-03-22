@@ -30,28 +30,5 @@ class Notification {
         notify_after = dict["notify_after"] as? Date
         read = dict["read"] as? Bool ?? false
         cleared = dict["cleared"] as? Bool ?? false
-    }
-    
-    static func loadAll(notifications:[Notification], completion:@escaping([Notification])->Void) {
-        var total = notifications.count
-        let checkforcompletion: ()->Void = {
-            total -= 1
-            if total <= 0 { completion(notifications) }
-        }
-        for n in notifications {
-            if n.object_id == nil {
-                total -= 1
-                continue
-            }
-            if n.object_type == "announcement" {
-                TRACSClient.fetchAnnouncement(id: n.object_id!, completion: { (ann) in
-                    n.object = ann
-                    checkforcompletion()
-                })
-            } else {
-                total -= 1
-            }
-        }
-        checkforcompletion()
-    }
+    }    
 }

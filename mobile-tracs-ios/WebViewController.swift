@@ -62,7 +62,6 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         let downloadpath = documentsPath+"/"+filename!
         let downloadurl = URL(fileURLWithPath: downloadpath)
         
-        NSLog("%@", HTTPCookieStorage.shared.cookies ?? "")
         URLSession.shared.dataTask(with: fileUrl!) { (tmp, response, error) in
             NSLog("completion handler")
             if (error != nil) {

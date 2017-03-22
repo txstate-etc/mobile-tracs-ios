@@ -12,6 +12,7 @@ class IntegrationClient {
     static var deviceToken = ""
     static let baseurl = "https://notifications.its.txstate.edu"
     static let registrationurl = baseurl+"/registration"
+    static let notificationsurl = baseurl+"/notifications"
     
     public static func register() {
         // are we already registered?
@@ -31,6 +32,72 @@ class IntegrationClient {
                     UserDefaults.standard.set(["userId":TRACSClient.userid, "deviceToken":deviceToken], forKey: "registration")
                 }
             })
+        }
+    }
+    
+    static func getNotification(id:String, completion:@escaping(Notification?)->Void) {
+        Utils.fetchJSONObject(url: notificationsurl+"/"+id) { (dict) in
+            if (dict == nil) { return completion(nil) }
+            completion(Notification(dict: dict!))
+        }
+    }
+    
+    // this is the primary function for loading data in the notifications screen
+    // it automatically calls loadAll to get related data
+    static func getNotifications(completion:@escaping([Notification]?)->Void) {
+        Utils.fetchJSONArray(url: notificationsurl+"?device_id="+deviceToken) { (data) in
+            if (data == nil) { return completion(nil) }
+            var ret:[Notification] = []
+            for notifyjson in data! {
+                ret.append(Notification(dict: notifyjson as! [String : Any]))
+            }
+            loadAll(notifications: ret, completion: { (fillednotifications) in
+                completion(fillednotifications)
+            })
+        }
+    }
+    
+    // this func interacts with the TRACSClient to fetch all the LMS data for current notifications
+    // it runs the API requests in parallel and calls the completion handler when all of them
+    // are done
+    static func loadAll(notifications:[Notification], completion:@escaping([Notification])->Void) {
+        var total = notifications.count+1
+        var sitehash:[String:Site] = [:]
+        let checkforcompletion: ()->Void = {
+            total -= 1
+            if total <= 0 {
+                // add the Site into each TRACSObject
+                for n in notifications {
+                    if n.object != nil && !n.object!.site_id.isEmpty {
+                        n.object!.site = sitehash[n.object!.site_id]
+                    }
+                }
+                completion(notifications)
+            }
+        }
+        
+        // here we fetch all the user's sites so that we can
+        // map them into the TRACSObjects that relate to each Notification
+        TRACSClient.fetchSites(completion: { (sites) in
+            if sites != nil { sitehash = sites! }
+            checkforcompletion()
+        })
+        
+        // then we start requests for each notification to fetch the LMS data for its
+        // TRACSObject
+        for n in notifications {
+            if n.object_id == nil {
+                checkforcompletion()
+                continue
+            }
+            if n.object_type == "announcement" {
+                TRACSClient.fetchAnnouncement(id: n.object_id!, completion: { (ann) in
+                    n.object = ann
+                    checkforcompletion()
+                })
+            } else {
+                checkforcompletion()
+            }
         }
     }
     

@@ -15,6 +15,7 @@ class Utils {
     static let darkblue = UIColor(red: 40/255.0, green: 40/255.0, blue: 59/255.0, alpha: 1)
     static let lightgray = UIColor(red: 229/255.0, green: 232/255.0, blue: 227/255.0, alpha: 1)
     static let lightergray = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1)
+    static let urlsession = URLSession.shared
 
     static func constrainToContainer(view: UIView, container: UIView) {
         container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.leading, multiplier: 1.0, constant: 0.0))
@@ -24,20 +25,34 @@ class Utils {
     }
     
     static func fetchJSON(url:String, completion:@escaping (Any?)->Void) {
+        // fake data for testing
+        if url.contains(IntegrationClient.notificationsurl) { return completion([[
+                "notification_type":"creation",
+                "object_type": "announcement",
+                "object_id": "831342dd-fdb6-4878-8b3c-1d29ecb06a14:main:aa4f8f85-a645-4766-bc91-1a1c7bef93df",
+                "context_id": "831342dd-fdb6-4878-8b3c-1d29ecb06a14",
+                "content_hash": "hash",
+                "notify_after": "2017-03-22T12:50:00-0500",
+                "read": false,
+                "cleared": false
+                ]])
+        }
         let targeturl = URL(string: url)
-        URLSession.shared.dataTask(with:targeturl!) { (data, response, error) in
+        var req = URLRequest(url: targeturl!)
+        req.cachePolicy = .reloadIgnoringLocalCacheData
+        urlsession.dataTask(with:req) { (data, response, error) in
             if error != nil {
                 NSLog("%@", error?.localizedDescription ?? "")
                 return completion(nil)
             }
             if data != nil {
-                NSLog("got data from request: %@", String(data: data!, encoding: .utf8) ?? "")
+                //NSLog("%@: %@", url, String(data: data!, encoding: .utf8) ?? "nil")
                 let parsed = try? JSONSerialization.jsonObject(with: data!, options: []) as! [String:Any]
                 if parsed != nil {
-                    completion(parsed);
+                    return completion(parsed);
                 }
             }
-            completion(nil)
+            return completion(nil)
         }.resume()
     }
     
@@ -66,7 +81,7 @@ class Utils {
         request.httpMethod = "POST"
         let body = paramsToString(params: params)
         request.httpBody = body.data(using: .utf8)
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
+        urlsession.dataTask(with: request) { (data, response, error) in
             if error != nil {
                 NSLog("could not post: %@", error!.localizedDescription)
                 return completion(nil, false)
@@ -87,7 +102,7 @@ class Utils {
         let withquery = url+"?"+paramsToString(params: params)
         var request = URLRequest(url: URL(string: withquery)!)
         request.httpMethod = "DELETE"
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
+        urlsession.dataTask(with: request) { (data, response, error) in
             if error != nil {
                 NSLog("could not delete %@", error!.localizedDescription)
                 return completion(nil, false)

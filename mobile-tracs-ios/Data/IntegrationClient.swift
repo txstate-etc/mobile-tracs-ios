@@ -63,25 +63,21 @@ class IntegrationClient {
     static func loadAll(notifications:[Notification], completion:@escaping([Notification])->Void) {
         var total = notifications.count+1
         var sitehash:[String:Site] = [:]
+        var siteids:[String] = []
+        
         let checkforcompletion: ()->Void = {
             total -= 1
             if total <= 0 {
                 // add the Site into each TRACSObject
+                NSLog("loadAll complete")
                 for n in notifications {
-                    if n.object != nil && !n.object!.site_id.isEmpty {
-                        n.object!.site = sitehash[n.object!.site_id]
+                    if n.object != nil && !(n.context_id ?? "").isEmpty {
+                        n.object!.site = sitehash[n.context_id!]
                     }
                 }
                 completion(notifications)
             }
         }
-        
-        // here we fetch all the user's sites so that we can
-        // map them into the TRACSObjects that relate to each Notification
-        TRACSClient.fetchSites(completion: { (sites) in
-            if sites != nil { sitehash = sites! }
-            checkforcompletion()
-        })
         
         // then we start requests for each notification to fetch the LMS data for its
         // TRACSObject
@@ -89,6 +85,9 @@ class IntegrationClient {
             if n.object_id == nil {
                 checkforcompletion()
                 continue
+            }
+            if !(n.context_id ?? "").isEmpty {
+                siteids.append(n.context_id!)
             }
             if n.object_type == "announcement" {
                 TRACSClient.fetchAnnouncement(id: n.object_id!, completion: { (ann) in
@@ -99,6 +98,13 @@ class IntegrationClient {
                 checkforcompletion()
             }
         }
+        
+        // here we fetch all the sites so that we can
+        // map them into the TRACSObjects that relate to each Notification
+        TRACSClient.fetchSitesById(siteids: siteids, completion: { (sh) in
+            sitehash = sh
+            checkforcompletion()
+        })
     }
     
     public static func unregister() {

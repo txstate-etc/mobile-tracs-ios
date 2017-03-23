@@ -25,10 +25,8 @@ class TRACSClient {
     static func fetchCurrentUserId(completion:@escaping (String?)->Void) {
         let sessionurl = baseurl+"/session/current.json"
         Utils.fetchJSONObject(url: sessionurl) { (parsed) in
-            if parsed != nil {
-                completion(parsed!["userId"] as? String)
-            }
-            completion(nil)
+            if parsed == nil { return completion(nil) }
+            return completion(parsed!["userId"] as? String)
         }
     }
     
@@ -40,9 +38,38 @@ class TRACSClient {
             let sitecollection = dict!["site_collection"] as? [[String:Any]] ?? []
             for site in sitecollection {
                 let siteobj = Site(dict: site)
-                ret[siteobj.id] = siteobj
+                if !siteobj.id.isEmpty {
+                    ret[siteobj.id] = siteobj
+                }
             }
             completion(ret)
+        }
+    }
+    
+    static func fetchSite(id:String, completion:@escaping(Site?)->Void) {
+        Utils.fetchJSONObject(url: siteurl+"/"+id+".json") { (parsed) in
+            if parsed == nil { return completion(nil) }
+            return completion(Site(dict: parsed!))
+        }
+    }
+    
+    static func fetchSitesById(siteids:[String], completion:@escaping([String:Site])->Void) {
+        var total = siteids.count
+        var sitehash:[String:Site] = [:]
+        let checkforcompletion: ()->Void = {
+            total -= 1
+            if total <= 0 {
+                completion(sitehash)
+            }
+        }
+        
+        for siteid in siteids {
+            fetchSite(id: siteid, completion: { (site) in
+                if site != nil && !site!.id.isEmpty {
+                    sitehash[site!.id] = site
+                }
+                checkforcompletion()
+            })
         }
     }
 }

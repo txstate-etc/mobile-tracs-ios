@@ -19,6 +19,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         IntegrationClient.getNotifications { (notifications) in
             self.notifications = notifications ?? []
             DispatchQueue.main.async {

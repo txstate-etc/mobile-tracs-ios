@@ -14,8 +14,9 @@ class Site {
     var announcementurl = ""
     
     init(dict:[String:Any]) {
-        title = dict["title"] as! String
-        for page in dict["sitePages"] as! [[String:Any]] {
+        id = dict["id"] as? String ?? ""
+        title = dict["title"] as? String ?? ""
+        for page in dict["sitePages"] as? [[String:Any]] ?? [] {
             if page["title"] as? String == "Announcements" {
                 announcementurl = page["url"] as? String ?? ""
             }

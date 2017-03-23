@@ -20,7 +20,7 @@ class Announcement : TRACSObject {
         table_title = title
     }
     
-    public func getUrl()->String {
+    public override func getUrl()->String {
         return site?.announcementurl ?? ""
     }
 }

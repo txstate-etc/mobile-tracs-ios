@@ -63,7 +63,6 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         let downloadurl = URL(fileURLWithPath: downloadpath)
         
         URLSession.shared.dataTask(with: fileUrl!) { (tmp, response, error) in
-            NSLog("completion handler")
             if (error != nil) {
                 NSLog("Unable to download file. %@", error!.localizedDescription)
                 return

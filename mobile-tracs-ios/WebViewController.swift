@@ -104,7 +104,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     }
     func webViewDidFinishLoad(_ webView: UIWebView) {
         updateButtons()
-        if TRACSClient.userid.isEmpty {
+        if TRACSClient.userid.isEmpty { // TODO: improve this to notice when there's a new user, like with a 5 minute cache or something
             TRACSClient.fetchCurrentUserId { (userid) in
                 if !(userid ?? "").isEmpty {
                     TRACSClient.userid = userid!

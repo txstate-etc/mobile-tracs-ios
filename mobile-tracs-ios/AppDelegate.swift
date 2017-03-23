@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
         let wvc = WebViewController(nibName: "WebViewController", bundle: nil)
-        wvc.urlStringToLoad = "https://tracs.txstate.edu"
+        wvc.urlStringToLoad = "https://tracs.txstate.edu/portal/login"
         let nav = UINavigationController()
         nav.navigationBar.barStyle = UIBarStyle.blackOpaque
         nav.navigationBar.isTranslucent = false

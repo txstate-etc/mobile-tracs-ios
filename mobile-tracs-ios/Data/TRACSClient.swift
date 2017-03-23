@@ -54,7 +54,8 @@ class TRACSClient {
     }
     
     static func fetchSitesById(siteids:[String], completion:@escaping([String:Site])->Void) {
-        var total = siteids.count
+        let uniquesiteids = Set(siteids)
+        var total = uniquesiteids.count
         var sitehash:[String:Site] = [:]
         let checkforcompletion: ()->Void = {
             total -= 1
@@ -63,7 +64,7 @@ class TRACSClient {
             }
         }
         
-        for siteid in siteids {
+        for siteid in uniquesiteids {
             fetchSite(id: siteid, completion: { (site) in
                 if site != nil && !site!.id.isEmpty {
                     sitehash[site!.id] = site

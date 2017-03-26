@@ -8,19 +8,29 @@
 
 import Foundation
 
-class Announcement : TRACSObject {
-    public var title: String = ""
-    public var body: String = ""
+class Announcement : TRACSObjectBase, TRACSObject {
+    static let type = "announcement"
+    static let display = "Announcement"
+    static let displayplural = "Announcements"
+    
+    var title = ""
+    var body = ""
     
     override init(dict:[String:Any]) {
-        super.init(dict: dict)
+        super.init(dict:dict)
         title = dict["title"] as? String ?? ""
         body = dict["body"] as? String ?? ""
-        site_id = dict["siteId"] as? String ?? ""
-        table_title = title
     }
     
-    public override func getUrl()->String {
+    func titleForTable()->String {
+        return title
+    }
+
+    func getUrl()->String {
         return site?.announcementurl ?? ""
+    }
+    
+    func getType()->String {
+        return Announcement.type
     }
 }

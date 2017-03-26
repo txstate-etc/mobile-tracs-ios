@@ -16,6 +16,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         //navigationItem.hidesBackButton = true
         tableView.register(UINib(nibName:"NotificationCell", bundle: nil), forCellReuseIdentifier: "notification")
+        navigationItem.rightBarButtonItem = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedSettings))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,7 +45,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath)
         let notify = notifications[indexPath.row]
-        cell.textLabel?.text = notify.object?.table_title
+        cell.textLabel?.text = notify.object?.titleForTable()
         cell.detailTextLabel?.text = notify.object?.tableSubtitle()
         return cell
     }
@@ -59,4 +60,8 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+    func pressedSettings() {
+        let svc = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
+        navigationController?.pushViewController(svc, animated: true)
+    }
 }

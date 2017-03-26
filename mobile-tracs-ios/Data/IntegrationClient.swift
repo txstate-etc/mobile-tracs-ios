@@ -13,6 +13,7 @@ class IntegrationClient {
     static let baseurl = "https://notifications.its.txstate.edu"
     static let registrationurl = baseurl+"/registration"
     static let notificationsurl = baseurl+"/notifications"
+    static let settingsurl = baseurl+"/settings"
     
     public static func register() {
         // are we already registered?
@@ -35,6 +36,16 @@ class IntegrationClient {
         }
     }
     
+    public static func unregister() {
+        TRACSClient.userid = ""
+        UserDefaults.standard.removeObject(forKey: "registration")
+        if !deviceToken.isEmpty {
+            Utils.delete(url: registrationurl, params: ["device_id":deviceToken], completion: { (data, success) in
+                // not sure if we need to do anything here
+            })
+        }
+    }
+   
     static func getNotification(id:String, completion:@escaping(Notification?)->Void) {
         Utils.fetchJSONObject(url: notificationsurl+"/"+id) { (dict) in
             if (dict == nil) { return completion(nil) }
@@ -89,7 +100,7 @@ class IntegrationClient {
             if !(n.context_id ?? "").isEmpty {
                 siteids.append(n.context_id!)
             }
-            if n.object_type == "announcement" {
+            if n.object_type == Announcement.type {
                 TRACSClient.fetchAnnouncement(id: n.object_id!, completion: { (ann) in
                     n.object = ann
                     checkforcompletion()
@@ -107,13 +118,9 @@ class IntegrationClient {
         })
     }
     
-    public static func unregister() {
-        TRACSClient.userid = ""
-        UserDefaults.standard.removeObject(forKey: "registration")
-        if !deviceToken.isEmpty {
-            Utils.delete(url: registrationurl, params: ["device_id":deviceToken], completion: { (data, success) in
-                // not sure if we need to do anything here
-            })
+    static func fetchSettings(completion:@escaping(Settings)->Void) {
+        Utils.fetchJSONObject(url: settingsurl) { (dict) in
+            completion(Settings(dict: dict))
         }
     }
 }

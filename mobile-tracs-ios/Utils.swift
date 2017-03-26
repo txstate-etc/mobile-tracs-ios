@@ -124,4 +124,10 @@ class Utils {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         vc.present(alert, animated: true, completion: nil)
     }
+    
+    static func fontAwesomeBarButtonItem(icon: FontAwesome, target: Any, action: Selector) -> UIBarButtonItem {
+        let ret = UIBarButtonItem(title: String.fontAwesomeIcon(name: icon), style: UIBarButtonItemStyle.plain, target: target, action: action)
+        ret.setTitleTextAttributes([NSFontAttributeName: UIFont.fontAwesome(ofSize: 20)], for: .normal)
+        return ret
+    }
 }

@@ -24,7 +24,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(pressedBell))
+        navigationItem.leftBarButtonItem = Utils.fontAwesomeBarButtonItem(icon: .bellO, target: self, action: #selector(pressedBell))
         
         back.action = #selector(pressedBack(sender:))
         forward.action = #selector(pressedForward(sender:))

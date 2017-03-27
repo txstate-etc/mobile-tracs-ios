@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SettingsCellDelegate {
     @IBOutlet var tableView:UITableView!
     var sites: [Site] = []
     var settings: Settings?
@@ -52,20 +52,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-
+    // MARK: - UITableViewDataSource
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 2
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         if settings == nil { return 0 }
         return section == 0 ? objecttypes.count : sites.count
     }
@@ -76,26 +69,28 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:SettingsCell = tableView.dequeueReusableCell(withIdentifier: "settings", for: indexPath) as! SettingsCell
+        if cell.delegate == nil { cell.delegate = self }
 
         if indexPath.section == 0 {
             cell.title.text = objectnames[indexPath.row]
-            cell.filter_key = "object_type"
-            cell.filter_value = objecttypes[indexPath.row]
+            cell.entry = SettingsEntry(disabled_type: objecttypes[indexPath.row])
             cell.toggle.setOn(!settings!.objectTypeIsDisabled(type: objecttypes[indexPath.row]), animated: false)
         } else {
             cell.title.text = sites[indexPath.row].title
-            cell.filter_key = "site_id"
-            cell.filter_value = sites[indexPath.row].id
+            cell.entry = SettingsEntry(disabled_site: sites[indexPath.row])
             cell.toggle.setOn(!settings!.siteIsDisabled(site: sites[indexPath.row]), animated: false)
-        }
-        if !cell.targetset {
-            cell.toggle.addTarget(self, action: #selector(toggleChanged(sender:)), for: .valueChanged)
         }
 
         return cell
     }
     
-    func toggleChanged(sender: UISwitch) {
-        
+    // MARK: - SettingsCellDelegate
+    
+    func cellDidToggle(_ cell:SettingsCell, toggle:UISwitch) {
+        if let settings = settings, let entry = cell.entry {
+            if toggle.isOn { settings.enableEntry(entry) }
+            else { settings.disableEntry(entry) }
+            IntegrationClient.saveSettings(settings)
+        }
     }
 }

@@ -16,12 +16,21 @@ class Utils {
     static let lightgray = UIColor(red: 229/255.0, green: 232/255.0, blue: 227/255.0, alpha: 1)
     static let lightergray = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1)
     static let urlsession = URLSession.shared
+    private static let post_queue = DispatchGroup()
 
     static func constrainToContainer(view: UIView, container: UIView) {
         container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.leading, multiplier: 1.0, constant: 0.0))
         container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.trailing, multiplier: 1.0, constant: 0.0))
         container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0.0))
         container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0.0))
+    }
+    
+    private static func standardRequest(_ url: URL)->URLRequest {
+        var req = URLRequest(url: url)
+        if url.absoluteString.contains(IntegrationClient.baseurl) {
+            req.setValue(IntegrationClient.deviceToken, forHTTPHeaderField: "X-Notification-Device-Token")
+        }
+        return req
     }
     
     static func fetchJSON(url:String, completion:@escaping (Any?)->Void) {
@@ -38,7 +47,7 @@ class Utils {
                 ]])
         }
         let targeturl = URL(string: url)
-        var req = URLRequest(url: targeturl!)
+        var req = standardRequest(targeturl!)
         req.cachePolicy = .reloadIgnoringLocalCacheData
         urlsession.dataTask(with:req) { (data, response, error) in
             if error != nil {
@@ -46,10 +55,12 @@ class Utils {
                 return completion(nil)
             }
             if data != nil {
-                //NSLog("%@: %@", url, String(data: data!, encoding: .utf8) ?? "nil")
-                let parsed = try? JSONSerialization.jsonObject(with: data!, options: []) as! [String:Any]
-                if parsed != nil {
+                NSLog("%@: %@", url, String(data: data!, encoding: .utf8) ?? "nil")
+                do {
+                    let parsed = try JSONSerialization.jsonObject(with: data!, options: []) as! [String:Any]
                     return completion(parsed);
+                } catch {
+                    NSLog(error.localizedDescription)
                 }
             }
             return completion(nil)
@@ -76,15 +87,16 @@ class Utils {
         return pairs.joined(separator: "&")
     }
     
-    static func post(url: String, params: [String:String], completion:@escaping(Any?, Bool)->Void) {
-        var request = URLRequest(url: URL(string: url)!)
+    static func post(url: String, body: String, completion:@escaping(Any?, Bool)->Void) {
+        var request = standardRequest(URL(string: url)!)
         request.httpMethod = "POST"
-        let body = paramsToString(params: params)
         request.httpBody = body.data(using: .utf8)
-        urlsession.dataTask(with: request) { (data, response, error) in
+        let task = urlsession.dataTask(with: request) { (data, response, error) in
             if error != nil {
                 NSLog("could not post: %@", error!.localizedDescription)
-                return completion(nil, false)
+                completion(nil, false)
+                post_queue.leave()
+                return
             }
             if response is HTTPURLResponse {
                 let httpresponse = response as! HTTPURLResponse
@@ -93,14 +105,19 @@ class Utils {
                     let parsed = try? JSONSerialization.jsonObject(with: data!, options: [])
                     if parsed != nil { return completion(parsed, success) }
                 }
-                return completion(data, success)
+                completion(data, success)
+                post_queue.leave()
             }
-        }.resume()
+        }
+        post_queue.notify(queue: .main) { 
+            post_queue.enter()
+            task.resume()
+        }
     }
     
     static func delete(url: String, params: [String:String], completion:@escaping(Any?,Bool)->Void) {
         let withquery = url+"?"+paramsToString(params: params)
-        var request = URLRequest(url: URL(string: withquery)!)
+        var request = standardRequest(URL(string: withquery)!)
         request.httpMethod = "DELETE"
         urlsession.dataTask(with: request) { (data, response, error) in
             if error != nil {

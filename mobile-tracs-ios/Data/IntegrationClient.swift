@@ -26,7 +26,7 @@ class IntegrationClient {
             
             // register with the integration server
             let reg = ["app_id": "tracs_ios", "user_id": TRACSClient.userid, "device_id":deviceToken]
-            Utils.post(url: registrationurl, params: reg, completion: { (data, success) in
+            Utils.post(url: registrationurl, body: JSON.toJSON(reg)!, completion: { (data, success) in
                 NSLog("attempted registration with integration server")
                 if success {
                     // save the registration details so that we don't have to do this often
@@ -121,6 +121,11 @@ class IntegrationClient {
     static func fetchSettings(completion:@escaping(Settings)->Void) {
         Utils.fetchJSONObject(url: settingsurl) { (dict) in
             completion(Settings(dict: dict))
+        }
+    }
+    
+    static func saveSettings(_ settings:Settings) {
+        Utils.post(url: settingsurl, body: settings.toJSON()!) { (data, success) in
         }
     }
 }

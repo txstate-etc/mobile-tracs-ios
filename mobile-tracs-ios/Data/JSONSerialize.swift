@@ -12,21 +12,30 @@ protocol JSONRepresentable {
     func toJSONObject()->Any
 }
 
-extension JSONRepresentable {
-    func toJSON() -> String? {
-        let jsonobject = toJSONObject()
+class JSON {
+    static func toJSON(_ obj:Any)->String? {
+        var final = obj
+        if let obj = obj as? JSONRepresentable {
+            final = obj.toJSONObject()
+        }
         
-        guard JSONSerialization.isValidJSONObject(jsonobject) else {
+        guard JSONSerialization.isValidJSONObject(final) else {
             print("Invalid JSON Representation")
             return nil
         }
         
         do {
-            let data = try JSONSerialization.data(withJSONObject: jsonobject, options: [])
+            let data = try JSONSerialization.data(withJSONObject: final, options: [])
             return String(data: data, encoding: .utf8)
         } catch {
             return nil
         }
+    }
+}
+
+extension JSONRepresentable {
+    func toJSON() -> String? {
+        return JSON.toJSON(self)
     }    
 }
 

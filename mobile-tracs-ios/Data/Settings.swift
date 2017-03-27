@@ -21,13 +21,28 @@ class Settings : JSONRepresentable {
         }
     }
     
-    func disableSite(site:Site) {
-        if !siteIsDisabled(site: site) {
-            disabled_filters.append(SettingsEntry(disabled_site: site))
+    func entryIsDisabled(_ targetentry: SettingsEntry)->Bool {
+        return disabled_filters.contains(targetentry)
+    }
+    func disableEntry(_ targetentry: SettingsEntry) {
+        if !entryIsDisabled(targetentry) {
+            disabled_filters.append(targetentry)
         }
     }
+    func enableEntry(_ targetentry: SettingsEntry) {
+        for (i, entry) in disabled_filters.enumerated() {
+            if entry == targetentry { disabled_filters.remove(at: i); break}
+        }
+    }
+    
+    func disableSite(site:Site) {
+        disableEntry(SettingsEntry(disabled_site: site))
+    }
+    func enableSite(site:Site) {
+        enableEntry(SettingsEntry(disabled_site: site))
+    }
     func siteIsDisabled(site:Site)->Bool {
-        return disabled_filters.contains(SettingsEntry(disabled_site:site))
+        return entryIsDisabled(SettingsEntry(disabled_site:site))
     }
     
     func disableObjectType(type:String) {
@@ -35,8 +50,11 @@ class Settings : JSONRepresentable {
             disabled_filters.append(SettingsEntry(disabled_type: type))
         }
     }
+    func enableObjectType(type:String) {
+        enableEntry(SettingsEntry(disabled_type: type))
+    }
     func objectTypeIsDisabled(type:String)->Bool {
-        return disabled_filters.contains(SettingsEntry(disabled_type: type))
+        return entryIsDisabled(SettingsEntry(disabled_type: type))
     }
     
     func toJSONObject() -> Any {

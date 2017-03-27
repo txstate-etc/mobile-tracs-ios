@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SettingsCellDelegate {
     @IBOutlet var tableView:UITableView!
-    var sites: [Site] = []
+    var sites:[Site] = []
     var settings: Settings?
     let objecttypes: [String] = [
         Announcement.type
@@ -33,6 +33,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 tmpsites.append(site)
             }
             tmpsites.sort(by: { (a, b) -> Bool in
+                (!a.coursesite && b.coursesite) ||
                 a.title > b.title
             })
             dispatch_group.leave()

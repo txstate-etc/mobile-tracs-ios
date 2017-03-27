@@ -106,7 +106,9 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     func webViewDidFinishLoad(_ webView: UIWebView) {
         updateButtons()
         TRACSClient.checkForNewUser { ()
-            self.navigationItem.leftBarButtonItem!.isEnabled = !TRACSClient.userid.isEmpty
+            DispatchQueue.main.async {
+                self.navigationItem.leftBarButtonItem!.isEnabled = !TRACSClient.userid.isEmpty
+            }
         }
     }
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {

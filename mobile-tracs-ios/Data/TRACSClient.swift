@@ -9,11 +9,14 @@
 import Foundation
 
 class TRACSClient {
-    static let baseurl = "https://tracs.txstate.edu/direct"
+    static let tracsurl = "https://tracs.txstate.edu"
+    static let baseurl = tracsurl+"/direct"
     static let announcementurl = baseurl+"/announcement"
     static let siteurl = baseurl+"/site"
+    static let starturl = tracsurl+"/portal/login"
     static var announcementcache: [String:Announcement] = [:]
     public static var userid = ""
+    public static var associatedsessionid = ""
     
     static func fetchAnnouncement(id:String, completion:@escaping (Announcement?)->Void) {
         Utils.fetchJSONObject(url: announcementurl+"/"+id+".json") { (parsed) in
@@ -71,6 +74,27 @@ class TRACSClient {
                 }
                 checkforcompletion()
             })
+        }
+    }
+    
+    static func checkForNewUser(runifuserchanged:@escaping()->Void) {
+        var currentcookieid = ""
+        for cookie in HTTPCookieStorage.shared.cookies(for: URL(string:tracsurl)!)! {
+            if cookie.name.lowercased() == "jsessionid" {
+                currentcookieid = cookie.value
+            }
+        }
+        if userid.isEmpty || associatedsessionid != currentcookieid {
+            TRACSClient.fetchCurrentUserId { (uid) in
+                if !(uid ?? "").isEmpty {
+                    associatedsessionid = currentcookieid
+                    if uid != userid {
+                        userid = uid!
+                        IntegrationClient.register()
+                        runifuserchanged()
+                    }
+                }
+            }
         }
     }
 }

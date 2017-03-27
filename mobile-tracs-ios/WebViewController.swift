@@ -25,7 +25,8 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = Utils.fontAwesomeBarButtonItem(icon: .bellO, target: self, action: #selector(pressedBell))
-        
+        self.navigationItem.leftBarButtonItem!.isEnabled = !TRACSClient.userid.isEmpty
+
         back.action = #selector(pressedBack(sender:))
         forward.action = #selector(pressedForward(sender:))
         refresh.action = #selector(pressedRefresh(sender:))
@@ -33,7 +34,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         
         back.accessibilityLabel = "back"
         forward.accessibilityLabel = "forward"
-
+        
         let urlToLoad = URL(string: urlStringToLoad)
         webView.loadRequest(URLRequest(url: urlToLoad!))
     }
@@ -104,13 +105,8 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     }
     func webViewDidFinishLoad(_ webView: UIWebView) {
         updateButtons()
-        if TRACSClient.userid.isEmpty { // TODO: improve this to notice when there's a new user, like with a 5 minute cache or something
-            TRACSClient.fetchCurrentUserId { (userid) in
-                if !(userid ?? "").isEmpty {
-                    TRACSClient.userid = userid!
-                    IntegrationClient.register()
-                }
-            }
+        TRACSClient.checkForNewUser { ()
+            self.navigationItem.leftBarButtonItem!.isEnabled = !TRACSClient.userid.isEmpty
         }
     }
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {

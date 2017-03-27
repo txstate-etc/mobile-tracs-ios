@@ -354,7 +354,7 @@
 				INFOPLIST_FILE = "mobile-tracs-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.txstate.mobile.mobile-tracs-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.txstate.mobile.tracs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -370,7 +370,7 @@
 				INFOPLIST_FILE = "mobile-tracs-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.txstate.mobile.mobile-tracs-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.txstate.mobile.tracs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

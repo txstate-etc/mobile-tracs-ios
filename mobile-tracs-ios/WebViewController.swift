@@ -62,7 +62,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         let filename = fileUrl?.lastPathComponent;
         let downloadpath = documentsPath+"/"+filename!
         let downloadurl = URL(fileURLWithPath: downloadpath)
-        
+        interaction.isEnabled = false
         URLSession.shared.dataTask(with: fileUrl!) { (tmp, response, error) in
             if (error != nil) {
                 NSLog("Unable to download file. %@", error!.localizedDescription)
@@ -97,6 +97,18 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         var tb = toolBar.items!
         tb[5] = (webView.isLoading ? stop : refresh);
         toolBar.setItems(tb, animated: false)
+
+        interaction.isEnabled = false
+        NSLog("updateButtons %@", webView.request?.url?.absoluteString ?? "nil")
+        if URLCache.shared.cachedResponse(for: webView.request!) != nil {
+            interaction.isEnabled = true
+        } else {
+            if let ext = webView.request?.url?.pathExtension.lowercased() {
+                if !ext.isEmpty && ext != "html" {
+                    interaction.isEnabled = true
+                }
+            }
+        }
     }
     
     // MARK: - UIWebViewDelegate
@@ -153,6 +165,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
 
     // MARK: - UIDocumentInteractionControllerDelegate
     func documentInteractionControllerDidDismissOptionsMenu(_ controller: UIDocumentInteractionController) {
+        interaction.isEnabled = true
         do {
             try FileManager.default.removeItem(at: controller.url!)
             NSLog("deleted temporary file at %@", controller.url?.absoluteString ?? "nil")

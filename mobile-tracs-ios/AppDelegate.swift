@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         nav.navigationBar.barStyle = UIBarStyle.blackOpaque
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.barTintColor = Utils.darkred
+        nav.navigationBar.tintColor = Utils.gold
         nav.viewControllers = [wvc]
         window?.rootViewController = nav
         window?.backgroundColor = UIColor.white

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0918543E1E98A03300DAF3B6 /* Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0918543D1E98A03300DAF3B6 /* Registration.swift */; };
 		092700CE1E884D720089821D /* JSONSerialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700CD1E884D720089821D /* JSONSerialize.swift */; };
 		092700D11E884DB00089821D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700CF1E884DB00089821D /* Settings.swift */; };
 		092700D21E884DB00089821D /* SettingsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700D01E884DB00089821D /* SettingsEntry.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0918543D1E98A03300DAF3B6 /* Registration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Registration.swift; path = Data/Registration.swift; sourceTree = "<group>"; };
 		092700CD1E884D720089821D /* JSONSerialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONSerialize.swift; path = Data/JSONSerialize.swift; sourceTree = "<group>"; };
 		092700CF1E884DB00089821D /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = Data/Settings.swift; sourceTree = "<group>"; };
 		092700D01E884DB00089821D /* SettingsEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsEntry.swift; path = Data/SettingsEntry.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				092700D01E884DB00089821D /* SettingsEntry.swift */,
 				2D9161A91E81E7F90090A5C6 /* Site.swift */,
 				092700CD1E884D720089821D /* JSONSerialize.swift */,
+				0918543D1E98A03300DAF3B6 /* Registration.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -231,6 +234,7 @@
 				09F10E081E7F25FF00303A96 /* Announcement.swift in Sources */,
 				099BC24B1E882CFF009EEF0D /* SettingsCell.swift in Sources */,
 				092700D11E884DB00089821D /* Settings.swift in Sources */,
+				0918543E1E98A03300DAF3B6 /* Registration.swift in Sources */,
 				099BC2431E882AED009EEF0D /* SettingsViewController.swift in Sources */,
 				099C81711E7CBFDD00529530 /* WebViewController.swift in Sources */,
 				09F10E091E7F25FF00303A96 /* Notification.swift in Sources */,

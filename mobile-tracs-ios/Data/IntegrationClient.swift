@@ -17,31 +17,30 @@ class IntegrationClient {
     
     public static func register() {
         // are we already registered?
-        let registration = UserDefaults.standard.value(forKey: "registration") as? [String:String]
-        if registration == nil || registration?["userId"] != TRACSClient.userid || registration?["deviceToken"] != deviceToken {
-            // do we have enough information to register?
-            if TRACSClient.userid.isEmpty || deviceToken.isEmpty {
-                return
-            }
-            
+        var savedreg:Registration?
+        if let registration = UserDefaults.standard.value(forKey: "registration") as? [String:Any] {
+            savedreg = Registration(registration)
+        }
+        
+        let newreg = Registration()
+        if newreg != savedreg && newreg.valid() {
             // register with the integration server
-            let reg = ["app_id": "tracs_ios", "user_id": TRACSClient.userid, "device_id":deviceToken]
-            Utils.post(url: registrationurl, body: JSON.toJSON(reg)!, completion: { (data, success) in
-                NSLog("attempted registration with integration server")
-                if success {
-                    // save the registration details so that we don't have to do this often
-                    UserDefaults.standard.set(["userId":TRACSClient.userid, "deviceToken":deviceToken], forKey: "registration")
-                }
-            })
+            if let body = newreg.toJSON() {
+                Utils.post(url: registrationurl, body: body, completion: { (data, success) in
+                    NSLog("attempted registration with integration server")
+                    if success {
+                        // save the registration details so that we don't have to do this often
+                        UserDefaults.standard.set(newreg.toJSONObject(), forKey: "registration")
+                    }
+                })
+            }
         }
     }
     
     public static func unregister() {
-        TRACSClient.userid = ""
-        UserDefaults.standard.removeObject(forKey: "registration")
         if !deviceToken.isEmpty {
-            Utils.delete(url: registrationurl, params: ["device_id":deviceToken], completion: { (data, success) in
-                // not sure if we need to do anything here
+            Utils.delete(url: registrationurl, params: ["token":deviceToken], completion: { (data, success) in
+                UserDefaults.standard.removeObject(forKey: "registration")
             })
         }
     }
@@ -82,8 +81,8 @@ class IntegrationClient {
                 // add the Site into each TRACSObject
                 NSLog("loadAll complete")
                 for n in notifications {
-                    if n.object != nil && !(n.context_id ?? "").isEmpty {
-                        n.object!.site = sitehash[n.context_id!]
+                    if n.object != nil && !(n.site_id ?? "").isEmpty {
+                        n.object!.site = sitehash[n.site_id!]
                     }
                 }
                 completion(notifications)
@@ -97,8 +96,8 @@ class IntegrationClient {
                 checkforcompletion()
                 continue
             }
-            if !(n.context_id ?? "").isEmpty {
-                siteids.append(n.context_id!)
+            if !(n.site_id ?? "").isEmpty {
+                siteids.append(n.site_id!)
             }
             if n.object_type == Announcement.type {
                 TRACSClient.fetchAnnouncement(id: n.object_id!, completion: { (ann) in

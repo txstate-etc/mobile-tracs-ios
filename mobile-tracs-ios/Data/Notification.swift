@@ -9,26 +9,34 @@
 import Foundation
 
 class Notification {
-    public var id: Int?
-    public var notification_type: String?
+    public var id: String?
+    public var provider_id: String?
+    public var user_id: String?
     public var object_type: String?
     public var object_id: String?
     public var object: TRACSObject?
-    public var context_id: String?
-    public var content_hash: String?
+    public var notification_type: String?
+    public var site_id: String?
+    public var tool_id: String?
     public var notify_after: Date?
+    public var seen: Bool
     public var read: Bool
-    public var cleared: Bool
 
     init(dict:[String:Any]) {
-        id = dict["id"] as? Int
-        notification_type = dict["notification_type"] as? String
-        object_type = dict["object_type"] as? String
-        object_id = dict["object_id"] as? String
-        context_id = dict["context_id"] as? String
-        content_hash = dict["content_hash"] as? String
+        id = dict["id"] as? String
+        if let keys:[String:Any] = dict["keys"] as? [String:Any] {
+            notification_type = keys["notification_type"] as? String
+            object_type = keys["object_type"] as? String
+            object_id = keys["object_id"] as? String
+            user_id = keys["user_id"] as? String
+            provider_id = keys["provider_id"] as? String
+        }
+        if let otherkeys:[String:Any] = dict["otherkeys"] as? [String:Any] {
+            site_id = otherkeys["site_id"] as? String
+            tool_id = otherkeys["tool_id"] as? String
+        }
         notify_after = dict["notify_after"] as? Date
+        seen = dict["seen"] as? Bool ?? false
         read = dict["read"] as? Bool ?? false
-        cleared = dict["cleared"] as? Bool ?? false
-    }    
+    }
 }

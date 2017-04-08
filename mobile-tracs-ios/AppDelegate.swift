@@ -69,6 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         IntegrationClient.deviceToken = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        NSLog("deviceToken: %@", IntegrationClient.deviceToken)
     }
 }
 

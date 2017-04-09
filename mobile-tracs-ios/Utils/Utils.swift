@@ -147,4 +147,15 @@ class Utils {
         ret.setTitleTextAttributes([NSFontAttributeName: UIFont.fontAwesome(ofSize: 20)], for: .normal)
         return ret
     }
+    
+    static func store(netid:String, pw:String) {
+        UserDefaults.standard.set(netid, forKey: "netid")
+        KeychainSwift.shared.set(pw, forKey: "password")
+    }
+    static func netid() -> String {
+        return UserDefaults.standard.value(forKey: "netid") as? String ?? ""
+    }
+    static func password() -> String {
+        return KeychainSwift.shared.get("password") ?? ""
+    }
 }

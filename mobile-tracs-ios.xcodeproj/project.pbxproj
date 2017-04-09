@@ -11,6 +11,8 @@
 		092700CE1E884D720089821D /* JSONSerialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700CD1E884D720089821D /* JSONSerialize.swift */; };
 		092700D11E884DB00089821D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700CF1E884DB00089821D /* Settings.swift */; };
 		092700D21E884DB00089821D /* SettingsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700D01E884DB00089821D /* SettingsEntry.swift */; };
+		098FCFC01E9AA1AA00D4C66D /* KeychainSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FCFBF1E9AA1AA00D4C66D /* KeychainSwift.swift */; };
+		098FCFC21E9AA3FF00D4C66D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FCFC11E9AA3FF00D4C66D /* Utils.swift */; };
 		099BC2431E882AED009EEF0D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099BC2411E882AED009EEF0D /* SettingsViewController.swift */; };
 		099BC2441E882AED009EEF0D /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099BC2421E882AED009EEF0D /* SettingsViewController.xib */; };
 		099BC24B1E882CFF009EEF0D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099BC2491E882CFF009EEF0D /* SettingsCell.swift */; };
@@ -21,7 +23,6 @@
 		099BC25E1E883417009EEF0D /* FontAwesomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099BC25A1E883417009EEF0D /* FontAwesomeView.swift */; };
 		099C81711E7CBFDD00529530 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C81701E7CBFDD00529530 /* WebViewController.swift */; };
 		099C81731E7CC94500529530 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099C81721E7CC94500529530 /* WebViewController.xib */; };
-		099C81751E7DD19600529530 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C81741E7DD19600529530 /* Utils.swift */; };
 		099C81781E7DEEB600529530 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C81761E7DEEB600529530 /* NotificationViewController.swift */; };
 		099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099C81771E7DEEB600529530 /* NotificationViewController.xib */; };
 		09B527FD1E7CBD6500BACF81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */; };
@@ -40,6 +41,8 @@
 		092700CD1E884D720089821D /* JSONSerialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONSerialize.swift; path = Data/JSONSerialize.swift; sourceTree = "<group>"; };
 		092700CF1E884DB00089821D /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = Data/Settings.swift; sourceTree = "<group>"; };
 		092700D01E884DB00089821D /* SettingsEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsEntry.swift; path = Data/SettingsEntry.swift; sourceTree = "<group>"; };
+		098FCFBF1E9AA1AA00D4C66D /* KeychainSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainSwift.swift; path = Utils/KeychainSwift.swift; sourceTree = "<group>"; };
+		098FCFC11E9AA3FF00D4C66D /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Utils/Utils.swift; sourceTree = "<group>"; };
 		099BC2411E882AED009EEF0D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		099BC2421E882AED009EEF0D /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		099BC2491E882CFF009EEF0D /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -51,7 +54,6 @@
 		099C816F1E7CBE4100529530 /* mobile-tracs-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "mobile-tracs-ios.entitlements"; sourceTree = "<group>"; };
 		099C81701E7CBFDD00529530 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		099C81721E7CC94500529530 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
-		099C81741E7DD19600529530 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		099C81761E7DEEB600529530 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		099C81771E7DEEB600529530 /* NotificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationViewController.xib; sourceTree = "<group>"; };
 		09B527F91E7CBD6500BACF81 /* mobile-tracs-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mobile-tracs-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,6 +80,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0918543F1E9A9FCD00DAF3B6 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				098FCFBF1E9AA1AA00D4C66D /* KeychainSwift.swift */,
+				098FCFC11E9AA3FF00D4C66D /* Utils.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		099BC2561E883417009EEF0D /* FontAwesome */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +119,7 @@
 		09B527FB1E7CBD6500BACF81 /* mobile-tracs-ios */ = {
 			isa = PBXGroup;
 			children = (
+				0918543F1E9A9FCD00DAF3B6 /* Utils */,
 				099BC2561E883417009EEF0D /* FontAwesome */,
 				09DAC4011E7F1FA20065C5DB /* Data */,
 				099C816F1E7CBE4100529530 /* mobile-tracs-ios.entitlements */,
@@ -116,7 +128,6 @@
 				09B528081E7CBD6500BACF81 /* Info.plist */,
 				099C81701E7CBFDD00529530 /* WebViewController.swift */,
 				099C81721E7CC94500529530 /* WebViewController.xib */,
-				099C81741E7DD19600529530 /* Utils.swift */,
 				099C81761E7DEEB600529530 /* NotificationViewController.swift */,
 				099C81771E7DEEB600529530 /* NotificationViewController.xib */,
 				2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */,
@@ -245,8 +256,9 @@
 				099C81781E7DEEB600529530 /* NotificationViewController.swift in Sources */,
 				2D9161AA1E81E7F90090A5C6 /* Site.swift in Sources */,
 				09F10E0F1E7F629A00303A96 /* IntegrationClient.swift in Sources */,
+				098FCFC01E9AA1AA00D4C66D /* KeychainSwift.swift in Sources */,
 				099BC25E1E883417009EEF0D /* FontAwesomeView.swift in Sources */,
-				099C81751E7DD19600529530 /* Utils.swift in Sources */,
+				098FCFC21E9AA3FF00D4C66D /* Utils.swift in Sources */,
 				099BC25D1E883417009EEF0D /* FontAwesome.swift in Sources */,
 				09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */,
 			);

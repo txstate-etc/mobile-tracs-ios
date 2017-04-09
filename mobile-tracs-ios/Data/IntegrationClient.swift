@@ -11,7 +11,7 @@ import UIKit
 class IntegrationClient {
     static var deviceToken = ""
     static let baseurl = "https://notifications.its.txstate.edu"
-    static let registrationurl = baseurl+"/registration"
+    static let registrationurl = baseurl+"/registrations"
     static let notificationsurl = baseurl+"/notifications"
     static let settingsurl = baseurl+"/settings"
     
@@ -55,7 +55,8 @@ class IntegrationClient {
     // this is the primary function for loading data in the notifications screen
     // it automatically calls loadAll to get related data
     static func getNotifications(completion:@escaping([Notification]?)->Void) {
-        Utils.fetchJSONArray(url: notificationsurl+"?device_id="+deviceToken) { (data) in
+        if TRACSClient.userid.isEmpty { return completion(nil) }
+        Utils.fetchJSONArray(url: notificationsurl+"?user_id="+TRACSClient.userid) { (data) in
             if (data == nil) { return completion(nil) }
             var ret:[Notification] = []
             for notifyjson in data! {

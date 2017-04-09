@@ -23,7 +23,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
 
         tableView.register(UINib(nibName:"SettingsCell", bundle: nil), forCellReuseIdentifier: "settings")
-
+        
         let dispatch_group = DispatchGroup()
         var tmpsites:[Site] = []
         dispatch_group.enter()
@@ -34,7 +34,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             }
             tmpsites.sort(by: { (a, b) -> Bool in
                 (!a.coursesite && b.coursesite) ||
-                a.title > b.title
+                a.title.trimmingCharacters(in:CharacterSet.whitespacesAndNewlines).lowercased() < b.title.trimmingCharacters(in:CharacterSet.whitespacesAndNewlines).lowercased()
             })
             dispatch_group.leave()
         }

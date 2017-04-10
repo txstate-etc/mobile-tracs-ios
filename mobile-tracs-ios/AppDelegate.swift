@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
         let wvc = WebViewController(nibName: "WebViewController", bundle: nil)
-        wvc.urlStringToLoad = TRACSClient.starturl
         let nav = UINavigationController()
         nav.navigationBar.barStyle = UIBarStyle.blackOpaque
         nav.navigationBar.isTranslucent = false
@@ -40,6 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             application.registerUserNotificationSettings(settings)
             application.registerForRemoteNotifications()
         }
+        
+        NSLog("device locked: %@", Utils.deviceIsLocked() ? "true" : "false")
         
         return true
     }

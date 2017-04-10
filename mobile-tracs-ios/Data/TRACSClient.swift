@@ -13,7 +13,11 @@ class TRACSClient {
     static let baseurl = tracsurl+"/direct"
     static let announcementurl = baseurl+"/announcement"
     static let siteurl = baseurl+"/site"
-    static let starturl = tracsurl+"/portal/login"
+    static let portalurl = tracsurl+"/portal"
+    static let loginurl = tracsurl+"/portal/login"
+    static let deeploginurl = tracsurl+"/sakai-login-tool"
+    static let logouturl = tracsurl+"/portal/pda/?force.logout=yes"
+    static let altlogouturl = tracsurl+"/portal/logout"
     static var announcementcache: [String:Announcement] = [:]
     public static var userid = ""
     public static var associatedsessionid = ""
@@ -25,11 +29,11 @@ class TRACSClient {
         }
     }
     
-    static func fetchCurrentUserId(completion:@escaping (String?)->Void) {
+    static func fetchCurrentUserId(completion:@escaping (String)->Void) {
         let sessionurl = baseurl+"/session/current.json"
         Utils.fetchJSONObject(url: sessionurl) { (parsed) in
-            if parsed == nil { return completion(nil) }
-            return completion(parsed!["userId"] as? String)
+            if parsed == nil { return completion("") }
+            return completion(parsed!["userId"] as? String ?? "")
         }
     }
     
@@ -58,43 +62,66 @@ class TRACSClient {
     
     static func fetchSitesById(siteids:[String], completion:@escaping([String:Site])->Void) {
         let uniquesiteids = Set(siteids)
-        var total = uniquesiteids.count
         var sitehash:[String:Site] = [:]
-        let checkforcompletion: ()->Void = {
-            total -= 1
-            if total <= 0 {
-                completion(sitehash)
-            }
-        }
+        
+        let dispatchgroup = DispatchGroup()
         
         for siteid in uniquesiteids {
+            dispatchgroup.enter()
             fetchSite(id: siteid, completion: { (site) in
                 if site != nil && !site!.id.isEmpty {
                     sitehash[site!.id] = site
                 }
-                checkforcompletion()
+                dispatchgroup.leave()
             })
+        }
+        
+        dispatchgroup.notify(queue: .main) { 
+            completion(sitehash)
         }
     }
     
-    static func checkForNewUser(runifuserchanged:@escaping()->Void) {
-        var currentcookieid = ""
-        for cookie in HTTPCookieStorage.shared.cookies(for: URL(string:tracsurl)!)! {
-            if cookie.name.lowercased() == "jsessionid" {
-                currentcookieid = cookie.value
+    static func attemptLogin(netid:String, password:String, completion:@escaping(String)->Void) {
+        if netid.isEmpty || password.isEmpty { return completion("") }
+        Utils.post(url: baseurl+"/session", params: ["_username":netid, "_password":password]) { (data, success) in
+            if let body = data as? String {
+                return completion(body.trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            return completion("")
+        }
+    }
+    
+    static func loginIfNecessary(completion:@escaping(Bool)->Void) {
+        fetchCurrentUserId { (uid) in
+            if uid.isEmpty {
+                // try our saved credentials
+                attemptLogin(netid: Utils.netid(), password: Utils.password(), completion: { (sessionid) in
+                    NSLog("login attempt made, got %@ back", sessionid)
+                    if !sessionid.isEmpty {
+                        checkForNewUser(completion: {
+                            completion(true)
+                        })
+                    } else {
+                        Utils.removeCredentials()
+                        completion(false)
+                    }
+                })
+            } else {
+                completion(true)
             }
         }
-        if userid.isEmpty || associatedsessionid != currentcookieid {
-            TRACSClient.fetchCurrentUserId { (uid) in
-                if !(uid ?? "").isEmpty {
-                    associatedsessionid = currentcookieid
-                    if uid != userid {
-                        userid = uid!
-                        IntegrationClient.register()
-                        runifuserchanged()
-                    }
+    }
+    
+    static func checkForNewUser(completion:@escaping()->Void) {
+        TRACSClient.fetchCurrentUserId { (uid) in
+            if !uid.isEmpty {
+                if uid != userid {
+                    userid = uid
+                    IntegrationClient.register()
+                    return completion()
                 }
             }
+            completion()
         }
     }
 }

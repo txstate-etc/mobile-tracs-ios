@@ -13,6 +13,7 @@
 		092700D21E884DB00089821D /* SettingsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700D01E884DB00089821D /* SettingsEntry.swift */; };
 		098FCFC01E9AA1AA00D4C66D /* KeychainSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FCFBF1E9AA1AA00D4C66D /* KeychainSwift.swift */; };
 		098FCFC21E9AA3FF00D4C66D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FCFC11E9AA3FF00D4C66D /* Utils.swift */; };
+		098FCFC51E9AD57100D4C66D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098FCFC41E9AD57100D4C66D /* Security.framework */; };
 		099BC2431E882AED009EEF0D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099BC2411E882AED009EEF0D /* SettingsViewController.swift */; };
 		099BC2441E882AED009EEF0D /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099BC2421E882AED009EEF0D /* SettingsViewController.xib */; };
 		099BC24B1E882CFF009EEF0D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099BC2491E882CFF009EEF0D /* SettingsCell.swift */; };
@@ -43,6 +44,7 @@
 		092700D01E884DB00089821D /* SettingsEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsEntry.swift; path = Data/SettingsEntry.swift; sourceTree = "<group>"; };
 		098FCFBF1E9AA1AA00D4C66D /* KeychainSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainSwift.swift; path = Utils/KeychainSwift.swift; sourceTree = "<group>"; };
 		098FCFC11E9AA3FF00D4C66D /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Utils/Utils.swift; sourceTree = "<group>"; };
+		098FCFC41E9AD57100D4C66D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		099BC2411E882AED009EEF0D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		099BC2421E882AED009EEF0D /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		099BC2491E882CFF009EEF0D /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098FCFC51E9AD57100D4C66D /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +90,14 @@
 				098FCFC11E9AA3FF00D4C66D /* Utils.swift */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		098FCFC31E9AD57100D4C66D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				098FCFC41E9AD57100D4C66D /* Security.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		099BC2561E883417009EEF0D /* FontAwesome */ = {
@@ -105,6 +116,7 @@
 			children = (
 				09B527FB1E7CBD6500BACF81 /* mobile-tracs-ios */,
 				09B527FA1E7CBD6500BACF81 /* Products */,
+				098FCFC31E9AD57100D4C66D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

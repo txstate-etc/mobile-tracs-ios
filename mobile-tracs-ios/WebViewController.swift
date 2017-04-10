@@ -17,7 +17,6 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     @IBOutlet var refresh: UIBarButtonItem!
     @IBOutlet var interaction: UIBarButtonItem!
 
-    public var urlStringToLoad: String = ""
     var documentInteractionController: UIDocumentInteractionController?
     let documentsPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
     let stop = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(pressedRefresh(sender:)))
@@ -34,9 +33,21 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         
         back.accessibilityLabel = "back"
         forward.accessibilityLabel = "forward"
-        
-        let urlToLoad = URL(string: urlStringToLoad)
-        webView.loadRequest(URLRequest(url: urlToLoad!))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        TRACSClient.loginIfNecessary { (loggedin) in
+            DispatchQueue.main.async {
+                self.navigationItem.leftBarButtonItem!.isEnabled = loggedin
+                if self.webView.request?.url?.absoluteString == nil {
+                    let urlStringToLoad = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
+                    if let urlToLoad = URL(string: urlStringToLoad) {
+                        self.webView.loadRequest(URLRequest(url: urlToLoad))
+                    }
+                }
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -99,7 +110,6 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         toolBar.setItems(tb, animated: false)
 
         interaction.isEnabled = false
-        NSLog("updateButtons %@", webView.request?.url?.absoluteString ?? "nil")
         if URLCache.shared.cachedResponse(for: webView.request!) != nil {
             interaction.isEnabled = true
         } else {
@@ -117,9 +127,11 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     }
     func webViewDidFinishLoad(_ webView: UIWebView) {
         updateButtons()
-        TRACSClient.checkForNewUser { ()
-            DispatchQueue.main.async {
-                self.navigationItem.leftBarButtonItem!.isEnabled = !TRACSClient.userid.isEmpty
+        if let urlstring = webView.request?.url?.absoluteString {
+            if urlstring.contains("?ticket=") {
+                TRACSClient.checkForNewUser(completion: {
+                    
+                })
             }
         }
     }
@@ -157,8 +169,39 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
             self.present(mvc, animated: true, completion: nil)
             return false;
         }
-        if request.url?.absoluteString == "about:blank" {
-            return false
+        if let urlstring = request.url?.absoluteString {
+            if urlstring == "about:blank" {
+                return false
+            }
+            if request.httpMethod == "POST" {
+                if let body = request.httpBody {
+                    if let body = String(data: body, encoding: .utf8) {
+                        let params = Utils.stringToParams(body)
+                        if params["publicWorkstation"] == nil {
+                            if let netid = params["username"], let pw = params["password"] {
+                                Utils.store(netid: netid, pw: pw)
+                            }
+                        }
+                    }
+                }
+            }
+            if urlstring.contains(TRACSClient.loginurl) || urlstring.contains(TRACSClient.deeploginurl) {
+                if Utils.haveCredentials() && !urlstring.contains("?ticket="){
+                    TRACSClient.loginIfNecessary(completion: { (loggedin) in
+                        DispatchQueue.main.async {
+                            if loggedin {
+                                self.webView.reload()
+                            } else {
+                                self.webView.loadRequest(request)
+                            }
+                        }
+                    })
+                    return false
+                }
+            }
+            if urlstring.contains(TRACSClient.logouturl) || urlstring.contains(TRACSClient.altlogouturl) {
+                Utils.removeCredentials()
+            }
         }
         return true
     }

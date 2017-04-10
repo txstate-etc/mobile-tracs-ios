@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class Utils {
     static let red = UIColor(red: 80/255.0, green: 18/255.0, blue: 20/255.0, alpha: 1)
@@ -17,13 +18,8 @@ class Utils {
     static let lightergray = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1)
     static let urlsession = URLSession.shared
     private static let post_queue = DispatchGroup()
-
-    static func constrainToContainer(view: UIView, container: UIView) {
-        container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.leading, multiplier: 1.0, constant: 0.0))
-        container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.trailing, multiplier: 1.0, constant: 0.0))
-        container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0.0))
-        container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0.0))
-    }
+    
+    // MARK: - HTTP Helpers
     
     private static func standardRequest(_ url: URL)->URLRequest {
         var req = URLRequest(url: url)
@@ -36,10 +32,16 @@ class Utils {
     static func fetchJSON(url:String, completion:@escaping (Any?)->Void) {
         // fake data for testing
         if url.contains(IntegrationClient.notificationsurl) { return completion([[
-                "notification_type":"creation",
-                "object_type": "announcement",
-                "object_id": "831342dd-fdb6-4878-8b3c-1d29ecb06a14:main:aa4f8f85-a645-4766-bc91-1a1c7bef93df",
-                "context_id": "831342dd-fdb6-4878-8b3c-1d29ecb06a14",
+                "keys":[
+                    "provider_id":"tracs",
+                    "notification_type":"creation",
+                    "object_type": "announcement",
+                    "object_id": "831342dd-fdb6-4878-8b3c-1d29ecb06a14:main:aa4f8f85-a645-4766-bc91-1a1c7bef93df",
+                    "user_id": "392b6c67-e53f-4c47-8068-3602bdc7b782"
+                ],
+                "otherkeys":[
+                    "site_id": "831342dd-fdb6-4878-8b3c-1d29ecb06a14"
+                ],
                 "content_hash": "hash",
                 "notify_after": "2017-03-22T12:50:00-0500",
                 "read": false,
@@ -87,6 +89,22 @@ class Utils {
         return pairs.joined(separator: "&")
     }
     
+    static func stringToParams(_ str:String)->[String:String] {
+        var ret:[String:String] = [:]
+        let pairs = str.components(separatedBy: "&")
+        for pair in pairs {
+            let entry = pair.components(separatedBy: "=")
+            if let key = entry[0].removingPercentEncoding, let val = entry[1].removingPercentEncoding {
+                ret[key] = val
+            }
+        }
+        return ret
+    }
+    
+    static func post(url: String, params:[String:String], completion:@escaping(Any?, Bool)->Void) {
+        post(url: url, body: paramsToString(params: params), completion: completion)
+    }
+    
     static func post(url: String, body: String, completion:@escaping(Any?, Bool)->Void) {
         var request = standardRequest(URL(string: url)!)
         request.httpMethod = "POST"
@@ -105,7 +123,11 @@ class Utils {
                     let parsed = try? JSONSerialization.jsonObject(with: data!, options: [])
                     if parsed != nil { return completion(parsed, success) }
                 }
-                completion(data, success)
+                if data != nil, let data = String(data:data!, encoding:.utf8) {
+                    completion(data, success)
+                } else {
+                    completion(data, success)
+                }
                 post_queue.leave()
             }
         }
@@ -136,6 +158,8 @@ class Utils {
         }.resume()
     }
     
+    // MARK: - UI Helpers
+    
     static func alert(vc: UIViewController, message:String) {
         let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -148,14 +172,71 @@ class Utils {
         return ret
     }
     
+    static func constrainToContainer(view: UIView, container: UIView) {
+        container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.leading, multiplier: 1.0, constant: 0.0))
+        container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.trailing, multiplier: 1.0, constant: 0.0))
+        container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0.0))
+        container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0.0))
+    }
+    
+    // MARK: - Login Credentials
     static func store(netid:String, pw:String) {
+        UserDefaults.standard.set(Date(), forKey: "logintime")
         UserDefaults.standard.set(netid, forKey: "netid")
         KeychainSwift.shared.set(pw, forKey: "password")
     }
+    static func haveCredentials()->Bool {
+        return !netid().isEmpty && !password().isEmpty
+    }
+    static func removeCredentials() {
+        UserDefaults.standard.removeObject(forKey: "logintime")
+        UserDefaults.standard.removeObject(forKey: "netid")
+        KeychainSwift.shared.delete("password")
+    }
+    static func netidExpired() -> Bool {
+        let logintime = UserDefaults.standard.value(forKey: "logintime")
+        if let logintime = logintime as? Date {
+            var interval = DateComponents()
+            if deviceIsLocked() {
+                interval.month = 3
+            } else {
+                interval.day = 1
+            }
+            let expires = Calendar.current.date(byAdding: interval, to: logintime)
+            if expires! > Date() { return false }
+        }
+        return true
+    }
     static func netid() -> String {
+        if netidExpired() { return "" }
         return UserDefaults.standard.value(forKey: "netid") as? String ?? ""
     }
     static func password() -> String {
+        if netidExpired() { return "" }
         return KeychainSwift.shared.get("password") ?? ""
+    }
+    
+    static func deviceIsLocked() -> Bool {
+        if #available(iOS 9, *) {
+            return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
+        } else if #available(iOS 8, *) {
+            let secret = "Device has passcode set?".data(using: String.Encoding.utf8, allowLossyConversion: false)
+            let attributes:[String:Any] = [
+                kSecClass as String: kSecClassGenericPassword as String,
+                kSecAttrService as String: "LocalDeviceServices",
+                kSecAttrAccount as String: "NoAccount",
+                kSecValueData as String: secret!,
+                kSecAttrAccessible as String: kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+            ]
+            
+            let status = SecItemAdd(attributes as CFDictionary, nil)
+            if status == 0 {
+                SecItemDelete(attributes as CFDictionary)
+                return true
+            }
+            
+            return false
+        }
+        return false
     }
 }

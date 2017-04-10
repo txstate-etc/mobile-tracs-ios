@@ -26,11 +26,18 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         navigationItem.leftBarButtonItem = Utils.fontAwesomeBarButtonItem(icon: .bellO, target: self, action: #selector(pressedBell))
         self.navigationItem.leftBarButtonItem!.isEnabled = !TRACSClient.userid.isEmpty
 
-        back.action = #selector(pressedBack(sender:))
-        forward.action = #selector(pressedForward(sender:))
+        back = Utils.fontAwesomeBarButtonItem(icon: .chevronLeft, target: self, action: #selector(pressedBack(sender:)))
+        forward = Utils.fontAwesomeBarButtonItem(icon: .chevronRight, target: self, action: #selector(pressedForward(sender:)))
+        
+        var tb = toolBar.items!
+        tb[1] = back;
+        tb[3] = forward;
+        toolBar.setItems(tb, animated: false)
+        
         refresh.action = #selector(pressedRefresh(sender:))
         interaction.action = #selector(pressedInteraction(sender:))
         
+
         back.accessibilityLabel = "back"
         forward.accessibilityLabel = "forward"
     }

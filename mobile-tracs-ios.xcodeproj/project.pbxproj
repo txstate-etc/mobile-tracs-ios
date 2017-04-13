@@ -35,6 +35,11 @@
 		09F10E0F1E7F629A00303A96 /* IntegrationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E0E1E7F629A00303A96 /* IntegrationClient.swift */; };
 		2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */; };
 		2D9161AA1E81E7F90090A5C6 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9161A91E81E7F90090A5C6 /* Site.swift */; };
+		2DD215C31EA0369000A6C30F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C21EA0369000A6C30F /* CoreData.framework */; };
+		2DD215C51EA0369900A6C30F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C41EA0369900A6C30F /* SystemConfiguration.framework */; };
+		2DD215C71EA036B900A6C30F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C61EA036B900A6C30F /* libz.tbd */; };
+		2DD215C91EA036C500A6C30F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C81EA036C500A6C30F /* libsqlite3.tbd */; };
+		2DD215EE1EA037E000A6C30F /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215ED1EA037E000A6C30F /* libGoogleAnalyticsServices.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +74,21 @@
 		09F10E0E1E7F629A00303A96 /* IntegrationClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntegrationClient.swift; path = Data/IntegrationClient.swift; sourceTree = "<group>"; };
 		2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 		2D9161A91E81E7F90090A5C6 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Site.swift; path = Data/Site.swift; sourceTree = "<group>"; };
+		2DD215C21EA0369000A6C30F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		2DD215C41EA0369900A6C30F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		2DD215C61EA036B900A6C30F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		2DD215C81EA036C500A6C30F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		2DD215E31EA037CD00A6C30F /* GAI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = GoogleAnalytics/GAI.h; sourceTree = "<group>"; };
+		2DD215E41EA037CD00A6C30F /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAIDictionaryBuilder.h; path = GoogleAnalytics/GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		2DD215E51EA037CD00A6C30F /* GAIEcommerceFields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceFields.h; path = GoogleAnalytics/GAIEcommerceFields.h; sourceTree = "<group>"; };
+		2DD215E61EA037CD00A6C30F /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceProduct.h; path = GoogleAnalytics/GAIEcommerceProduct.h; sourceTree = "<group>"; };
+		2DD215E71EA037CD00A6C30F /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAIEcommerceProductAction.h; path = GoogleAnalytics/GAIEcommerceProductAction.h; sourceTree = "<group>"; };
+		2DD215E81EA037CD00A6C30F /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAIEcommercePromotion.h; path = GoogleAnalytics/GAIEcommercePromotion.h; sourceTree = "<group>"; };
+		2DD215E91EA037CD00A6C30F /* GAIFields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAIFields.h; path = GoogleAnalytics/GAIFields.h; sourceTree = "<group>"; };
+		2DD215EA1EA037CD00A6C30F /* GAILogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAILogger.h; path = GoogleAnalytics/GAILogger.h; sourceTree = "<group>"; };
+		2DD215EB1EA037CD00A6C30F /* GAITrackedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = GoogleAnalytics/GAITrackedViewController.h; sourceTree = "<group>"; };
+		2DD215EC1EA037CD00A6C30F /* GAITracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = GoogleAnalytics/GAITracker.h; sourceTree = "<group>"; };
+		2DD215ED1EA037E000A6C30F /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = "mobile-tracs-ios/GoogleAnalytics/libGoogleAnalyticsServices.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +96,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DD215EE1EA037E000A6C30F /* libGoogleAnalyticsServices.a in Frameworks */,
+				2DD215C91EA036C500A6C30F /* libsqlite3.tbd in Frameworks */,
+				2DD215C71EA036B900A6C30F /* libz.tbd in Frameworks */,
+				2DD215C51EA0369900A6C30F /* SystemConfiguration.framework in Frameworks */,
+				2DD215C31EA0369000A6C30F /* CoreData.framework in Frameworks */,
 				098FCFC51E9AD57100D4C66D /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,6 +120,11 @@
 		098FCFC31E9AD57100D4C66D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2DD215ED1EA037E000A6C30F /* libGoogleAnalyticsServices.a */,
+				2DD215C81EA036C500A6C30F /* libsqlite3.tbd */,
+				2DD215C61EA036B900A6C30F /* libz.tbd */,
+				2DD215C41EA0369900A6C30F /* SystemConfiguration.framework */,
+				2DD215C21EA0369000A6C30F /* CoreData.framework */,
 				098FCFC41E9AD57100D4C66D /* Security.framework */,
 			);
 			name = Frameworks;
@@ -131,6 +161,7 @@
 		09B527FB1E7CBD6500BACF81 /* mobile-tracs-ios */ = {
 			isa = PBXGroup;
 			children = (
+				2DD215CA1EA036E700A6C30F /* Google Analytics */,
 				0918543F1E9A9FCD00DAF3B6 /* Utils */,
 				099BC2561E883417009EEF0D /* FontAwesome */,
 				09DAC4011E7F1FA20065C5DB /* Data */,
@@ -166,6 +197,23 @@
 				0918543D1E98A03300DAF3B6 /* Registration.swift */,
 			);
 			name = Data;
+			sourceTree = "<group>";
+		};
+		2DD215CA1EA036E700A6C30F /* Google Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				2DD215E31EA037CD00A6C30F /* GAI.h */,
+				2DD215E41EA037CD00A6C30F /* GAIDictionaryBuilder.h */,
+				2DD215E51EA037CD00A6C30F /* GAIEcommerceFields.h */,
+				2DD215E61EA037CD00A6C30F /* GAIEcommerceProduct.h */,
+				2DD215E71EA037CD00A6C30F /* GAIEcommerceProductAction.h */,
+				2DD215E81EA037CD00A6C30F /* GAIEcommercePromotion.h */,
+				2DD215E91EA037CD00A6C30F /* GAIFields.h */,
+				2DD215EA1EA037CD00A6C30F /* GAILogger.h */,
+				2DD215EB1EA037CD00A6C30F /* GAITrackedViewController.h */,
+				2DD215EC1EA037CD00A6C30F /* GAITracker.h */,
+			);
+			name = "Google Analytics";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -382,6 +430,10 @@
 				INFOPLIST_FILE = "mobile-tracs-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mobile-tracs-ios/GoogleAnalytics",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.txstate.mobile.tracs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -398,6 +450,10 @@
 				INFOPLIST_FILE = "mobile-tracs-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mobile-tracs-ios/GoogleAnalytics",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.txstate.mobile.tracs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;

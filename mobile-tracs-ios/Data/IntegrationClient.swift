@@ -55,16 +55,18 @@ class IntegrationClient {
     // this is the primary function for loading data in the notifications screen
     // it automatically calls loadAll to get related data
     static func getNotifications(completion:@escaping([Notification]?)->Void) {
-        if TRACSClient.userid.isEmpty { return completion(nil) }
-        Utils.fetchJSONArray(url: notificationsurl+"?user_id="+TRACSClient.userid) { (data) in
-            if (data == nil) { return completion(nil) }
-            var ret:[Notification] = []
-            for notifyjson in data! {
-                ret.append(Notification(dict: notifyjson as! [String : Any]))
+        TRACSClient.waitForLogin { (loggedin) in
+            if !loggedin { return completion(nil) }
+            Utils.fetchJSONArray(url: notificationsurl+"?user_id="+TRACSClient.userid) { (data) in
+                if (data == nil) { return completion(nil) }
+                var ret:[Notification] = []
+                for notifyjson in data! {
+                    ret.append(Notification(dict: notifyjson as! [String : Any]))
+                }
+                loadAll(notifications: ret, completion: { (fillednotifications) in
+                    completion(fillednotifications)
+                })
             }
-            loadAll(notifications: ret, completion: { (fillednotifications) in
-                completion(fillednotifications)
-            })
         }
     }
     
@@ -113,9 +115,15 @@ class IntegrationClient {
         }
     }
     
+    static func markNotificationsSeen(notifications:[Notification], completion:@escaping(Bool)->Void) {
+        completion(true)
+    }
+    
     static func fetchSettings(completion:@escaping(Settings)->Void) {
-        Utils.fetchJSONObject(url: settingsurl) { (dict) in
-            completion(Settings(dict: dict))
+        TRACSClient.waitForLogin { (loggedin) in
+            Utils.fetchJSONObject(url: settingsurl+"?token="+deviceToken) { (dict) in
+                completion(Settings(dict: dict))
+            }
         }
     }
     

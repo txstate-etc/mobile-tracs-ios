@@ -14,20 +14,21 @@
 		098FCFC01E9AA1AA00D4C66D /* KeychainSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FCFBF1E9AA1AA00D4C66D /* KeychainSwift.swift */; };
 		098FCFC21E9AA3FF00D4C66D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FCFC11E9AA3FF00D4C66D /* Utils.swift */; };
 		098FCFC51E9AD57100D4C66D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098FCFC41E9AD57100D4C66D /* Security.framework */; };
+		098FCFD01E9D23DF00D4C66D /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FCFCC1E9D23DF00D4C66D /* Enum.swift */; };
+		098FCFD11E9D23DF00D4C66D /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = 098FCFCD1E9D23DF00D4C66D /* FontAwesome.otf */; };
+		098FCFD21E9D23DF00D4C66D /* FontAwesome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FCFCE1E9D23DF00D4C66D /* FontAwesome.swift */; };
+		098FCFD31E9D23DF00D4C66D /* FontAwesomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FCFCF1E9D23DF00D4C66D /* FontAwesomeView.swift */; };
 		099BC2431E882AED009EEF0D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099BC2411E882AED009EEF0D /* SettingsViewController.swift */; };
 		099BC2441E882AED009EEF0D /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099BC2421E882AED009EEF0D /* SettingsViewController.xib */; };
 		099BC24B1E882CFF009EEF0D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099BC2491E882CFF009EEF0D /* SettingsCell.swift */; };
 		099BC24C1E882CFF009EEF0D /* SettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099BC24A1E882CFF009EEF0D /* SettingsCell.xib */; };
-		099BC25B1E883417009EEF0D /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099BC2571E883417009EEF0D /* Enum.swift */; };
-		099BC25C1E883417009EEF0D /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = 099BC2581E883417009EEF0D /* FontAwesome.otf */; };
-		099BC25D1E883417009EEF0D /* FontAwesome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099BC2591E883417009EEF0D /* FontAwesome.swift */; };
-		099BC25E1E883417009EEF0D /* FontAwesomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099BC25A1E883417009EEF0D /* FontAwesomeView.swift */; };
 		099C81711E7CBFDD00529530 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C81701E7CBFDD00529530 /* WebViewController.swift */; };
 		099C81731E7CC94500529530 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099C81721E7CC94500529530 /* WebViewController.xib */; };
 		099C81781E7DEEB600529530 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C81761E7DEEB600529530 /* NotificationViewController.swift */; };
 		099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099C81771E7DEEB600529530 /* NotificationViewController.xib */; };
 		09B527FD1E7CBD6500BACF81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */; };
 		09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09B528031E7CBD6500BACF81 /* Assets.xcassets */; };
+		09DDA8AC1E9D3143004220CF /* BadgeSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DDA8AB1E9D3143004220CF /* BadgeSwift.swift */; };
 		09F10E081E7F25FF00303A96 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E051E7F25FF00303A96 /* Announcement.swift */; };
 		09F10E091E7F25FF00303A96 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E061E7F25FF00303A96 /* Notification.swift */; };
 		09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E071E7F25FF00303A96 /* TRACSClient.swift */; };
@@ -50,14 +51,14 @@
 		098FCFBF1E9AA1AA00D4C66D /* KeychainSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainSwift.swift; path = Utils/KeychainSwift.swift; sourceTree = "<group>"; };
 		098FCFC11E9AA3FF00D4C66D /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Utils/Utils.swift; sourceTree = "<group>"; };
 		098FCFC41E9AD57100D4C66D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		098FCFCC1E9D23DF00D4C66D /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		098FCFCD1E9D23DF00D4C66D /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
+		098FCFCE1E9D23DF00D4C66D /* FontAwesome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesome.swift; sourceTree = "<group>"; };
+		098FCFCF1E9D23DF00D4C66D /* FontAwesomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesomeView.swift; sourceTree = "<group>"; };
 		099BC2411E882AED009EEF0D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		099BC2421E882AED009EEF0D /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		099BC2491E882CFF009EEF0D /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		099BC24A1E882CFF009EEF0D /* SettingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsCell.xib; sourceTree = "<group>"; };
-		099BC2571E883417009EEF0D /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
-		099BC2581E883417009EEF0D /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
-		099BC2591E883417009EEF0D /* FontAwesome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesome.swift; sourceTree = "<group>"; };
-		099BC25A1E883417009EEF0D /* FontAwesomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesomeView.swift; sourceTree = "<group>"; };
 		099C816F1E7CBE4100529530 /* mobile-tracs-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "mobile-tracs-ios.entitlements"; sourceTree = "<group>"; };
 		099C81701E7CBFDD00529530 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		099C81721E7CC94500529530 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
@@ -67,6 +68,7 @@
 		09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09B528031E7CBD6500BACF81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		09B528081E7CBD6500BACF81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09DDA8AB1E9D3143004220CF /* BadgeSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeSwift.swift; sourceTree = "<group>"; };
 		09F10E051E7F25FF00303A96 /* Announcement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Announcement.swift; path = Data/Announcement.swift; sourceTree = "<group>"; };
 		09F10E061E7F25FF00303A96 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Notification.swift; path = Data/Notification.swift; sourceTree = "<group>"; };
 		09F10E071E7F25FF00303A96 /* TRACSClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRACSClient.swift; path = Data/TRACSClient.swift; sourceTree = "<group>"; };
@@ -130,15 +132,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		099BC2561E883417009EEF0D /* FontAwesome */ = {
+		098FCFCA1E9D239900D4C66D /* UIWidgets */ = {
 			isa = PBXGroup;
 			children = (
-				099BC2571E883417009EEF0D /* Enum.swift */,
-				099BC2581E883417009EEF0D /* FontAwesome.otf */,
-				099BC2591E883417009EEF0D /* FontAwesome.swift */,
-				099BC25A1E883417009EEF0D /* FontAwesomeView.swift */,
+				098FCFCB1E9D23DF00D4C66D /* FontAwesome */,
+				09DDA8AB1E9D3143004220CF /* BadgeSwift.swift */,
 			);
-			path = FontAwesome;
+			name = UIWidgets;
+			sourceTree = "<group>";
+		};
+		098FCFCB1E9D23DF00D4C66D /* FontAwesome */ = {
+			isa = PBXGroup;
+			children = (
+				098FCFCC1E9D23DF00D4C66D /* Enum.swift */,
+				098FCFCD1E9D23DF00D4C66D /* FontAwesome.otf */,
+				098FCFCE1E9D23DF00D4C66D /* FontAwesome.swift */,
+				098FCFCF1E9D23DF00D4C66D /* FontAwesomeView.swift */,
+			);
+			name = FontAwesome;
+			path = UIWidgets/FontAwesome;
 			sourceTree = "<group>";
 		};
 		09B527F01E7CBD6500BACF81 = {
@@ -162,8 +174,8 @@
 			isa = PBXGroup;
 			children = (
 				2DD215CA1EA036E700A6C30F /* Google Analytics */,
+				098FCFCA1E9D239900D4C66D /* UIWidgets */,
 				0918543F1E9A9FCD00DAF3B6 /* Utils */,
-				099BC2561E883417009EEF0D /* FontAwesome */,
 				09DAC4011E7F1FA20065C5DB /* Data */,
 				099C816F1E7CBE4100529530 /* mobile-tracs-ios.entitlements */,
 				09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */,
@@ -287,9 +299,9 @@
 				099BC24C1E882CFF009EEF0D /* SettingsCell.xib in Resources */,
 				2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */,
 				099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */,
-				099BC25C1E883417009EEF0D /* FontAwesome.otf in Resources */,
 				09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */,
 				099C81731E7CC94500529530 /* WebViewController.xib in Resources */,
+				098FCFD11E9D23DF00D4C66D /* FontAwesome.otf in Resources */,
 				099BC2441E882AED009EEF0D /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,21 +317,22 @@
 				09F10E081E7F25FF00303A96 /* Announcement.swift in Sources */,
 				099BC24B1E882CFF009EEF0D /* SettingsCell.swift in Sources */,
 				092700D11E884DB00089821D /* Settings.swift in Sources */,
+				098FCFD01E9D23DF00D4C66D /* Enum.swift in Sources */,
 				0918543E1E98A03300DAF3B6 /* Registration.swift in Sources */,
 				099BC2431E882AED009EEF0D /* SettingsViewController.swift in Sources */,
 				099C81711E7CBFDD00529530 /* WebViewController.swift in Sources */,
 				09F10E091E7F25FF00303A96 /* Notification.swift in Sources */,
 				092700D21E884DB00089821D /* SettingsEntry.swift in Sources */,
 				09B527FD1E7CBD6500BACF81 /* AppDelegate.swift in Sources */,
-				099BC25B1E883417009EEF0D /* Enum.swift in Sources */,
+				098FCFD31E9D23DF00D4C66D /* FontAwesomeView.swift in Sources */,
 				092700CE1E884D720089821D /* JSONSerialize.swift in Sources */,
+				09DDA8AC1E9D3143004220CF /* BadgeSwift.swift in Sources */,
 				099C81781E7DEEB600529530 /* NotificationViewController.swift in Sources */,
 				2D9161AA1E81E7F90090A5C6 /* Site.swift in Sources */,
 				09F10E0F1E7F629A00303A96 /* IntegrationClient.swift in Sources */,
 				098FCFC01E9AA1AA00D4C66D /* KeychainSwift.swift in Sources */,
-				099BC25E1E883417009EEF0D /* FontAwesomeView.swift in Sources */,
+				098FCFD21E9D23DF00D4C66D /* FontAwesome.swift in Sources */,
 				098FCFC21E9AA3FF00D4C66D /* Utils.swift in Sources */,
-				099BC25D1E883417009EEF0D /* FontAwesome.swift in Sources */,
 				09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

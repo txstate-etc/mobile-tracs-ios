@@ -22,10 +22,20 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         IntegrationClient.getNotifications { (notifications) in
-            self.notifications = notifications ?? []
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+            let notis = notifications ?? []
+            var unseen:[Notification] = []
+            for n in notis {
+                if !n.seen {
+                    unseen.append(n)
+                }
             }
+            IntegrationClient.markNotificationsSeen(notifications: unseen, completion: { (success) in
+                DispatchQueue.main.async {
+                    UIApplication.shared.applicationIconBadgeNumber = 0
+                    self.notifications = notis
+                    self.tableView.reloadData()
+                }
+            })
         }
     }
     override func didReceiveMemoryWarning() {

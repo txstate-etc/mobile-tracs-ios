@@ -166,10 +166,29 @@ class Utils {
         vc.present(alert, animated: true, completion: nil)
     }
     
-    static func fontAwesomeBarButtonItem(icon: FontAwesome, target: Any, action: Selector) -> UIBarButtonItem {
+    static func fontAwesomeBarButtonItem(icon: FontAwesome, target: AnyObject, action: Selector) -> UIBarButtonItem {
         let ret = UIBarButtonItem(title: String.fontAwesomeIcon(name: icon), style: UIBarButtonItemStyle.plain, target: target, action: action)
         ret.setTitleTextAttributes([NSFontAttributeName: UIFont.fontAwesome(ofSize: 20)], for: .normal)
         return ret
+    }
+    
+    static func fontAwesomeBadgedBarButtonItem(color: UIColor, badgecount: Int, icon: FontAwesome, target: AnyObject, action: Selector) -> UIBarButtonItem {
+        let button = UIButton(type: .custom)
+        button.frame = CGRect(x: 0, y: 0, width: 40, height: 34)
+        button.addTarget(target, action: action, for: .touchUpInside)
+        button.titleLabel?.font = UIFont.fontAwesome(ofSize: 28)
+        button.setTitleColor(color, for: .normal)
+        button.setTitle(String.fontAwesomeIcon(name: icon), for: .normal)
+        if badgecount > 0 {
+            let badge = BadgeSwift(frame:CGRect(x: 0, y: 0, width: 18, height: 18))
+            badge.font = UIFont.preferredFont(forTextStyle: .footnote)
+            //badge.insets = CGSize(width: 12, height: 12)
+            badge.textColor = UIColor.white
+            badge.text = String(badgecount)
+            button.addSubview(badge)
+        }
+        let ret = UIBarButtonItem(customView: button)
+        return ret;
     }
     
     static func constrainToContainer(view: UIView, container: UIView) {

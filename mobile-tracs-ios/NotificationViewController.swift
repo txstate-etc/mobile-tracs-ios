@@ -21,6 +21,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        Analytics.viewWillAppear("NotificationViewController")
         IntegrationClient.getNotifications { (notifications) in
             let notis = notifications ?? []
             var unseen:[Notification] = []

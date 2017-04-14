@@ -29,6 +29,10 @@
 		09B527FD1E7CBD6500BACF81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */; };
 		09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09B528031E7CBD6500BACF81 /* Assets.xcassets */; };
 		09DDA8AC1E9D3143004220CF /* BadgeSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DDA8AB1E9D3143004220CF /* BadgeSwift.swift */; };
+		09DDA8AE1EA077FB004220CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09DDA8AD1EA077FB004220CF /* GoogleService-Info.plist */; };
+		09DDA8B01EA07850004220CF /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DDA8AF1EA07850004220CF /* Analytics.swift */; };
+		09DDA8B31EA084F8004220CF /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DDA8B21EA084F8004220CF /* Secrets.swift */; };
+		09DDA8B51EA0864E004220CF /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09DDA8B41EA0864E004220CF /* Config.plist */; };
 		09F10E081E7F25FF00303A96 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E051E7F25FF00303A96 /* Announcement.swift */; };
 		09F10E091E7F25FF00303A96 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E061E7F25FF00303A96 /* Notification.swift */; };
 		09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E071E7F25FF00303A96 /* TRACSClient.swift */; };
@@ -69,6 +73,11 @@
 		09B528031E7CBD6500BACF81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		09B528081E7CBD6500BACF81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09DDA8AB1E9D3143004220CF /* BadgeSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeSwift.swift; sourceTree = "<group>"; };
+		09DDA8AD1EA077FB004220CF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "GoogleAnalytics/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		09DDA8AF1EA07850004220CF /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Analytics.swift; path = GoogleAnalytics/Analytics.swift; sourceTree = "<group>"; };
+		09DDA8B11EA07A31004220CF /* Analytics-BridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Analytics-BridgingHeader.h"; path = "GoogleAnalytics/Analytics-BridgingHeader.h"; sourceTree = "<group>"; };
+		09DDA8B21EA084F8004220CF /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = Utils/Secrets.swift; sourceTree = "<group>"; };
+		09DDA8B41EA0864E004220CF /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		09F10E051E7F25FF00303A96 /* Announcement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Announcement.swift; path = Data/Announcement.swift; sourceTree = "<group>"; };
 		09F10E061E7F25FF00303A96 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Notification.swift; path = Data/Notification.swift; sourceTree = "<group>"; };
 		09F10E071E7F25FF00303A96 /* TRACSClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRACSClient.swift; path = Data/TRACSClient.swift; sourceTree = "<group>"; };
@@ -115,6 +124,7 @@
 			children = (
 				098FCFBF1E9AA1AA00D4C66D /* KeychainSwift.swift */,
 				098FCFC11E9AA3FF00D4C66D /* Utils.swift */,
+				09DDA8B21EA084F8004220CF /* Secrets.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -180,6 +190,7 @@
 				099C816F1E7CBE4100529530 /* mobile-tracs-ios.entitlements */,
 				09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */,
 				09B528031E7CBD6500BACF81 /* Assets.xcassets */,
+				09DDA8B41EA0864E004220CF /* Config.plist */,
 				09B528081E7CBD6500BACF81 /* Info.plist */,
 				099C81701E7CBFDD00529530 /* WebViewController.swift */,
 				099C81721E7CC94500529530 /* WebViewController.xib */,
@@ -214,6 +225,7 @@
 		2DD215CA1EA036E700A6C30F /* Google Analytics */ = {
 			isa = PBXGroup;
 			children = (
+				09DDA8AD1EA077FB004220CF /* GoogleService-Info.plist */,
 				2DD215E31EA037CD00A6C30F /* GAI.h */,
 				2DD215E41EA037CD00A6C30F /* GAIDictionaryBuilder.h */,
 				2DD215E51EA037CD00A6C30F /* GAIEcommerceFields.h */,
@@ -224,6 +236,8 @@
 				2DD215EA1EA037CD00A6C30F /* GAILogger.h */,
 				2DD215EB1EA037CD00A6C30F /* GAITrackedViewController.h */,
 				2DD215EC1EA037CD00A6C30F /* GAITracker.h */,
+				09DDA8AF1EA07850004220CF /* Analytics.swift */,
+				09DDA8B11EA07A31004220CF /* Analytics-BridgingHeader.h */,
 			);
 			name = "Google Analytics";
 			sourceTree = "<group>";
@@ -297,6 +311,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				099BC24C1E882CFF009EEF0D /* SettingsCell.xib in Resources */,
+				09DDA8B51EA0864E004220CF /* Config.plist in Resources */,
+				09DDA8AE1EA077FB004220CF /* GoogleService-Info.plist in Resources */,
 				2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */,
 				099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */,
 				09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */,
@@ -317,6 +333,7 @@
 				09F10E081E7F25FF00303A96 /* Announcement.swift in Sources */,
 				099BC24B1E882CFF009EEF0D /* SettingsCell.swift in Sources */,
 				092700D11E884DB00089821D /* Settings.swift in Sources */,
+				09DDA8B01EA07850004220CF /* Analytics.swift in Sources */,
 				098FCFD01E9D23DF00D4C66D /* Enum.swift in Sources */,
 				0918543E1E98A03300DAF3B6 /* Registration.swift in Sources */,
 				099BC2431E882AED009EEF0D /* SettingsViewController.swift in Sources */,
@@ -332,6 +349,7 @@
 				09F10E0F1E7F629A00303A96 /* IntegrationClient.swift in Sources */,
 				098FCFC01E9AA1AA00D4C66D /* KeychainSwift.swift in Sources */,
 				098FCFD21E9D23DF00D4C66D /* FontAwesome.swift in Sources */,
+				09DDA8B31EA084F8004220CF /* Secrets.swift in Sources */,
 				098FCFC21E9AA3FF00D4C66D /* Utils.swift in Sources */,
 				09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */,
 			);
@@ -449,6 +467,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.txstate.mobile.tracs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "mobile-tracs-ios/GoogleAnalytics/Analytics-BridgingHeader.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -469,6 +488,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.txstate.mobile.tracs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "mobile-tracs-ios/GoogleAnalytics/Analytics-BridgingHeader.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

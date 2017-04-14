@@ -54,6 +54,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        Analytics.viewWillAppear("WebViewController")
         updateBell()
     }
     
@@ -162,6 +163,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     }
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if request.url?.scheme == "mailto" {
+            Analytics.event(category: "E-mail", action: "compose", label: request.url?.absoluteString ?? "", value: nil)
             let mvc = MFMailComposeViewController()
             mvc.mailComposeDelegate = self
             
@@ -192,6 +194,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
             return false;
         }
         if let urlstring = request.url?.absoluteString {
+            Analytics.linkClick(urlstring)
             if urlstring == "about:blank" {
                 return false
             }

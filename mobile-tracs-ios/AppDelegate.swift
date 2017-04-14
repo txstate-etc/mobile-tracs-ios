@@ -39,9 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             application.registerUserNotificationSettings(settings)
             application.registerForRemoteNotifications()
         }
-        
-        NSLog("device locked: %@", Utils.deviceIsLocked() ? "true" : "false")
-        
+                
         return true
     }
 

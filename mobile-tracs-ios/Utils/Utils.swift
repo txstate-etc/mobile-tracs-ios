@@ -20,6 +20,13 @@ class Utils {
     static let urlsession = URLSession.shared
     private static let post_queue = DispatchGroup()
     
+    static func isSimulator()->Bool {
+        #if arch(i386) || arch(x86_64)
+            return true
+        #endif
+        return false
+    }
+    
     // MARK: - HTTP Helpers
     
     private static func standardRequest(_ url: URL)->URLRequest {

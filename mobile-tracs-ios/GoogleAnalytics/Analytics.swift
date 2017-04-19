@@ -9,7 +9,7 @@
 import Foundation
 
 class Analytics {
-    static let tracker = GAI.sharedInstance().tracker(withTrackingId: Secrets.shared.analyticsid)
+    static let tracker = Utils.isSimulator() ? nil : GAI.sharedInstance().tracker(withTrackingId: Secrets.shared.analyticsid)
     
     static func viewWillAppear(_ name:String) {
         if let tracker = tracker {

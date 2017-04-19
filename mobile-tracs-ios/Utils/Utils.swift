@@ -16,6 +16,7 @@ class Utils {
     static let darkblue = UIColor(red: 40/255.0, green: 40/255.0, blue: 59/255.0, alpha: 1)
     static let lightgray = UIColor(red: 229/255.0, green: 232/255.0, blue: 227/255.0, alpha: 1)
     static let lightergray = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1)
+    static let colordisabled = UIColor(white: 0.8, alpha: 0.2)
     static let urlsession = URLSession.shared
     private static let post_queue = DispatchGroup()
     
@@ -178,6 +179,7 @@ class Utils {
         button.addTarget(target, action: action, for: .touchUpInside)
         button.titleLabel?.font = UIFont.fontAwesome(ofSize: 28)
         button.setTitleColor(color, for: .normal)
+        button.setTitleColor(colordisabled, for: .disabled)
         button.setTitle(String.fontAwesomeIcon(name: icon), for: .normal)
         if badgecount > 0 {
             let badge = BadgeSwift(frame:CGRect(x: 0, y: 0, width: 18, height: 18))

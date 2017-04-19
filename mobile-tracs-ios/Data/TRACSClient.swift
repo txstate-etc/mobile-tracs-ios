@@ -21,7 +21,6 @@ class TRACSClient {
     static let altlogouturl = tracsurl+"/portal/logout"
     
     // MARK: - Static Variables
-    internal static var tracslock = DispatchGroup()
     internal static var tracslockqueue = DispatchQueue(label: "tracslock")
     public static var userid = ""
     
@@ -29,7 +28,9 @@ class TRACSClient {
     static func waitForLogin(completion:@escaping(Bool)->Void) {
         tracslockqueue.async {
             NSLog("login must be complete")
-            completion(!userid.isEmpty)
+            DispatchQueue.main.async {
+                completion(!userid.isEmpty)
+            }
         }
     }
     
@@ -93,6 +94,7 @@ class TRACSClient {
     // MARK: - Authentication
     static func loginIfNecessary(completion:@escaping(Bool)->Void) {
         tracslockqueue.async {
+            let tracslock = DispatchGroup()
             tracslock.enter()
             fetchCurrentUserId { (uid) in
                 if uid == nil { // error occurred, no login right now

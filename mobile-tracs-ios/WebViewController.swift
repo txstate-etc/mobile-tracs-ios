@@ -36,7 +36,6 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         
         refresh.action = #selector(pressedRefresh(sender:))
         interaction.action = #selector(pressedInteraction(sender:))
-        
 
         back.accessibilityLabel = "back"
         forward.accessibilityLabel = "forward"
@@ -55,7 +54,9 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Analytics.viewWillAppear("WebViewController")
-        updateBell()
+        TRACSClient.waitForLogin { (loggedin) in
+            self.updateBell()
+        }
     }
     
     // MARK: - Helper functions
@@ -139,9 +140,12 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         let newnumber = UIApplication.shared.applicationIconBadgeNumber
         if bellnumber != newnumber {
             bellnumber = newnumber
-            navigationItem.leftBarButtonItem = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.gold, badgecount: bellnumber!, icon: .bellO, target: self, action: #selector(pressedBell))
+            navigationItem.leftBarButtonItem = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.gold, badgecount:newnumber, icon: .bellO, target: self, action: #selector(pressedBell))
+            navigationItem.leftBarButtonItem?.accessibilityLabel = "Notifications"
         }
-        self.navigationItem.leftBarButtonItem!.isEnabled = !TRACSClient.userid.isEmpty
+        if let btn = self.navigationItem.leftBarButtonItem?.customView as? UIButton {
+            btn.isEnabled = !TRACSClient.userid.isEmpty
+        }
    }
     
     // MARK: - UIWebViewDelegate
@@ -225,6 +229,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
             if urlstring.contains(TRACSClient.logouturl) || urlstring.contains(TRACSClient.altlogouturl) {
                 TRACSClient.userid = ""
                 Utils.removeCredentials()
+                updateBell()
             }
         }
         return true

@@ -229,6 +229,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
             if urlstring.contains(TRACSClient.logouturl) || urlstring.contains(TRACSClient.altlogouturl) {
                 TRACSClient.userid = ""
                 Utils.removeCredentials()
+                IntegrationClient.unregister()
                 updateBell()
             }
         }

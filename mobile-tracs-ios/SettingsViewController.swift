@@ -55,7 +55,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Analytics.viewWillAppear("SettingsViewController")
+        Analytics.viewWillAppear("Settings")
     }
 
     // MARK: - UITableViewDataSource

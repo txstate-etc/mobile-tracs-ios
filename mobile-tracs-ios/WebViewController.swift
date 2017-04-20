@@ -53,7 +53,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Analytics.viewWillAppear("WebViewController")
+        Analytics.viewWillAppear("WebView")
         TRACSClient.waitForLogin { (loggedin) in
             self.updateBell()
         }

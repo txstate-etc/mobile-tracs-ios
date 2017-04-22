@@ -15,6 +15,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Clear out cache data between versions in case we change the structure of the object being saved
+        if let savedversion = UserDefaults.standard.value(forKey: "version") as? String {
+            if let currentversion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                if currentversion != savedversion {
+                    UserDefaults.standard.removeObject(forKey: "sitecache")
+                    UserDefaults.standard.set(currentversion, forKey: "version")
+                }
+            }
+        }
+        
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
         let wvc = WebViewController(nibName: "WebViewController", bundle: nil)

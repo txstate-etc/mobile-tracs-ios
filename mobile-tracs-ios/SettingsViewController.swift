@@ -27,7 +27,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let dispatch_group = DispatchGroup()
         var tmpsites:[Site] = []
         dispatch_group.enter()
-        TRACSClient.fetchSites { (sitehash) in
+        TRACSClient.fetchSitesByMembership { (sitehash) in
             if sitehash == nil { dispatch_group.leave(); return }
             for site in sitehash!.values {
                 tmpsites.append(site)

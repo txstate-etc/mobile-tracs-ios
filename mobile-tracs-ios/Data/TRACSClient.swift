@@ -13,6 +13,7 @@ class TRACSClient {
     static let tracsurl = "https://tracs.txstate.edu"
     static let baseurl = tracsurl+"/direct"
     static let announcementurl = baseurl+"/announcement"
+    static let membershipurl = baseurl+"/membership"
     static let siteurl = baseurl+"/site"
     static let portalurl = tracsurl+"/portal"
     static let loginurl = tracsurl+"/portal/login"
@@ -22,6 +23,7 @@ class TRACSClient {
     
     // MARK: - Static Variables
     internal static var tracslockqueue = DispatchQueue(label: "tracslock")
+    internal static var sitecache:[String:Site] = [:]
     public static var userid = ""
     
     // MARK: - Fetch data from TRACS
@@ -61,11 +63,37 @@ class TRACSClient {
         }
     }
     
+    // returns a hash of all the user's sites
+    static func fetchSitesByMembership(completion:@escaping([String:Site]?)->Void) {
+        tracslockqueue.async {
+            Utils.fetchJSONObject(url: membershipurl+".json") { (dict) in
+                if (dict == nil) { return completion(nil) }
+                let membs = dict!["membership_collection"] as? [[String:Any]] ?? []
+                var siteids:[String] = []
+                for memb in membs {
+                    if let loc = memb["locationReference"] as? String {
+                        let sid = loc.substring(from: loc.index(loc.startIndex, offsetBy: 6))
+                        siteids.append(sid)
+                    }
+                }
+                fetchSitesById(siteids: siteids, completion: { (sitehash) in
+                    completion(sitehash)
+                })
+            }
+        }
+    }
+
+    
     static func fetchSite(id:String, completion:@escaping(Site?)->Void) {
         tracslockqueue.async {
+            if let site = siteCacheGet(siteid: id) {
+                return completion(site)
+            }
             Utils.fetchJSONObject(url: siteurl+"/"+id+".json") { (parsed) in
                 if parsed == nil { return completion(nil) }
-                return completion(Site(dict: parsed!))
+                let site = Site(dict: parsed!)
+                siteCachePut(site: site)
+                return completion(site)
             }
         }
     }
@@ -157,5 +185,33 @@ class TRACSClient {
             }
             return completion("")
         }
+    }
+
+    
+    internal static func siteCacheLoad() {
+        if sitecache.count == 0 {
+            if let data = UserDefaults.standard.value(forKey: "sitecache") as? Data {
+                if let sitehash = NSKeyedUnarchiver.unarchiveObject(with: data) as? [String:Site] {
+                    sitecache = sitehash
+                }
+            }
+        }
+    }
+    
+    internal static func siteCachePut(site:Site) {
+        siteCacheLoad()
+        sitecache[site.id] = site
+        let data = NSKeyedArchiver.archivedData(withRootObject: sitecache)
+        UserDefaults.standard.set(data, forKey: "sitecache")
+    }
+    
+    internal static func siteCacheGet(siteid:String) -> Site? {
+        siteCacheLoad()
+        if let site = sitecache[siteid] {
+            if site.created_at > Calendar.current.date(byAdding: .day, value: -2, to: Date())! {
+                return site
+            }
+        }
+        return nil
     }
 }

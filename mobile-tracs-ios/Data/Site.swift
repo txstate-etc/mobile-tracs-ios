@@ -8,11 +8,12 @@
 
 import Foundation
 
-class Site {
+class Site : NSObject, NSCoding {
     var id = ""
     var coursesite = false
     var title = ""
     var announcementurl = ""
+    var created_at:Date
     
     init(dict:[String:Any]) {
         id = dict["id"] as? String ?? ""
@@ -23,5 +24,22 @@ class Site {
                 announcementurl = page["url"] as? String ?? ""
             }
         }
+        created_at = Date()
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(id, forKey:"id")
+        aCoder.encode(coursesite, forKey:"coursesite")
+        aCoder.encode(title, forKey:"title")
+        aCoder.encode(announcementurl, forKey:"announcementurl")
+        aCoder.encode(created_at, forKey:"created_at")
+    }
+    
+    required init(coder: NSCoder) {
+        id = coder.decodeObject(forKey: "id") as? String ?? ""
+        coursesite = coder.decodeObject(forKey: "coursesite") as? Bool ?? false
+        title = coder.decodeObject(forKey: "title") as? String ?? ""
+        announcementurl = coder.decodeObject(forKey: "announcementurl") as? String ?? ""
+        created_at = coder.decodeObject(forKey: "createdat") as? Date ?? Date(timeIntervalSince1970: 0)
     }
 }

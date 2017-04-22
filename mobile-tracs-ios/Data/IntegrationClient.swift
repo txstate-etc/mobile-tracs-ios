@@ -10,28 +10,39 @@ import UIKit
 
 class IntegrationClient {
     static var deviceToken = ""
-    static let baseurl = "https://notifications.its.txstate.edu"
+    static let baseurl = "https://dispatch.its.txstate.edu"
     static let registrationurl = baseurl+"/registrations"
     static let notificationsurl = baseurl+"/notifications"
-    static let settingsurl = baseurl+"/settings"
+    
+    public static func getRegistration() -> Registration {
+        var reg = Registration()
+        if let registration = UserDefaults.standard.value(forKey: "registration") as? [String:Any] {
+            reg = Registration(registration)
+        }
+        return reg
+    }
     
     public static func register() {
         // are we already registered?
-        var savedreg:Registration?
-        if let registration = UserDefaults.standard.value(forKey: "registration") as? [String:Any] {
-            savedreg = Registration(registration)
-        }
+        let reg = getRegistration()
+        reg.token = deviceToken
+        reg.user_id = TRACSClient.userid
         
-        let newreg = Registration()
-        if newreg != savedreg && newreg.valid() {
-            // register with the integration server
-            if let body = newreg.toJSON() {
+        saveRegistration(reg: reg) { (success) in
+            
+        }
+    }
+    
+    public static func saveRegistration(reg:Registration, completion:@escaping(Bool)->Void) {
+        if reg.valid() {
+            if let body = reg.toJSON() {
                 Utils.post(url: registrationurl, body: body, completion: { (data, success) in
-                    NSLog("attempted registration with integration server")
+                    NSLog("saving registration with integration server")
                     if success {
                         // save the registration details so that we don't have to do this often
-                        UserDefaults.standard.set(newreg.toJSONObject(), forKey: "registration")
+                        UserDefaults.standard.set(reg.toJSONObject(), forKey: "registration")
                     }
+                    completion(success)
                 })
             }
         }
@@ -121,14 +132,18 @@ class IntegrationClient {
     
     static func fetchSettings(completion:@escaping(Settings)->Void) {
         TRACSClient.waitForLogin { (loggedin) in
-            Utils.fetchJSONObject(url: settingsurl+"?token="+deviceToken) { (dict) in
+            Utils.fetchJSONObject(url: registrationurl+"/"+deviceToken) { (dict) in
                 completion(Settings(dict: dict))
             }
         }
     }
     
-    static func saveSettings(_ settings:Settings) {
-        Utils.post(url: settingsurl, body: settings.toJSON()!) { (data, success) in
+    static func saveSettings(_ settings:Settings, completion:@escaping(Bool)->Void) {
+        let reg = getRegistration()
+        reg.settings = settings
+        NSLog("%@", reg.toJSON() ?? "")
+        saveRegistration(reg: reg) { (success) in
+            completion(success)
         }
     }
 }

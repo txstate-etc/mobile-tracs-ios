@@ -9,16 +9,15 @@
 import Foundation
 
 class Settings : JSONRepresentable {
-    var token:String?
     var global_disable = false
     var disabled_filters:[SettingsEntry] = []
     
     init(dict: [String:Any]?) {
         if let dict = dict {
-            token = dict["token"] as? String
             global_disable = dict["global_disable"] as? Bool ?? false
-            for entrydict in dict["disabled_filters"] as? [[String:String]] ?? [] {
-                disabled_filters.append(SettingsEntry(dict: entrydict))
+            for entrydict in dict["blacklist"] as? [[String:[String:String]]] ?? [] {
+                let entry = SettingsEntry(dict: entrydict)
+                if entry.valid() { disabled_filters.append(entry) }
             }
         }
     }
@@ -32,8 +31,8 @@ class Settings : JSONRepresentable {
         }
     }
     func enableEntry(_ targetentry: SettingsEntry) {
-        for (i, entry) in disabled_filters.enumerated() {
-            if entry == targetentry { disabled_filters.remove(at: i); break}
+        disabled_filters = disabled_filters.filter { (entry) -> Bool in
+            return entry != targetentry
         }
     }
     
@@ -61,9 +60,8 @@ class Settings : JSONRepresentable {
     
     func toJSONObject() -> Any {
         return [
-            "token": token ?? "",
             "global_disable": global_disable,
-            "disabled_filters": disabled_filters.toJSONObject()
+            "blacklist": disabled_filters.toJSONObject()
         ]
     }
 }

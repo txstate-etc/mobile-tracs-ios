@@ -13,6 +13,7 @@ class Registration : JSONRepresentable, Equatable {
     var token:String?
     var platform:String?
     var app_id:String?
+    var settings:Settings?
     
     init(_ dict:[String:Any]?) {
         if let dict = dict {
@@ -20,6 +21,7 @@ class Registration : JSONRepresentable, Equatable {
             token = dict["token"] as? String
             platform = dict["platform"] as? String
             app_id = dict["app_id"] as? String
+            settings = Settings(dict: dict)
         }
     }
     
@@ -36,10 +38,12 @@ class Registration : JSONRepresentable, Equatable {
     
     func toJSONObject() -> Any {
         return [
-            "user_id": user_id,
-            "token": token,
-            "platform": platform,
-            "app_id": app_id
+            "user_id": user_id ?? "",
+            "token": token ?? "",
+            "platform": platform ?? "",
+            "app_id": app_id ?? "",
+            "global_disable": settings?.global_disable ?? false,
+            "blacklist": settings?.disabled_filters.toJSONObject() ?? []
         ]
     }
     

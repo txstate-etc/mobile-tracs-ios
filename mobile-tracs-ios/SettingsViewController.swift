@@ -96,7 +96,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if let settings = settings, let entry = cell.entry {
             if toggle.isOn { settings.enableEntry(entry) }
             else { settings.disableEntry(entry) }
-            IntegrationClient.saveSettings(settings)
+            IntegrationClient.saveSettings(settings, completion: { (success) in
+            })
         }
     }
 }

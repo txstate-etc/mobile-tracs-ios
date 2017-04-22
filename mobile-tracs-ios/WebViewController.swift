@@ -24,6 +24,8 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.rightBarButtonItem = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedSettings))
+
         updateBell()
 
         back = Utils.fontAwesomeBarButtonItem(icon: .chevronLeft, target: self, action: #selector(pressedBack(sender:)))
@@ -250,6 +252,11 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     // MARK: - MFMailComposeViewControllerDelegate
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         self.dismiss(animated: true, completion: nil)
+    }
+
+    func pressedSettings() {
+        let svc = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
+        navigationController?.pushViewController(svc, animated: true)
     }
 
 }

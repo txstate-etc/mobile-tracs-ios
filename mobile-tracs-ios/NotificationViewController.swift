@@ -21,6 +21,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        Utils.showActivity(view)
         Analytics.viewWillAppear("Notifications")
         IntegrationClient.getNotifications { (notifications) in
             let notis = notifications ?? []
@@ -35,6 +36,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                     UIApplication.shared.applicationIconBadgeNumber = 0
                     self.notifications = notis
                     self.tableView.reloadData()
+                    Utils.hideActivity()
                 }
             })
         }

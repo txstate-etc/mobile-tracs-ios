@@ -24,6 +24,8 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Utils.showActivity(view)
         navigationItem.rightBarButtonItem = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedSettings))
 
         updateBell()
@@ -44,12 +46,11 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         
         TRACSClient.waitForLogin { (loggedin) in
             NSLog("loading webview")
-            if self.webView.request?.url?.absoluteString == nil {
-                let urlStringToLoad = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
-                if let urlToLoad = URL(string: urlStringToLoad) {
-                    self.webView.loadRequest(URLRequest(url: urlToLoad))
-                }
+            let urlStringToLoad = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
+            if let urlToLoad = URL(string: urlStringToLoad) {
+                self.webView.loadRequest(URLRequest(url: urlToLoad))
             }
+            Utils.hideActivity()
         }
     }
     

@@ -18,7 +18,8 @@ class Utils {
     static let lightergray = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1)
     static let colordisabled = UIColor(white: 0.8, alpha: 0.2)
     static let urlsession = URLSession.shared
-    private static let post_queue = DispatchGroup()
+    internal static let post_queue = DispatchGroup()
+    internal static var indicators:[Int:UIActivityIndicatorView] = [:]
     
     static func isSimulator()->Bool {
         #if arch(i386) || arch(x86_64)
@@ -201,10 +202,59 @@ class Utils {
     }
     
     static func constrainToContainer(view: UIView, container: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
         container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.leading, multiplier: 1.0, constant: 0.0))
         container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.trailing, multiplier: 1.0, constant: 0.0))
         container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0.0))
         container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0.0))
+    }
+    
+    static func constrainCentered(view: UIView, container: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0))
+        container.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0))
+    }
+    
+    @discardableResult static func showActivity(_ inView:UIView) -> UIView {
+        return showActivity(inView, withIndex:0)
+    }
+    
+    @discardableResult static func showActivity(_ inView:UIView, withIndex:Int) -> UIView {
+        // let's make sure the indicator isn't already animating
+        hideActivity(withIndex)
+    
+        // create a view to grey out the entirety of the parent view we were given
+        let actView = UIView()
+        actView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+    
+        // create the indicator
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        
+        // place the views where they go
+        inView.addSubview(actView)
+        constrainToContainer(view: actView, container: inView)
+        actView.addSubview(indicator)
+        constrainCentered(view: indicator, container: actView)
+        
+        indicator.startAnimating()
+        indicators[withIndex] = indicator
+        
+        // we'll return actView in case our caller wants to create new views while
+        // the indicator is going.  They'll need a view to use with [UIView insertBelow]
+        return actView
+    }
+    
+    static func hideActivity() {
+        hideActivity(0)
+    }
+    
+    static func hideActivity(_ index:Int) {
+        if let indicator = indicators[index] {
+            indicator.stopAnimating()
+            indicator.superview?.removeFromSuperview()
+            indicator.removeFromSuperview()
+            indicators.removeValue(forKey: index)
+        }
     }
     
     // MARK: - Login Credentials

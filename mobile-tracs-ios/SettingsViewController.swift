@@ -21,7 +21,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        Utils.showActivity(view)
         tableView.register(UINib(nibName:"SettingsCell", bundle: nil), forCellReuseIdentifier: "settings")
         
         let dispatch_group = DispatchGroup()
@@ -50,6 +50,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             self.settings = tmpsettings
             self.sites = tmpsites
             self.tableView.reloadData()
+            Utils.hideActivity()
         }
     }
     

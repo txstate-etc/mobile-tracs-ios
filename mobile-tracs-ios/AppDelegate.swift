@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if let savedversion = Utils.grab("version") as? String {
             if let currentversion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
                 if currentversion != savedversion {
-                    Utils.zap("sitecache")
+                    TRACSClient.sitecache.clean()
                     Utils.save(currentversion, withKey: "version")
                 }
             }

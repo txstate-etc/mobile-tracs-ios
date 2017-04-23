@@ -17,6 +17,11 @@ class Cache {
         hash = Utils.grab(name) as? [String:Cacheable] ?? [:]
     }
     
+    func reset() {
+        hash = [:]
+        Utils.zap(name)
+    }
+    
     func clean() {
         for (key,obj) in hash {
             if obj.isExpired() {

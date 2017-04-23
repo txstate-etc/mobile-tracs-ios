@@ -23,7 +23,7 @@ class TRACSClient {
     
     // MARK: - Static Variables
     internal static var tracslockqueue = DispatchQueue(label: "tracslock")
-    internal static var sitecache = Cache(cacheName: "sitecache")
+    public static var sitecache = Cache(cacheName: "sitecache")
     public static var userid = ""
     
     // MARK: - Fetch data from TRACS

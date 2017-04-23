@@ -69,12 +69,11 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let notify = notifications[indexPath.row]
-        if notify.object == nil { return }
-        let url = URL(string: notify.object!.getUrl())
-        if url != nil {
-            navigationController!.popViewController(animated: true)
-            (navigationController!.viewControllers[0] as! WebViewController).webView.loadRequest(URLRequest(url: url!))
+        if let tracsobj = notifications[indexPath.row].object {
+            if let url = URL(string: tracsobj.getUrl()) {
+                navigationController!.popViewController(animated: true)
+                (navigationController!.viewControllers[0] as! WebViewController).webView.loadRequest(URLRequest(url: url))
+            }
         }
     }
     

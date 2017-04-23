@@ -68,7 +68,7 @@ class IntegrationClient {
     static func getNotifications(completion:@escaping([Notification]?)->Void) {
         TRACSClient.waitForLogin { (loggedin) in
             if !loggedin { return completion(nil) }
-            Utils.fetchJSONArray(url: notificationsurl+"?user_id="+TRACSClient.userid) { (data) in
+            Utils.fetchJSONArray(url: notificationsurl+"?token="+deviceToken) { (data) in
                 if (data == nil) { return completion(nil) }
                 var ret:[Notification] = []
                 for notifyjson in data! {

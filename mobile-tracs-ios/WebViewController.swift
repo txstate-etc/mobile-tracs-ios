@@ -149,6 +149,9 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         if let btn = self.navigationItem.leftBarButtonItem?.customView as? UIButton {
             btn.isEnabled = !TRACSClient.userid.isEmpty
         }
+        if let btn = self.navigationItem.rightBarButtonItem {
+            btn.isEnabled = !TRACSClient.userid.isEmpty
+        }
    }
     
     // MARK: - UIWebViewDelegate

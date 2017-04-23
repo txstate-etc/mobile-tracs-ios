@@ -58,8 +58,13 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath)
         let notify = notifications[indexPath.row]
-        cell.textLabel?.text = notify.object?.titleForTable()
-        cell.detailTextLabel?.text = notify.object?.tableSubtitle()
+        if let tracsobj = notify.object {
+            cell.textLabel?.text = tracsobj.titleForTable()
+            cell.detailTextLabel?.text = tracsobj.tableSubtitle()
+            if !tracsobj.getUrl().isEmpty {
+                cell.accessoryType = .disclosureIndicator
+            }
+        }
         return cell
     }
     

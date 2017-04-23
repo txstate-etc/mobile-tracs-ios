@@ -16,7 +16,7 @@ class IntegrationClient {
     
     public static func getRegistration() -> Registration {
         var reg = Registration()
-        if let registration = UserDefaults.standard.value(forKey: "registration") as? [String:Any] {
+        if let registration = Utils.grab("registration") as? [String:Any] {
             reg = Registration(registration)
         }
         return reg
@@ -40,7 +40,7 @@ class IntegrationClient {
                     NSLog("saving registration with integration server")
                     if success {
                         // save the registration details so that we don't have to do this often
-                        UserDefaults.standard.set(reg.toJSONObject(), forKey: "registration")
+                        Utils.save(reg.toJSONObject(), withKey: "registration")
                     }
                     completion(success)
                 })
@@ -51,7 +51,7 @@ class IntegrationClient {
     public static func unregister() {
         if !deviceToken.isEmpty {
             Utils.delete(url: registrationurl, params: ["token":deviceToken], completion: { (data, success) in
-                UserDefaults.standard.removeObject(forKey: "registration")
+                Utils.zap("registration")
             })
         }
     }

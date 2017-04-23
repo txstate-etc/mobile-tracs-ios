@@ -28,8 +28,29 @@ class Utils {
         return false
     }
     
-    // MARK: - HTTP Helpers
+    // MARK: - UserDefaults
+    static func save(_ obj:Any, withKey:String) {
+        if let codingobj = obj as? NSCoding {
+            let data = NSKeyedArchiver.archivedData(withRootObject: codingobj)
+            UserDefaults.standard.set(data, forKey: withKey)
+        } else {
+            NSLog("was asked to save an object (key: %@) that does not conform to NSCoding!", withKey)
+        }
+    }
     
+    static func grab(_ withKey:String) -> Any? {
+        var ret:Any? = nil
+        if let data = UserDefaults.standard.data(forKey: withKey) {
+            ret = NSKeyedUnarchiver.unarchiveObject(with: data)
+        }
+        return ret
+    }
+    
+    static func zap(_ key:String) {
+        UserDefaults.standard.removeObject(forKey: key)
+    }
+    
+    // MARK: - HTTP Helpers
     private static func standardRequest(_ url: URL)->URLRequest {
         var req = URLRequest(url: url)
         if url.absoluteString.contains(IntegrationClient.baseurl) {
@@ -259,21 +280,20 @@ class Utils {
     
     // MARK: - Login Credentials
     static func store(netid:String, pw:String) {
-        UserDefaults.standard.set(Date(), forKey: "logintime")
-        UserDefaults.standard.set(netid, forKey: "netid")
+        save(Date(), withKey: "logintime")
+        save(netid, withKey: "netid")
         KeychainSwift.shared.set(pw, forKey: "password")
     }
     static func haveCredentials()->Bool {
         return !netid().isEmpty && !password().isEmpty
     }
     static func removeCredentials() {
-        UserDefaults.standard.removeObject(forKey: "logintime")
-        UserDefaults.standard.removeObject(forKey: "netid")
+        zap("logintime")
+        zap("netid")
         KeychainSwift.shared.delete("password")
     }
     static func netidExpired() -> Bool {
-        let logintime = UserDefaults.standard.value(forKey: "logintime")
-        if let logintime = logintime as? Date {
+        if let logintime = grab("logintime") as? Date {
             var interval = DateComponents()
             if deviceIsLocked() {
                 interval.month = 3
@@ -287,7 +307,7 @@ class Utils {
     }
     static func netid() -> String {
         if netidExpired() { return "" }
-        return UserDefaults.standard.value(forKey: "netid") as? String ?? ""
+        return grab("netid") as? String ?? ""
     }
     static func password() -> String {
         if netidExpired() { return "" }
@@ -316,5 +336,13 @@ class Utils {
             return false
         }
         return false
+    }
+    
+    // MARK: - Date math
+    static func date(_ d:Date, isNewerThan:Int, units:Calendar.Component) -> Bool {
+        return d > Calendar.current.date(byAdding: units, value: -isNewerThan, to: Date())!
+    }
+    static func date(_ d:Date, isOlderThan:Int, units:Calendar.Component) -> Bool {
+        return !date(d, isNewerThan: isOlderThan, units: units)
     }
 }

@@ -23,7 +23,7 @@ class TRACSClient {
     
     // MARK: - Static Variables
     internal static var tracslockqueue = DispatchQueue(label: "tracslock")
-    internal static var sitecache:[String:Site] = [:]
+    internal static var sitecache = Cache(cacheName: "sitecache")
     public static var userid = ""
     
     // MARK: - Fetch data from TRACS
@@ -86,14 +86,22 @@ class TRACSClient {
     
     static func fetchSite(id:String, completion:@escaping(Site?)->Void) {
         tracslockqueue.async {
-            if let site = siteCacheGet(siteid: id) {
-                return completion(site)
+            var completionsent = false
+            var shouldrefresh = true
+            if let site = sitecache.get(id) as? Site {
+                shouldrefresh = site.shouldRefresh()
+                completionsent = true
+                completion(site)
             }
-            Utils.fetchJSONObject(url: siteurl+"/"+id+".json") { (parsed) in
-                if parsed == nil { return completion(nil) }
-                let site = Site(dict: parsed!)
-                siteCachePut(site: site)
-                return completion(site)
+            if shouldrefresh {
+                Utils.fetchJSONObject(url: siteurl+"/"+id+".json") { (parsed) in
+                    if parsed == nil { return completion(nil) }
+                    let site = Site(dict: parsed!)
+                    sitecache.put(site)
+                    if !completionsent {
+                        return completion(site)
+                    }
+                }
             }
         }
     }
@@ -185,33 +193,5 @@ class TRACSClient {
             }
             return completion("")
         }
-    }
-
-    
-    internal static func siteCacheLoad() {
-        if sitecache.count == 0 {
-            if let data = UserDefaults.standard.value(forKey: "sitecache") as? Data {
-                if let sitehash = NSKeyedUnarchiver.unarchiveObject(with: data) as? [String:Site] {
-                    sitecache = sitehash
-                }
-            }
-        }
-    }
-    
-    internal static func siteCachePut(site:Site) {
-        siteCacheLoad()
-        sitecache[site.id] = site
-        let data = NSKeyedArchiver.archivedData(withRootObject: sitecache)
-        UserDefaults.standard.set(data, forKey: "sitecache")
-    }
-    
-    internal static func siteCacheGet(siteid:String) -> Site? {
-        siteCacheLoad()
-        if let site = sitecache[siteid] {
-            if site.created_at > Calendar.current.date(byAdding: .day, value: -2, to: Date())! {
-                return site
-            }
-        }
-        return nil
     }
 }

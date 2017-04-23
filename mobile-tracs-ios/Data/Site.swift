@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Site : NSObject, NSCoding {
+class Site : NSObject, Cacheable {
     var id = ""
     var coursesite = false
     var title = ""

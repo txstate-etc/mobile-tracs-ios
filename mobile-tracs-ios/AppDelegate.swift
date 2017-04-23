@@ -16,11 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Clear out cache data between versions in case we change the structure of the object being saved
-        if let savedversion = UserDefaults.standard.value(forKey: "version") as? String {
+        if let savedversion = Utils.grab("version") as? String {
             if let currentversion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
                 if currentversion != savedversion {
-                    UserDefaults.standard.removeObject(forKey: "sitecache")
-                    UserDefaults.standard.set(currentversion, forKey: "version")
+                    Utils.zap("sitecache")
+                    Utils.save(currentversion, withKey: "version")
                 }
             }
         }

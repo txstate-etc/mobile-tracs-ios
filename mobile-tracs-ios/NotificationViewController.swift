@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotificationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class NotificationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationCellDelegate {
     @IBOutlet var tableView: UITableView!
     var notifications: [Notification] = []
 
@@ -56,8 +56,10 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath) as! NotificationCell
+        cell.delegate = self
         let notify = notifications[indexPath.row]
+        cell.notify = notify
         if let tracsobj = notify.object {
             cell.textLabel?.text = tracsobj.titleForTable()
             cell.detailTextLabel?.text = tracsobj.tableSubtitle()
@@ -66,6 +68,17 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
         return cell
+    }
+    
+    func cellSwipedLeft(_ cell: NotificationCell, notify: Notification) {
+        IntegrationClient.markNotificationCleared(notify) { (success) in
+            DispatchQueue.main.async {
+                if success {
+                    self.notifications.remove(object:notify)
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

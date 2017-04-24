@@ -62,6 +62,7 @@ class Utils {
     static func fetchJSON(url:String, completion:@escaping (Any?)->Void) {
         // fake data for testing
         if url.contains(IntegrationClient.notificationsurl) { return completion([[
+                "id":"notification-dummy",
                 "keys":[
                     "provider_id":"tracs",
                     "notification_type":"creation",
@@ -69,7 +70,7 @@ class Utils {
                     "object_id": "831342dd-fdb6-4878-8b3c-1d29ecb06a14:main:aa4f8f85-a645-4766-bc91-1a1c7bef93df",
                     "user_id": "392b6c67-e53f-4c47-8068-3602bdc7b782"
                 ],
-                "otherkeys":[
+                "other_keys":[
                     "site_id": "831342dd-fdb6-4878-8b3c-1d29ecb06a14"
                 ],
                 "content_hash": "hash",
@@ -131,6 +132,15 @@ class Utils {
         return ret
     }
     
+    static func post(url: String, jsonobject:[String:Any], completion:@escaping(Any?, Bool)->Void) {
+        if let body = JSON.toJSON(jsonobject) {
+            post(url: url, body: body, completion: completion)
+        } else {
+            NSLog("badly formatted jsonobject handed to post(jsonobject:)")
+            completion(nil, false)
+        }
+    }
+    
     static func post(url: String, params:[String:String], completion:@escaping(Any?, Bool)->Void) {
         post(url: url, body: paramsToString(params: params), completion: completion)
     }
@@ -165,6 +175,26 @@ class Utils {
             post_queue.enter()
             task.resume()
         }
+    }
+    
+    static func patch(url:String, jsonobject:[String:Any], completion:@escaping(Bool)->Void) {
+        var request = standardRequest(URL(string: url)!)
+        request.httpMethod = "PATCH"
+        request.httpBody = JSON.toJSON(jsonobject)?.data(using: .utf8)
+        urlsession.dataTask(with: request) { (data, resp, error) in
+            if error != nil {
+                NSLog("patch error url=%@, error=%@", url, error!.localizedDescription)
+                completion(false)
+            } else if let httpresp = resp as? HTTPURLResponse {
+                if httpresp.statusCode >= 200 && httpresp.statusCode < 300 {
+                    completion(true)
+                } else {
+                    NSLog("patch failed statusCode=%i", httpresp.statusCode)
+                }
+            } else {
+                completion(false)
+            }
+        }.resume()
     }
     
     static func delete(url: String, params: [String:String], completion:@escaping(Any?,Bool)->Void) {

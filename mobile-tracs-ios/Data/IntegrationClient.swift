@@ -130,6 +130,16 @@ class IntegrationClient {
         completion(true)
     }
     
+    static func markNotificationCleared(_ notify:Notification, completion:@escaping(Bool)->Void) {
+        if let id = notify.id {
+            Utils.patch(url: notificationsurl+"/"+id, jsonobject:["cleared":true]) { (success) in
+                completion(success)
+            }
+        } else {
+            completion(false)
+        }
+    }
+    
     static func fetchSettings(completion:@escaping(Settings)->Void) {
         TRACSClient.waitForLogin { (loggedin) in
             Utils.fetchJSONObject(url: registrationurl+"/"+deviceToken) { (dict) in

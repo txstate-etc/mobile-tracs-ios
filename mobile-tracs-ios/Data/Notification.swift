@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Notification {
+class Notification : Equatable {
     public var id: String?
     public var provider_id: String?
     public var user_id: String?
@@ -38,5 +38,9 @@ class Notification {
         notify_after = dict["notify_after"] as? Date
         seen = dict["seen"] as? Bool ?? false
         read = dict["read"] as? Bool ?? false
+    }
+    
+    static func ==(lhs: Notification, rhs: Notification) -> Bool {
+        return lhs.id != nil && lhs.id == rhs.id
     }
 }

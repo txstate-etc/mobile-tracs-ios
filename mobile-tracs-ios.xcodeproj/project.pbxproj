@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		09071A151EAD3E1F008560B5 /* Cacheable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A141EAD3E1F008560B5 /* Cacheable.swift */; };
 		09071A171EAD5331008560B5 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A161EAD5331008560B5 /* Cache.swift */; };
+		09071A1D1EADB127008560B5 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A1C1EADB127008560B5 /* NotificationCell.swift */; };
+		09071A1F1EADB764008560B5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A1E1EADB764008560B5 /* Extensions.swift */; };
 		0918543E1E98A03300DAF3B6 /* Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0918543D1E98A03300DAF3B6 /* Registration.swift */; };
 		092700CE1E884D720089821D /* JSONSerialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700CD1E884D720089821D /* JSONSerialize.swift */; };
 		092700D11E884DB00089821D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700CF1E884DB00089821D /* Settings.swift */; };
@@ -52,6 +54,8 @@
 /* Begin PBXFileReference section */
 		09071A141EAD3E1F008560B5 /* Cacheable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cacheable.swift; path = Data/Cacheable.swift; sourceTree = "<group>"; };
 		09071A161EAD5331008560B5 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cache.swift; path = Data/Cache.swift; sourceTree = "<group>"; };
+		09071A1C1EADB127008560B5 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
+		09071A1E1EADB764008560B5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Utils/Extensions.swift; sourceTree = "<group>"; };
 		0918543D1E98A03300DAF3B6 /* Registration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Registration.swift; path = Data/Registration.swift; sourceTree = "<group>"; };
 		092700CD1E884D720089821D /* JSONSerialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONSerialize.swift; path = Data/JSONSerialize.swift; sourceTree = "<group>"; };
 		092700CF1E884DB00089821D /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = Data/Settings.swift; sourceTree = "<group>"; };
@@ -130,6 +134,7 @@
 				098FCFBF1E9AA1AA00D4C66D /* KeychainSwift.swift */,
 				098FCFC11E9AA3FF00D4C66D /* Utils.swift */,
 				09DDA8B21EA084F8004220CF /* Secrets.swift */,
+				09071A1E1EADB764008560B5 /* Extensions.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -201,6 +206,7 @@
 				099C81721E7CC94500529530 /* WebViewController.xib */,
 				099C81761E7DEEB600529530 /* NotificationViewController.swift */,
 				099C81771E7DEEB600529530 /* NotificationViewController.xib */,
+				09071A1C1EADB127008560B5 /* NotificationCell.swift */,
 				2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */,
 				099BC2411E882AED009EEF0D /* SettingsViewController.swift */,
 				099BC2421E882AED009EEF0D /* SettingsViewController.xib */,
@@ -336,9 +342,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				09F10E0C1E7F3C3400303A96 /* TRACSObject.swift in Sources */,
+				09071A1F1EADB764008560B5 /* Extensions.swift in Sources */,
 				09F10E081E7F25FF00303A96 /* Announcement.swift in Sources */,
 				09071A151EAD3E1F008560B5 /* Cacheable.swift in Sources */,
 				099BC24B1E882CFF009EEF0D /* SettingsCell.swift in Sources */,
+				09071A1D1EADB127008560B5 /* NotificationCell.swift in Sources */,
 				092700D11E884DB00089821D /* Settings.swift in Sources */,
 				09DDA8B01EA07850004220CF /* Analytics.swift in Sources */,
 				098FCFD01E9D23DF00D4C66D /* Enum.swift in Sources */,

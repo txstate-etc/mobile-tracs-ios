@@ -29,7 +29,6 @@ class TRACSClient {
     // MARK: - Fetch data from TRACS
     static func waitForLogin(completion:@escaping(Bool)->Void) {
         tracslockqueue.async {
-            NSLog("login must be complete")
             DispatchQueue.main.async {
                 completion(!userid.isEmpty)
             }
@@ -132,19 +131,16 @@ class TRACSClient {
         tracslockqueue.async {
             let tracslock = DispatchGroup()
             tracslock.enter()
-            fetchCurrentUserId { (uid) in
-                if uid == nil { // error occurred, no login right now
-                    tracslock.leave()
-                    completion(false)
-                } else if uid!.isEmpty {
+            checkForNewUser {
+                if userid.isEmpty {
                     // try our saved credentials
                     attemptLogin(netid: Utils.netid(), password: Utils.password(), completion: { (sessionid) in
                         NSLog("login attempt made, got %@ back", sessionid)
                         if !sessionid.isEmpty {
-                            checkForNewUser(completion: {
+                            checkForNewUser {
                                 tracslock.leave()
                                 completion(true)
-                            })
+                            }
                         } else {
                             userid = ""
                             Utils.removeCredentials()
@@ -171,15 +167,15 @@ class TRACSClient {
     
     internal static func checkForNewUser(completion:@escaping()->Void) {
         TRACSClient.fetchCurrentUserId { (uid) in
-            if uid != nil && !uid!.isEmpty {
-                if uid != userid {
-                    userid = uid!
+            if let uid = uid {
+                if uid.isEmpty {
+                    // we got a good response but an empty userid, we are clearly logged out
+                    userid = ""
+                } else if uid != userid {
+                    userid = uid
                     IntegrationClient.register()
                     return completion()
                 }
-            } else if uid != nil {
-                // we got a good response but an empty userid, we are clearly logged out
-                userid = ""
             }
             completion()
         }

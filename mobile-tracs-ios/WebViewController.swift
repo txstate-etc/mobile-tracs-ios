@@ -161,9 +161,9 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     func webViewDidFinishLoad(_ webView: UIWebView) {
         updateButtons()
         if let urlstring = webView.request?.url?.absoluteString {
-            if urlstring.contains("?ticket=") {
+            if urlstring.hasPrefix(TRACSClient.tracsurl) && TRACSClient.userid.isEmpty {
                 loginIfNecessary(completion: { (loggedin) in
-                
+                    
                 })
             }
         }

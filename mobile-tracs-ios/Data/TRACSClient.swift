@@ -161,7 +161,7 @@ class TRACSClient {
         let sessionurl = baseurl+"/session/current.json"
         Utils.fetchJSONObject(url: sessionurl) { (parsed) in
             if parsed == nil { return completion(nil) }
-            return completion(parsed!["userId"] as? String ?? "")
+            return completion(parsed!["userEid"] as? String ?? "")
         }
     }
     

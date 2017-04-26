@@ -98,6 +98,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             if toggle.isOn { settings.enableEntry(entry) }
             else { settings.disableEntry(entry) }
             IntegrationClient.saveSettings(settings, completion: { (success) in
+                Analytics.event(category: "Filter", action: toggle.isOn ? "allow" : "block", label: cell.title.text ?? "", value: nil)
             })
         }
     }

@@ -76,6 +76,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                 if success {
                     self.notifications.remove(object:notify)
                     self.tableView.reloadData()
+                    Analytics.event(category: "Notification", action: "cleared", label: notify.object_type ?? "", value: nil)
                 }
             }
         }
@@ -84,6 +85,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let tracsobj = notifications[indexPath.row].object {
             if let url = URL(string: tracsobj.getUrl()) {
+                Analytics.event(category: "Notification", action: "click", label: notifications[indexPath.row].object_type ?? "", value: nil)
                 navigationController!.popViewController(animated: true)
                 (navigationController!.viewControllers[0] as! WebViewController).webView.loadRequest(URLRequest(url: url))
             }

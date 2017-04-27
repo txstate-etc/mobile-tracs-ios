@@ -24,8 +24,9 @@ class Utils {
     static func isSimulator()->Bool {
         #if arch(i386) || arch(x86_64)
             return true
+        #else
+            return false
         #endif
-        return false
     }
     
     // MARK: - UserDefaults

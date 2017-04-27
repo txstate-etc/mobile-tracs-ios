@@ -22,9 +22,9 @@ class TRACSClient {
     static let altlogouturl = tracsurl+"/portal/logout"
     
     // MARK: - Static Variables
-    internal static var tracslockqueue = DispatchQueue(label: "tracslock")
-    public static var sitecache = Cache(cacheName: "sitecache")
-    public static var userid = ""
+    private static var tracslockqueue = DispatchQueue(label: "tracslock")
+    static var sitecache = Cache(cacheName: "sitecache")
+    static var userid = ""
     
     // MARK: - Fetch data from TRACS
     static func waitForLogin(completion:@escaping(Bool)->Void) {
@@ -157,7 +157,7 @@ class TRACSClient {
         }
     }
 
-    internal static func fetchCurrentUserId(completion:@escaping (String?)->Void) {
+    private static func fetchCurrentUserId(completion:@escaping (String?)->Void) {
         let sessionurl = baseurl+"/session/current.json"
         Utils.fetchJSONObject(url: sessionurl) { (parsed) in
             if parsed == nil { return completion(nil) }
@@ -165,7 +165,7 @@ class TRACSClient {
         }
     }
     
-    internal static func checkForNewUser(completion:@escaping()->Void) {
+    private static func checkForNewUser(completion:@escaping()->Void) {
         TRACSClient.fetchCurrentUserId { (uid) in
             if let uid = uid {
                 if uid.isEmpty {
@@ -181,7 +181,7 @@ class TRACSClient {
         }
     }
     
-    internal static func attemptLogin(netid:String, password:String, completion:@escaping(String)->Void) {
+    private static func attemptLogin(netid:String, password:String, completion:@escaping(String)->Void) {
         if netid.isEmpty || password.isEmpty { return completion("") }
         Utils.post(url: baseurl+"/session", params: ["_username":netid, "_password":password]) { (data, success) in
             if let body = data as? String {

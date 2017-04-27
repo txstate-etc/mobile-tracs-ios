@@ -10,7 +10,7 @@ import Foundation
 
 class Cache {
     var name:String
-    var hash:[String:Cacheable]
+    private var hash:[String:Cacheable]
     
     init(cacheName:String) {
         name = cacheName

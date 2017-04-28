@@ -18,6 +18,7 @@ class Utils {
     static let lightergray = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1)
     static let colordisabled = UIColor(white: 0.8, alpha: 0.2)
     static let urlsession = URLSession.shared
+    static let userAgent = UIWebView().stringByEvaluatingJavaScript(from:"navigator.userAgent")! + " TRACS Mobile"
     internal static let post_queue = DispatchGroup()
     internal static var indicators:[Int:UIActivityIndicatorView] = [:]
     
@@ -54,10 +55,28 @@ class Utils {
     // MARK: - HTTP Helpers
     private static func standardRequest(_ url: URL)->URLRequest {
         var req = URLRequest(url: url)
+        req.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         if url.absoluteString.contains(IntegrationClient.baseurl) {
             req.setValue(IntegrationClient.deviceToken, forHTTPHeaderField: "X-Notification-Device-Token")
         }
         return req
+    }
+    
+    static func fetch(_ url:String, completion:@escaping (String)->Void) {
+        if let targeturl = URL(string: url) {
+            var req = standardRequest(targeturl)
+            req.cachePolicy = .reloadIgnoringLocalCacheData
+            urlsession.dataTask(with: req, completionHandler: { (data, response, error) in
+                if let data = data {
+                    let ret = (String(data: data, encoding: .utf8) ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+                    completion(ret)
+                } else {
+                    completion("")
+                }
+            }).resume()
+        } else {
+            completion("")
+        }
     }
     
     static func fetchJSON(url:String, completion:@escaping (Any?)->Void) {
@@ -89,7 +108,7 @@ class Utils {
                 return completion(nil)
             }
             if data != nil {
-                NSLog("%@: %@", url, String(data: data!, encoding: .utf8) ?? "nil")
+                //NSLog("%@: %@", url, String(data: data!, encoding: .utf8) ?? "nil")
                 do {
                     let parsed = try JSONSerialization.jsonObject(with: data!, options: []) as! [String:Any]
                     return completion(parsed);

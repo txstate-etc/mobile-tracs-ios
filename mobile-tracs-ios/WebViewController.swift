@@ -21,6 +21,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     let documentsPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
     let stop = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(pressedRefresh(sender:)))
     var bellnumber: Int?
+    var needtoregister = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -167,6 +168,17 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
                 })
             }
         }
+        if needtoregister {
+            loginIfNecessary(completion: { (success) in
+                if success {
+                    IntegrationClient.register({ (success) in
+                        if success {
+                            self.needtoregister = false
+                        }
+                    })
+                }
+            })
+        }
     }
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         updateButtons()
@@ -204,6 +216,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
             return false;
         }
         if let urlstring = request.url?.absoluteString {
+            NSLog(urlstring)
             Analytics.linkClick(urlstring)
             if urlstring == "about:blank" {
                 return false
@@ -215,21 +228,10 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
                         if params["publicWorkstation"] == nil {
                             if let netid = params["username"], let pw = params["password"] {
                                 Utils.store(netid: netid, pw: pw)
+                                needtoregister = true
                             }
                         }
                     }
-                }
-            }
-            if urlstring.contains(TRACSClient.loginurl) || urlstring.contains(TRACSClient.deeploginurl) {
-                if Utils.haveCredentials() && !urlstring.contains("?ticket="){
-                    loginIfNecessary(completion: { (loggedin) in
-                        if loggedin {
-                            self.webView.reload()
-                        } else {
-                            self.webView.loadRequest(request)
-                        }
-                    })
-                    return false
                 }
             }
             if urlstring.contains(TRACSClient.logouturl) || urlstring.contains(TRACSClient.altlogouturl) {

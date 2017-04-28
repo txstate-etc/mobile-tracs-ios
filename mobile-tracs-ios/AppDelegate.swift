@@ -38,6 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         window?.backgroundColor = UIColor.white
         window?.makeKeyAndVisible()
         
+        //Set a custom user agent so that UIWebView and URLSession dataTasks will match
+        UserDefaults.standard.register(defaults: ["UserAgent": Utils.userAgent])
+        
         // register for push notifications
         if #available(iOS 10, *) {
             let center = UNUserNotificationCenter.current()

@@ -10,7 +10,8 @@ import UIKit
 
 class IntegrationClient {
     static var deviceToken = ""
-    static let baseurl = "https://dispatch.its.txstate.edu"
+    static let jwtserviceurl = Secrets.shared.jwtservicebaseurl ?? "http://dispatch.its.txstate.edu/token.pl"
+    static let baseurl = Secrets.shared.integrationbaseurl ?? "https://dispatch.its.txstate.edu"
     static let registrationurl = baseurl+"/registrations"
     static let notificationsurl = baseurl+"/notifications"
     
@@ -22,27 +23,31 @@ class IntegrationClient {
         return reg
     }
     
-    public static func register() {
+    public static func register(_ completion:@escaping (Bool)->Void) {
         // are we already registered?
         let reg = getRegistration()
         reg.token = deviceToken
         reg.user_id = TRACSClient.userid
         
         saveRegistration(reg: reg) { (success) in
-            
+            completion(success)
         }
     }
     
     public static func saveRegistration(reg:Registration, completion:@escaping(Bool)->Void) {
         if reg.valid() {
             if let body = reg.toJSON() {
-                Utils.post(url: registrationurl, body: body, completion: { (data, success) in
-                    NSLog("saving registration with integration server")
-                    if success {
-                        // save the registration details so that we don't have to do this often
-                        Utils.save(reg.toJSONObject(), withKey: "registration")
-                    }
-                    completion(success)
+                Utils.fetch(jwtserviceurl, completion: { (jwt) in
+                    if jwt.isEmpty || jwt.contains("<html") { return completion(false) }
+                    Utils.post(url: registrationurl+"?jwt="+jwt, body: body, completion: { (data, success) in
+                        if success {
+                            // save the registration details so that we don't have to do this often
+                            Utils.save(reg.toJSONObject(), withKey: "registration")
+                        } else {
+                            NSLog("error saving registration: %@", data as? String ?? "")
+                        }
+                        completion(success)
+                    })
                 })
             }
         }

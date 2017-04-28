@@ -10,7 +10,7 @@ import Foundation
 
 class TRACSClient {
     // MARK: - URL Constants
-    static let tracsurl = "https://tracs.txstate.edu"
+    static let tracsurl = Secrets.shared.tracsbaseurl ?? "https://tracs.txstate.edu"
     static let baseurl = tracsurl+"/direct"
     static let announcementurl = baseurl+"/announcement"
     static let membershipurl = baseurl+"/membership"
@@ -173,8 +173,6 @@ class TRACSClient {
                     userid = ""
                 } else if uid != userid {
                     userid = uid
-                    IntegrationClient.register()
-                    return completion()
                 }
             }
             completion()

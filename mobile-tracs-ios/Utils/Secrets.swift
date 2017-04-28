@@ -11,11 +11,17 @@ import Foundation
 class Secrets {
     static let shared = Secrets()
     var analyticsid:String?
+    var integrationbaseurl:String?
+    var jwtservicebaseurl:String?
+    var tracsbaseurl:String?
     
     init() {
         if let path = Bundle.main.path(forResource: "Config", ofType: "plist") {
             if let dict = NSDictionary(contentsOfFile: path) as? [String:AnyObject] {
                 analyticsid = dict["analyticsid"] as? String
+                integrationbaseurl = dict["integrationbaseurl"] as? String
+                jwtservicebaseurl = dict["jwtservicebaseurl"] as? String
+                tracsbaseurl = dict["tracsbaseurl"] as? String
             }
         }
     }

@@ -14,17 +14,16 @@ class IntegrationClient {
     static let baseurl = Secrets.shared.integrationbaseurl ?? "https://dispatch.its.txstate.edu"
     static let registrationurl = baseurl+"/registrations"
     static let notificationsurl = baseurl+"/notifications"
+    static let settingsurl = baseurl+"/settings"
     
     public static func getRegistration() -> Registration {
-        var reg = Registration()
         if let registration = Utils.grab("registration") as? [String:Any] {
-            reg = Registration(registration)
+            return Registration(registration)
         }
-        return reg
+        return Registration()
     }
     
     public static func register(_ completion:@escaping (Bool)->Void) {
-        // are we already registered?
         let reg = getRegistration()
         reg.token = deviceToken
         reg.user_id = TRACSClient.userid
@@ -38,7 +37,10 @@ class IntegrationClient {
         if reg.valid() {
             if let body = reg.toJSON() {
                 Utils.fetch(jwtserviceurl, completion: { (jwt) in
-                    if jwt.isEmpty || jwt.contains("<html") { return completion(false) }
+                    if jwt.isEmpty || jwt.contains("<html") {
+                        NSLog("did not get a good JWT from service")
+                        return completion(false)
+                    }
                     Utils.post(url: registrationurl+"?jwt="+jwt, body: body, completion: { (data, success) in
                         if success {
                             // save the registration details so that we don't have to do this often
@@ -50,6 +52,8 @@ class IntegrationClient {
                     })
                 })
             }
+        } else {
+            NSLog("saveRegistration: reg was not valid")
         }
     }
     
@@ -146,19 +150,23 @@ class IntegrationClient {
     }
     
     static func fetchSettings(completion:@escaping(Settings)->Void) {
-        TRACSClient.waitForLogin { (loggedin) in
-            Utils.fetchJSONObject(url: registrationurl+"/"+deviceToken) { (dict) in
-                completion(Settings(dict: dict))
-            }
+        Utils.fetchJSONObject(url: settingsurl+"/"+deviceToken) { (dict) in
+            completion(Settings(dict: dict))
         }
     }
     
     static func saveSettings(_ settings:Settings, completion:@escaping(Bool)->Void) {
-        let reg = getRegistration()
-        reg.settings = settings
-        NSLog("%@", reg.toJSON() ?? "")
-        saveRegistration(reg: reg) { (success) in
-            completion(success)
+        if let jsonobject = settings.toJSONObject() as? [String:Any] {
+            Utils.post(url: settingsurl+"/"+deviceToken, jsonobject: jsonobject, completion: { (body, success) in
+                if success {
+                    let reg = getRegistration()
+                    reg.settings = settings
+                    Utils.save(reg.toJSONObject(), withKey: "registration")
+                }
+                completion(success)
+            })
+        } else {
+            completion(false)
         }
     }
 }

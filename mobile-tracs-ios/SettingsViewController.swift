@@ -39,12 +39,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             dispatch_group.leave()
         }
         
-        var tmpsettings:Settings?
-        dispatch_group.enter()
-        IntegrationClient.fetchSettings { (settings) in
-            tmpsettings = settings
-            dispatch_group.leave()
-        }
+        let tmpsettings = IntegrationClient.getRegistration().settings
         
         dispatch_group.notify(queue: .main) {
             self.settings = tmpsettings

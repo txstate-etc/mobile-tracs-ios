@@ -179,6 +179,10 @@ class Utils {
             if response is HTTPURLResponse {
                 let httpresponse = response as! HTTPURLResponse
                 let success = httpresponse.statusCode >= 200 && httpresponse.statusCode < 300
+                if !success {
+                    NSLog("received a failing status code during post: %i", httpresponse.statusCode)
+                    return completion(nil, false)
+                }
                 if data != nil {
                     let parsed = try? JSONSerialization.jsonObject(with: data!, options: [])
                     if parsed != nil { return completion(parsed, success) }

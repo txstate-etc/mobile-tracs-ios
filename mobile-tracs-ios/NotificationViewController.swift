@@ -61,7 +61,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         let notify = notifications[indexPath.row]
         cell.notify = notify
         if let tracsobj = notify.object {
-            cell.textLabel?.text = tracsobj.titleForTable()
+            cell.textLabel?.text = tracsobj.tableTitle()
             cell.detailTextLabel?.text = tracsobj.tableSubtitle()
             if !tracsobj.getUrl().isEmpty {
                 cell.accessoryType = .disclosureIndicator

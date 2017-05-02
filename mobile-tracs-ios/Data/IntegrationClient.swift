@@ -113,6 +113,13 @@ class IntegrationClient {
                     dispatchgroup.leave()
                 })
             }
+            if n.object_type == Discussion.type {
+                dispatchgroup.enter()
+                TRACSClient.fetchDiscussion(id: n.object_id!, completion: { (msg) in
+                    n.object = msg
+                    dispatchgroup.leave()
+                })
+            }
         }
         
         // here we fetch all the sites so that we can
@@ -127,8 +134,11 @@ class IntegrationClient {
             // add the Site into each TRACSObject
             NSLog("loadAll complete")
             for n in notifications {
-                if n.object != nil && !(n.site_id ?? "").isEmpty {
-                    n.object!.site = sitehash[n.site_id!]
+                if var obj = n.object {
+                    if obj.read { n.read = true }
+                    if !(n.site_id ?? "").isEmpty {
+                        obj.site = sitehash[n.site_id!]
+                    }
                 }
             }
             completion(notifications)

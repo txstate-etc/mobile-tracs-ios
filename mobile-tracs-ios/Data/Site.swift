@@ -13,6 +13,7 @@ class Site : NSObject, Cacheable {
     var coursesite = false
     var title = ""
     var announcementurl = ""
+    var discussionurl = ""
     var created_at:Date
     
     init(dict:[String:Any]) {
@@ -23,6 +24,9 @@ class Site : NSObject, Cacheable {
             if page["title"] as? String == "Announcements" {
                 announcementurl = page["url"] as? String ?? ""
             }
+            if page["title"] as? String == "Forums" {
+                discussionurl = page["url"] as? String ?? ""
+            }
         }
         created_at = Date()
     }
@@ -32,6 +36,7 @@ class Site : NSObject, Cacheable {
         aCoder.encode(coursesite, forKey:"coursesite")
         aCoder.encode(title, forKey:"title")
         aCoder.encode(announcementurl, forKey:"announcementurl")
+        aCoder.encode(discussionurl, forKey:"discussionurl")
         aCoder.encode(created_at, forKey:"created_at")
     }
     
@@ -40,6 +45,7 @@ class Site : NSObject, Cacheable {
         coursesite = coder.decodeObject(forKey: "coursesite") as? Bool ?? false
         title = coder.decodeObject(forKey: "title") as? String ?? ""
         announcementurl = coder.decodeObject(forKey: "announcementurl") as? String ?? ""
+        discussionurl = coder.decodeObject(forKey: "discussionurl") as? String ?? ""
         created_at = coder.decodeObject(forKey: "createdat") as? Date ?? Date(timeIntervalSince1970: 0)
     }
 }

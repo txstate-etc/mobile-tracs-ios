@@ -1,17 +1,17 @@
 //
-//  Announcement.swift
+//  Discussion.swift
 //  mobile-tracs-ios
 //
-//  Created by Nick Wing on 3/19/17.
+//  Created by Nick Wing on 5/2/17.
 //  Copyright © 2017 Texas State University. All rights reserved.
 //
 
 import Foundation
 
-class Announcement : TRACSObjectBase, TRACSObject {
-    static let type = "announcement"
-    static let display = "Announcement"
-    static let displayplural = "Announcements"
+class Discussion : TRACSObjectBase, TRACSObject {
+    static let type = "discussion"
+    static let display = "Forum Post"
+    static let displayplural = "Forum Posts"
     
     var title = ""
     var body = ""
@@ -25,12 +25,12 @@ class Announcement : TRACSObjectBase, TRACSObject {
     func tableTitle()->String {
         return title
     }
-
+    
     func getUrl()->String {
-        return site?.announcementurl ?? ""
+        return site?.discussionurl ?? ""
     }
     
     func getType()->String {
-        return Announcement.type
+        return Discussion.type
     }
 }

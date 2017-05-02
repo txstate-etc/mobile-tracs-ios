@@ -9,9 +9,10 @@
 import Foundation
 
 protocol TRACSObject {
-    var id:String { get set }
+    var id:String { get }
     var site:Site? { get set }
-    func titleForTable()->String
+    var read:Bool { get }
+    func tableTitle()->String
     func getType()->String
     func getUrl()->String
 }
@@ -24,9 +25,11 @@ extension TRACSObject {
 
 class TRACSObjectBase {
     var id = ""
+    var read = false
     var site:Site?
     
     init(dict:[String:Any]) {
         id = dict["id"] as? String ?? ""
+        read = dict["read"] as? Bool ?? false
     }
 }

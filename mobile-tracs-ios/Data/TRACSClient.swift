@@ -44,6 +44,15 @@ class TRACSClient {
         }
     }
     
+    static func fetchDiscussion(id:String, completion:@escaping (Discussion?)->Void) {
+        tracslockqueue.async {
+            Utils.fetchJSONObject(url: baseurl+"/"+id+".json") { (parsed) in
+                if parsed == nil { return completion(nil) }
+                return completion(Discussion(dict: parsed!))
+            }
+        }
+    }
+    
     // returns a hash of all the user's sites
     static func fetchSites(completion:@escaping([String:Site]?)->Void) {
         tracslockqueue.async {

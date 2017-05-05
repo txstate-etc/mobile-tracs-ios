@@ -194,7 +194,8 @@ class Utils {
                 if httpresp.statusCode >= 200 && httpresp.statusCode < 300 {
                     completion(true)
                 } else {
-                    NSLog("patch failed statusCode=%i", httpresp.statusCode)
+                    let body = String(data: request.httpBody!, encoding: .utf8)
+                    NSLog("patch failed url=%@ body=%@ statusCode=%i", url, body ?? "nil", httpresp.statusCode)
                 }
             } else {
                 completion(false)

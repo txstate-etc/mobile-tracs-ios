@@ -81,24 +81,6 @@ class Utils {
     
     static func fetchJSON(url:String, completion:@escaping (Any?)->Void) {
         // fake data for testing
-        if url.contains(IntegrationClient.notificationsurl) { return completion([[
-                "id":"notification-dummy",
-                "keys":[
-                    "provider_id":"tracs",
-                    "notification_type":"creation",
-                    "object_type": "announcement",
-                    "object_id": "831342dd-fdb6-4878-8b3c-1d29ecb06a14:main:aa4f8f85-a645-4766-bc91-1a1c7bef93df",
-                    "user_id": "392b6c67-e53f-4c47-8068-3602bdc7b782"
-                ],
-                "other_keys":[
-                    "site_id": "831342dd-fdb6-4878-8b3c-1d29ecb06a14"
-                ],
-                "content_hash": "hash",
-                "notify_after": "2017-03-22T12:50:00-0500",
-                "read": false,
-                "cleared": false
-                ]])
-        }
         let targeturl = URL(string: url)
         var req = standardRequest(targeturl!)
         req.cachePolicy = .reloadIgnoringLocalCacheData

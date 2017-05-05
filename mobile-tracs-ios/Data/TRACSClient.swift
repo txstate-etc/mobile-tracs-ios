@@ -12,7 +12,7 @@ class TRACSClient {
     // MARK: - URL Constants
     static let tracsurl = Secrets.shared.tracsbaseurl ?? "https://tracs.txstate.edu"
     static let baseurl = tracsurl+"/direct"
-    static let announcementurl = baseurl+"/announcement"
+    static let announcementurl = baseurl+"/announcement/message"
     static let membershipurl = baseurl+"/membership"
     static let siteurl = baseurl+"/site"
     static let portalurl = tracsurl+"/portal"
@@ -35,9 +35,9 @@ class TRACSClient {
         }
     }
     
-    static func fetchAnnouncement(id:String, completion:@escaping (Announcement?)->Void) {
+    static func fetchAnnouncement(id:String, siteid:String, completion:@escaping (Announcement?)->Void) {
         tracslockqueue.async {
-            Utils.fetchJSONObject(url: announcementurl+"/"+id+".json") { (parsed) in
+            Utils.fetchJSONObject(url: announcementurl+"/"+siteid+"/"+id+".json") { (parsed) in
                 if parsed == nil { return completion(nil) }
                 return completion(Announcement(dict: parsed!))
             }

@@ -53,7 +53,7 @@ class IntegrationClient {
                 })
             }
         } else {
-            NSLog("saveRegistration: reg was not valid")
+            NSLog("saveRegistration: reg was not valid %@ %@", reg.user_id ?? "nil", reg.token ?? "nil")
         }
     }
     
@@ -102,13 +102,11 @@ class IntegrationClient {
         // then we start requests for each notification to fetch the LMS data for its
         // TRACSObject
         for n in notifications {
-            if n.object_id == nil { continue }
-            if !(n.site_id ?? "").isEmpty {
-                siteids.append(n.site_id!)
-            }
+            if n.object_id == nil || (n.site_id ?? "").isEmpty { continue }
+            siteids.append(n.site_id!)
             if n.object_type == Announcement.type {
                 dispatchgroup.enter()
-                TRACSClient.fetchAnnouncement(id: n.object_id!, completion: { (ann) in
+                TRACSClient.fetchAnnouncement(id: n.object_id!, siteid: n.site_id!, completion: { (ann) in
                     n.object = ann
                     dispatchgroup.leave()
                 })

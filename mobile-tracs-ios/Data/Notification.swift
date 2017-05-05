@@ -31,7 +31,7 @@ class Notification : Equatable {
             user_id = keys["user_id"] as? String
             provider_id = keys["provider_id"] as? String
         }
-        if let otherkeys:[String:Any] = dict["otherkeys"] as? [String:Any] {
+        if let otherkeys:[String:Any] = dict["other_keys"] as? [String:Any] {
             site_id = otherkeys["site_id"] as? String
             tool_id = otherkeys["tool_id"] as? String
         }

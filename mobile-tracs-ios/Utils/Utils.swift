@@ -89,13 +89,12 @@ class Utils {
                 NSLog("%@", error?.localizedDescription ?? "")
                 return completion(nil)
             }
-            if data != nil {
-                //NSLog("%@: %@", url, String(data: data!, encoding: .utf8) ?? "nil")
-                do {
-                    let parsed = try JSONSerialization.jsonObject(with: data!, options: []) as! [String:Any]
+            if let data = data {
+                //NSLog("%@: %@", url, String(data: data, encoding: .utf8) ?? "nil")
+                if let parsed = try? JSONSerialization.jsonObject(with: data, options: []) {
                     return completion(parsed);
-                } catch {
-                    NSLog(error.localizedDescription)
+                } else {
+                    NSLog("was not able to parse json from %@", url)
                 }
             }
             return completion(nil)

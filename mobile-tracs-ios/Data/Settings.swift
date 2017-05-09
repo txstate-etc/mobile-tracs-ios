@@ -12,6 +12,10 @@ class Settings : JSONRepresentable {
     var global_disable = false
     var disabled_filters:[SettingsEntry] = []
     
+    init() {
+
+    }
+    
     init(dict: [String:Any]?) {
         if let dict = dict {
             global_disable = dict["global_disable"] as? Bool ?? false

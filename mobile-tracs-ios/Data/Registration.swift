@@ -30,6 +30,7 @@ class Registration : JSONRepresentable, Equatable {
         token = IntegrationClient.deviceToken
         platform = "ios"
         app_id = Bundle.main.bundleIdentifier
+        settings = Settings()
     }
     
     func valid() -> Bool {

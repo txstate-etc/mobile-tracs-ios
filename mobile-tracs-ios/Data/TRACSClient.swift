@@ -79,9 +79,11 @@ class TRACSClient {
                 let membs = dict!["membership_collection"] as? [[String:Any]] ?? []
                 var siteids:[String] = []
                 for memb in membs {
-                    if let loc = memb["locationReference"] as? String {
-                        let sid = loc.substring(from: loc.index(loc.startIndex, offsetBy: 6))
-                        siteids.append(sid)
+                    if let loc = memb["locationReference"] as? String, let active = memb["active"] as? Bool {
+                        if active {
+                            let sid = loc.substring(from: loc.index(loc.startIndex, offsetBy: 6))
+                            siteids.append(sid)
+                        }
                     }
                 }
                 fetchSitesById(siteids: siteids, completion: { (sitehash) in
@@ -102,14 +104,29 @@ class TRACSClient {
                 completion(site)
             }
             if shouldrefresh {
+                var pagesjson:[Any]?
+                var sitejson:[String:Any]?
+                let dispatchgroup = DispatchGroup()
+                dispatchgroup.enter()
+                Utils.fetchJSONArray(url: siteurl+"/"+id+"/pages.json", completion: { (parsed) in
+                    pagesjson = parsed
+                    dispatchgroup.leave()
+                })
+                dispatchgroup.enter()
                 Utils.fetchJSONObject(url: siteurl+"/"+id+".json") { (parsed) in
-                    if parsed == nil { return completion(nil) }
-                    let site = Site(dict: parsed!)
-                    sitecache.put(site)
-                    if !completionsent {
-                        return completion(site)
-                    }
+                    sitejson = parsed
+                    dispatchgroup.leave()
                 }
+                dispatchgroup.notify(queue: tracslockqueue, execute: {
+                    if let pagesjson = pagesjson, let sitejson = sitejson {
+                        let site = Site(dict: sitejson)
+                        site.findUrls(jsonarray: pagesjson)
+                        sitecache.put(site)
+                        if !completionsent { completion(site) }
+                    } else {
+                        if !completionsent { completion(nil) }
+                    }
+                })
             }
         }
     }
@@ -123,7 +140,7 @@ class TRACSClient {
         for siteid in uniquesiteids {
             dispatchgroup.enter()
             fetchSite(id: siteid, completion: { (site) in
-                if site != nil && !site!.id.isEmpty {
+                if site != nil && !site!.id.isEmpty && site!.valid() {
                     sitehash[site!.id] = site
                 }
                 dispatchgroup.leave()

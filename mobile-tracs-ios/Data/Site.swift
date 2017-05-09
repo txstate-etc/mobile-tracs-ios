@@ -15,20 +15,31 @@ class Site : NSObject, Cacheable {
     var announcementurl = ""
     var discussionurl = ""
     var created_at:Date
+    var invalid = false
     
     init(dict:[String:Any]) {
         id = dict["id"] as? String ?? ""
         title = dict["title"] as? String ?? ""
         coursesite = dict["type"] as? String == "course"
-        for page in dict["sitePages"] as? [[String:Any]] ?? [] {
-            if page["title"] as? String == "Announcements" {
-                announcementurl = page["url"] as? String ?? ""
-            }
-            if page["title"] as? String == "Forums" {
-                discussionurl = page["url"] as? String ?? ""
+        created_at = Date()
+        invalid = (dict["sitePages"] as? [Any] ?? []).count == 0 || !(dict["published"] as? Bool ?? false)
+    }
+    
+    func findUrls(jsonarray: [Any]) {
+        for page in jsonarray as? [[String:Any]] ?? [] {
+            for tool in page["tools"] as? [[String:Any]] ?? [] {
+                if tool["toolId"] as? String == "sakai.announcements" {
+                    announcementurl = tool["url"] as? String ?? ""
+                }
+                if tool["toolId"] as? String == "sakai.forums" {
+                    discussionurl = tool["url"] as? String ?? ""
+                }
             }
         }
-        created_at = Date()
+    }
+    
+    func valid() -> Bool {
+        return !id.isEmpty && !invalid && (!announcementurl.isEmpty || !discussionurl.isEmpty)
     }
     
     func encode(with aCoder: NSCoder) {

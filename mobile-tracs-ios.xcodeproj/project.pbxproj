@@ -11,6 +11,8 @@
 		09071A171EAD5331008560B5 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A161EAD5331008560B5 /* Cache.swift */; };
 		09071A1D1EADB127008560B5 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A1C1EADB127008560B5 /* NotificationCell.swift */; };
 		09071A1F1EADB764008560B5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A1E1EADB764008560B5 /* Extensions.swift */; };
+		09071A211EC79D06008560B5 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A201EC79D06008560B5 /* MenuViewController.swift */; };
+		09071A231EC7A368008560B5 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A221EC7A368008560B5 /* MenuItem.swift */; };
 		0918543E1E98A03300DAF3B6 /* Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0918543D1E98A03300DAF3B6 /* Registration.swift */; };
 		092700CE1E884D720089821D /* JSONSerialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700CD1E884D720089821D /* JSONSerialize.swift */; };
 		092700D11E884DB00089821D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700CF1E884DB00089821D /* Settings.swift */; };
@@ -57,6 +59,8 @@
 		09071A161EAD5331008560B5 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cache.swift; path = Data/Cache.swift; sourceTree = "<group>"; };
 		09071A1C1EADB127008560B5 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		09071A1E1EADB764008560B5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Utils/Extensions.swift; sourceTree = "<group>"; };
+		09071A201EC79D06008560B5 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = UIWidgets/MenuViewController.swift; sourceTree = "<group>"; };
+		09071A221EC7A368008560B5 /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuItem.swift; path = UIWidgets/MenuItem.swift; sourceTree = "<group>"; };
 		0918543D1E98A03300DAF3B6 /* Registration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Registration.swift; path = Data/Registration.swift; sourceTree = "<group>"; };
 		092700CD1E884D720089821D /* JSONSerialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONSerialize.swift; path = Data/JSONSerialize.swift; sourceTree = "<group>"; };
 		092700CF1E884DB00089821D /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = Data/Settings.swift; sourceTree = "<group>"; };
@@ -159,6 +163,8 @@
 			children = (
 				098FCFCB1E9D23DF00D4C66D /* FontAwesome */,
 				09DDA8AB1E9D3143004220CF /* BadgeSwift.swift */,
+				09071A201EC79D06008560B5 /* MenuViewController.swift */,
+				09071A221EC7A368008560B5 /* MenuItem.swift */,
 			);
 			name = UIWidgets;
 			sourceTree = "<group>";
@@ -353,6 +359,8 @@
 				09071A1D1EADB127008560B5 /* NotificationCell.swift in Sources */,
 				092700D11E884DB00089821D /* Settings.swift in Sources */,
 				09DDA8B01EA07850004220CF /* Analytics.swift in Sources */,
+				09071A231EC7A368008560B5 /* MenuItem.swift in Sources */,
+				09071A211EC79D06008560B5 /* MenuViewController.swift in Sources */,
 				098FCFD01E9D23DF00D4C66D /* Enum.swift in Sources */,
 				0918543E1E98A03300DAF3B6 /* Registration.swift in Sources */,
 				099BC2431E882AED009EEF0D /* SettingsViewController.swift in Sources */,

@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate {
+class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate, MenuViewControllerDelegate {
     @IBOutlet var webView: UIWebView!
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var back: UIBarButtonItem!
@@ -22,12 +22,14 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     let stop = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(pressedRefresh(sender:)))
     var bellnumber: Int?
     var needtoregister = false
+    private var registrationlock = DispatchGroup()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         Utils.showActivity(view)
-        navigationItem.rightBarButtonItem = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedSettings))
+        navigationItem.rightBarButtonItem = Utils.fontAwesomeBarButtonItem(icon: .ellipsisV, target: self, action: #selector(pressedMenu))
+        navigationItem.rightBarButtonItem?.accessibilityLabel = "Menu"
 
         updateBell()
 
@@ -46,7 +48,6 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         forward.accessibilityLabel = "forward"
         
         TRACSClient.waitForLogin { (loggedin) in
-            NSLog("loading webview")
             let urlStringToLoad = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
             if let urlToLoad = URL(string: urlStringToLoad) {
                 self.webView.loadRequest(URLRequest(url: urlToLoad))
@@ -145,7 +146,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         if bellnumber != newnumber {
             bellnumber = newnumber
             navigationItem.leftBarButtonItem = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.gold, badgecount:newnumber, icon: .bellO, target: self, action: #selector(pressedBell))
-            navigationItem.leftBarButtonItem?.accessibilityLabel = "Notifications"
+            navigationItem.leftBarButtonItem?.accessibilityLabel = String(bellnumber!)+" Notification"+(bellnumber != 1 ? "s" : "")
         }
         if let btn = self.navigationItem.leftBarButtonItem?.customView as? UIButton {
             btn.isEnabled = !TRACSClient.userid.isEmpty
@@ -168,16 +169,26 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
                 })
             }
         }
-        if needtoregister {
-            loginIfNecessary(completion: { (success) in
-                if success {
-                    IntegrationClient.register({ (success) in
-                        if success {
-                            self.needtoregister = false
-                        }
-                    })
-                }
-            })
+
+        registrationlock.notify(queue: .main) {
+            NSLog("got inside the notify")
+            self.registrationlock.enter();
+            if self.needtoregister {
+                TRACSClient.waitForLogin(completion: { (loggedin) in
+                    if loggedin {
+                        IntegrationClient.register({ (success) in
+                            if success {
+                                self.needtoregister = false
+                            }
+                            self.registrationlock.leave()
+                        })
+                    } else {
+                        self.registrationlock.leave()
+                    }
+                })
+            } else {
+                self.registrationlock.leave()
+            }
         }
     }
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
@@ -226,7 +237,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
                     if let body = String(data: body, encoding: .utf8) {
                         let params = Utils.stringToParams(body)
                         if params["publicWorkstation"] == nil {
-                            if let netid = params["username"], let pw = params["password"] {
+                            if let netid = params["username"] ?? params["eid"], let pw = params["password"] ?? params["pw"] {
                                 Utils.store(netid: netid, pw: pw)
                                 needtoregister = true
                             }
@@ -260,9 +271,36 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         self.dismiss(animated: true, completion: nil)
     }
 
-    func pressedSettings() {
-        let svc = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
-        navigationController?.pushViewController(svc, animated: true)
+    func pressedMenu() {
+        let popover = MenuViewController(delegate: self, bbi: navigationItem.rightBarButtonItem!)
+        self.present(popover, animated: false, completion: nil)
     }
+        
+    func menuViewController(_ mvc: MenuViewController, pressed: MenuItem) {
+        mvc.dismiss(animated: false, completion: nil)
+        if pressed == MenuItem.settings {
+            let svc = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
+            navigationController?.pushViewController(svc, animated: true)
+        } else if pressed == MenuItem.home {
+            Utils.showActivity(view)
+            loginIfNecessary(completion: { (loggedin) in
+                let urlStringToLoad = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
+                if let urlToLoad = URL(string: urlStringToLoad) {
+                    self.webView.loadRequest(URLRequest(url: urlToLoad))
+                }
+                Utils.hideActivity()
+            })
+        } else if pressed == MenuItem.txstate {
+            if let url = URL(string: "txstate://") {
+                if UIApplication.shared.canOpenURL(url) {
+                    Analytics.event(category: "External", action: "click", label: "txstate://", value: nil)
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        } else if pressed == MenuItem.feedback {
+            
+        }
+    }
+    
 
 }

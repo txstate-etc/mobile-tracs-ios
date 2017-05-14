@@ -247,9 +247,12 @@ class Utils {
         button.setTitleColor(colordisabled, for: .disabled)
         button.setTitle(String.fontAwesomeIcon(name: icon), for: .normal)
         if badgecount > 0 {
-            let badge = BadgeSwift(frame:CGRect(x: 0, y: 0, width: 18, height: 18))
-            badge.font = UIFont.preferredFont(forTextStyle: .footnote)
-            //badge.insets = CGSize(width: 12, height: 12)
+            let font = UIFont.preferredFont(forTextStyle: .footnote)
+            let s = (String(badgecount) as NSString).size(attributes: [
+                NSFontAttributeName: font
+                ])
+            let badge = BadgeSwift(frame:CGRect(x: 0, y: 0, width: s.width+10, height: s.height))
+            badge.font = font
             badge.textColor = UIColor.white
             badge.text = String(badgecount)
             button.addSubview(badge)

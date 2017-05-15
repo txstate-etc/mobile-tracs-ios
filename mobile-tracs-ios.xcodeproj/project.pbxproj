@@ -45,6 +45,7 @@
 		09F10E0C1E7F3C3400303A96 /* TRACSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E0B1E7F3C3400303A96 /* TRACSObject.swift */; };
 		09F10E0F1E7F629A00303A96 /* IntegrationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E0E1E7F629A00303A96 /* IntegrationClient.swift */; };
 		2D88E27D1EB9433A000DB020 /* Discussion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D88E27C1EB9433A000DB020 /* Discussion.swift */; };
+		2D88E27F1ECA6AFD000DB020 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D88E27E1ECA6AFD000DB020 /* LaunchScreen.storyboard */; };
 		2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */; };
 		2D9161AA1E81E7F90090A5C6 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9161A91E81E7F90090A5C6 /* Site.swift */; };
 		2DD215C31EA0369000A6C30F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C21EA0369000A6C30F /* CoreData.framework */; };
@@ -97,6 +98,7 @@
 		09F10E0B1E7F3C3400303A96 /* TRACSObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRACSObject.swift; path = Data/TRACSObject.swift; sourceTree = "<group>"; };
 		09F10E0E1E7F629A00303A96 /* IntegrationClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntegrationClient.swift; path = Data/IntegrationClient.swift; sourceTree = "<group>"; };
 		2D88E27C1EB9433A000DB020 /* Discussion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Discussion.swift; path = Data/Discussion.swift; sourceTree = "<group>"; };
+		2D88E27E1ECA6AFD000DB020 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 		2D9161A91E81E7F90090A5C6 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Site.swift; path = Data/Site.swift; sourceTree = "<group>"; };
 		2DD215C21EA0369000A6C30F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -220,6 +222,7 @@
 				099BC2421E882AED009EEF0D /* SettingsViewController.xib */,
 				099BC2491E882CFF009EEF0D /* SettingsCell.swift */,
 				099BC24A1E882CFF009EEF0D /* SettingsCell.xib */,
+				2D88E27E1ECA6AFD000DB020 /* LaunchScreen.storyboard */,
 			);
 			path = "mobile-tracs-ios";
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				099BC24C1E882CFF009EEF0D /* SettingsCell.xib in Resources */,
 				09DDA8B51EA0864E004220CF /* Config.plist in Resources */,
 				09DDA8AE1EA077FB004220CF /* GoogleService-Info.plist in Resources */,
+				2D88E27F1ECA6AFD000DB020 /* LaunchScreen.storyboard in Resources */,
 				2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */,
 				099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */,
 				09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */,
@@ -483,7 +487,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "mobile-tracs-ios/mobile-tracs-ios.entitlements";
 				DEVELOPMENT_TEAM = KV5755TZAS;
 				INFOPLIST_FILE = "mobile-tracs-ios/Info.plist";
@@ -504,7 +507,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "mobile-tracs-ios/mobile-tracs-ios.entitlements";
 				DEVELOPMENT_TEAM = KV5755TZAS;
 				INFOPLIST_FILE = "mobile-tracs-ios/Info.plist";

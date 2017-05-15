@@ -150,6 +150,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
             bellnumber = newnumber
             navigationItem.leftBarButtonItem = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.gold, badgecount:newnumber, icon: .bellO, target: self, action: #selector(pressedBell))
             navigationItem.leftBarButtonItem?.accessibilityLabel = String(bellnumber!)+" Notification"+(bellnumber != 1 ? "s" : "")
+            navigationItem.leftBarButtonItem?.accessibilityHint = "open notifications screen"
         }
         if let btn = self.navigationItem.leftBarButtonItem?.customView as? UIButton {
             btn.isEnabled = !TRACSClient.userid.isEmpty

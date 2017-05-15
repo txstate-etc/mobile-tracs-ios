@@ -52,7 +52,6 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
             if let urlToLoad = URL(string: urlStringToLoad) {
                 self.webView.loadRequest(URLRequest(url: urlToLoad))
             }
-            Utils.hideActivity()
         }
     }
     
@@ -161,6 +160,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         updateButtons()
     }
     func webViewDidFinishLoad(_ webView: UIWebView) {
+        Utils.hideActivity()
         updateButtons()
         if let urlstring = webView.request?.url?.absoluteString {
             if urlstring.hasPrefix(TRACSClient.tracsurl) && TRACSClient.userid.isEmpty {

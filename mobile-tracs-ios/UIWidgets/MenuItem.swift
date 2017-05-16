@@ -11,8 +11,9 @@ import Foundation
 class MenuItem : Equatable {
     static let settings = MenuItem(label: "Settings", icon: .gear)
     static let home = MenuItem(label: "Home", icon: .home)
-    static let txstate = MenuItem(label: "Main App", icon: .caretUp)
+    static let txstate = MenuItem(label: "Main App", icon: .chevronCircleLeft)
     static let feedback = MenuItem(label: "Feedback", icon: .envelopeO)
+    static let intro = MenuItem(label: "Introduction Screen", icon: .infoCircle)
     
     var label:String
     var icon:FontAwesome

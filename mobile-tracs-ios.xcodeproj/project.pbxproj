@@ -46,6 +46,8 @@
 		09F10E0F1E7F629A00303A96 /* IntegrationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E0E1E7F629A00303A96 /* IntegrationClient.swift */; };
 		2D88E27D1EB9433A000DB020 /* Discussion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D88E27C1EB9433A000DB020 /* Discussion.swift */; };
 		2D88E27F1ECA6AFD000DB020 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D88E27E1ECA6AFD000DB020 /* LaunchScreen.storyboard */; };
+		2D88E2841ECB9197000DB020 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D88E2821ECB9197000DB020 /* IntroViewController.swift */; };
+		2D88E2851ECB9197000DB020 /* IntroViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D88E2831ECB9197000DB020 /* IntroViewController.xib */; };
 		2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */; };
 		2D9161AA1E81E7F90090A5C6 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9161A91E81E7F90090A5C6 /* Site.swift */; };
 		2DD215C31EA0369000A6C30F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C21EA0369000A6C30F /* CoreData.framework */; };
@@ -99,6 +101,8 @@
 		09F10E0E1E7F629A00303A96 /* IntegrationClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntegrationClient.swift; path = Data/IntegrationClient.swift; sourceTree = "<group>"; };
 		2D88E27C1EB9433A000DB020 /* Discussion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Discussion.swift; path = Data/Discussion.swift; sourceTree = "<group>"; };
 		2D88E27E1ECA6AFD000DB020 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2D88E2821ECB9197000DB020 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		2D88E2831ECB9197000DB020 /* IntroViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroViewController.xib; sourceTree = "<group>"; };
 		2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 		2D9161A91E81E7F90090A5C6 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Site.swift; path = Data/Site.swift; sourceTree = "<group>"; };
 		2DD215C21EA0369000A6C30F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -212,6 +216,8 @@
 				09B528031E7CBD6500BACF81 /* Assets.xcassets */,
 				09DDA8B41EA0864E004220CF /* Config.plist */,
 				09B528081E7CBD6500BACF81 /* Info.plist */,
+				2D88E2821ECB9197000DB020 /* IntroViewController.swift */,
+				2D88E2831ECB9197000DB020 /* IntroViewController.xib */,
 				099C81701E7CBFDD00529530 /* WebViewController.swift */,
 				099C81721E7CC94500529530 /* WebViewController.xib */,
 				099C81761E7DEEB600529530 /* NotificationViewController.swift */,
@@ -341,6 +347,7 @@
 				2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */,
 				099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */,
 				09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */,
+				2D88E2851ECB9197000DB020 /* IntroViewController.xib in Resources */,
 				099C81731E7CC94500529530 /* WebViewController.xib in Resources */,
 				098FCFD11E9D23DF00D4C66D /* FontAwesome.otf in Resources */,
 				099BC2441E882AED009EEF0D /* SettingsViewController.xib in Resources */,
@@ -375,6 +382,7 @@
 				098FCFD31E9D23DF00D4C66D /* FontAwesomeView.swift in Sources */,
 				092700CE1E884D720089821D /* JSONSerialize.swift in Sources */,
 				09DDA8AC1E9D3143004220CF /* BadgeSwift.swift in Sources */,
+				2D88E2841ECB9197000DB020 /* IntroViewController.swift in Sources */,
 				099C81781E7DEEB600529530 /* NotificationViewController.swift in Sources */,
 				2D9161AA1E81E7F90090A5C6 /* Site.swift in Sources */,
 				09F10E0F1E7F629A00303A96 /* IntegrationClient.swift in Sources */,

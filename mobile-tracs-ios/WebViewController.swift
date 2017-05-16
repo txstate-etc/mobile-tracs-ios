@@ -53,6 +53,10 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
                 self.webView.loadRequest(URLRequest(url: urlToLoad))
             }
         }
+        
+        if !Utils.flag("introScreen", val: true) {
+            activateIntroScreen()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -271,6 +275,11 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         self.dismiss(animated: true, completion: nil)
     }
 
+    func activateIntroScreen() {
+        let ivc = IntroViewController()
+        self.present(ivc, animated: true, completion: nil)
+    }
+    
     func pressedMenu() {
         let popover = MenuViewController(delegate: self, bbi: navigationItem.rightBarButtonItem!)
         self.present(popover, animated: false, completion: nil)
@@ -299,6 +308,8 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
             }
         } else if pressed == MenuItem.feedback {
             
+        } else if pressed == MenuItem.intro {
+            activateIntroScreen()
         }
     }
     

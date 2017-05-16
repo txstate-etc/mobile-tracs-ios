@@ -23,6 +23,7 @@ class MenuViewController: UITableViewController, UIPopoverPresentationController
         menuitems.append(.settings)
         menuitems.append(.feedback)
         menuitems.append(.txstate)
+        menuitems.append(.intro)
         self.delegate = delegate
         modalPresentationStyle = .popover
         popoverPresentationController?.delegate = self

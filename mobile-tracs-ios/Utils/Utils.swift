@@ -52,6 +52,12 @@ class Utils {
         UserDefaults.standard.removeObject(forKey: key)
     }
     
+    static func flag(_ key:String, val:Bool) -> Bool {
+        let current = grab(key) as? Bool ?? false
+        save(val, withKey: key)
+        return current
+    }
+    
     // MARK: - HTTP Helpers
     private static func standardRequest(_ url: URL)->URLRequest {
         var req = URLRequest(url: url)

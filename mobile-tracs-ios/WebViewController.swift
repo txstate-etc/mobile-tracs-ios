@@ -28,9 +28,14 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         super.viewDidLoad()
         
         Utils.showActivity(view)
-        navigationItem.rightBarButtonItem = Utils.fontAwesomeBarButtonItem(icon: .ellipsisV, target: self, action: #selector(pressedMenu))
-        navigationItem.rightBarButtonItem?.accessibilityLabel = "Menu"
-
+        
+        let titlelabel = UILabel()
+        titlelabel.text = "TRACS"
+        titlelabel.font = UIFont.preferredFont(forTextStyle: .headline)
+        titlelabel.sizeToFit()
+        titlelabel.textColor = Utils.gold
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titlelabel)
         updateBell()
 
         back = Utils.fontAwesomeBarButtonItem(icon: .chevronLeft, target: self, action: #selector(pressedBack(sender:)))
@@ -147,10 +152,16 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     func updateBell() {
         let newnumber = UIApplication.shared.applicationIconBadgeNumber
         if bellnumber != newnumber {
+            let menubutton = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedMenu))
+            menubutton.accessibilityLabel = "Menu"
             bellnumber = newnumber
-            navigationItem.leftBarButtonItem = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.gold, badgecount:newnumber, icon: .bellO, target: self, action: #selector(pressedBell))
-            navigationItem.leftBarButtonItem?.accessibilityLabel = String(bellnumber!)+" Notification"+(bellnumber != 1 ? "s" : "")
-            navigationItem.leftBarButtonItem?.accessibilityHint = "open notifications screen"
+            let bellbutton = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.gold, badgecount:newnumber, icon: .bellO, target: self, action: #selector(pressedBell))
+            bellbutton.accessibilityLabel = String(bellnumber!)+" Notification"+(bellnumber != 1 ? "s" : "")
+            bellbutton.accessibilityHint = "open notifications screen"
+            navigationItem.rightBarButtonItems = [
+                menubutton,
+                bellbutton
+            ]
         }
         if let btn = self.navigationItem.leftBarButtonItem?.customView as? UIButton {
             btn.isEnabled = !TRACSClient.userid.isEmpty

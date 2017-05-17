@@ -7,11 +7,18 @@
 //
 
 import Foundation
+import UIKit
 
 extension Array where Element: Equatable {
     mutating func remove(object: Element) {
         if let index = index(of: object) {
             remove(at: index)
         }
+    }
+}
+
+extension UINavigationBar {
+    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+        return CGSize(width: UIScreen.main.bounds.size.width, height: 50.0)
     }
 }

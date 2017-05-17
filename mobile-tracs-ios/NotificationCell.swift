@@ -9,7 +9,6 @@
 import UIKit
 
 protocol NotificationCellDelegate {
-    func cellSwipedLeft(_ cell:NotificationCell, notify:Notification)
 }
 
 class NotificationCell: UITableViewCell {
@@ -19,15 +18,5 @@ class NotificationCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        let gest = UISwipeGestureRecognizer(target: self, action: #selector(cellSwipedLeft(gest:)))
-        gest.direction = .left
-        self.addGestureRecognizer(gest)
     }
-    
-    func cellSwipedLeft(gest:UIGestureRecognizer) {
-        if let del = delegate, let noti = notify {
-            del.cellSwipedLeft(self, notify: noti)
-        }
-    }
-    
 }

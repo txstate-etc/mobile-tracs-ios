@@ -70,18 +70,21 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         return cell
     }
     
-    func cellSwipedLeft(_ cell: NotificationCell, notify: Notification) {
-        IntegrationClient.markNotificationCleared(notify) { (success) in
-            DispatchQueue.main.async {
-                if success {
-                    self.notifications.remove(object:notify)
-                    self.tableView.reloadData()
-                    Analytics.event(category: "Notification", action: "cleared", label: notify.object_type ?? "", value: nil)
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        return [UITableViewRowAction(style: .default, title: "Dismiss", handler: { (action, indexPath) in
+            let n = self.notifications[indexPath.row]
+            IntegrationClient.markNotificationCleared(n) { (success) in
+                DispatchQueue.main.async {
+                    if success {
+                        self.notifications.remove(at: indexPath.row)
+                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+                        Analytics.event(category: "Notification", action: "cleared", label: n.object_type ?? "", value: nil)
+                    }
                 }
             }
-        }
+        })]
     }
-    
+        
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let tracsobj = notifications[indexPath.row].object {
             if let url = URL(string: tracsobj.getUrl()) {

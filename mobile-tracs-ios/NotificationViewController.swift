@@ -20,7 +20,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewWillAppear(animated)
         Utils.showActivity(view)
         Analytics.viewWillAppear("Notifications")
         IntegrationClient.getNotifications { (notifications) in

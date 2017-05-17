@@ -62,6 +62,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         cell.notify = notify
         if let tracsobj = notify.object {
             cell.textLabel?.text = tracsobj.tableTitle()
+            cell.textLabel?.font = notify.read ? UIFont.preferredFont(forTextStyle: .body) : Utils.boldPreferredFont(style: .body)
             cell.detailTextLabel?.text = tracsobj.tableSubtitle()
             if !tracsobj.getUrl().isEmpty {
                 cell.accessoryType = .disclosureIndicator
@@ -86,8 +87,13 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
         
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let tracsobj = notifications[indexPath.row].object {
+        let notify = notifications[indexPath.row]
+        if let tracsobj = notify.object {
             if let url = URL(string: tracsobj.getUrl()) {
+                IntegrationClient.markNotificationRead(notify, completion: { (success) in
+                    notify.read = true
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                })
                 Analytics.event(category: "Notification", action: "click", label: notifications[indexPath.row].object_type ?? "", value: nil)
                 navigationController!.popViewController(animated: true)
                 (navigationController!.viewControllers[0] as! WebViewController).webView.loadRequest(URLRequest(url: url))

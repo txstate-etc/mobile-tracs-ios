@@ -170,6 +170,16 @@ class IntegrationClient {
         }
     }
     
+    static func markNotificationRead(_ notify:Notification, completion:@escaping(Bool)->Void) {
+        if let id = notify.id {
+            Utils.patch(url: notificationsurl+"/"+id+"?token="+deviceToken, jsonobject:["read":true]) { (success) in
+                completion(success)
+            }
+        } else {
+            completion(false)
+        }
+    }
+    
     static func fetchSettings(completion:@escaping(Settings)->Void) {
         Utils.fetchJSONObject(url: settingsurl+"/"+deviceToken) { (dict) in
             completion(Settings(dict: dict))

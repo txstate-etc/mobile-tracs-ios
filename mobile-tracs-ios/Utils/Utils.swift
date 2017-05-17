@@ -238,6 +238,11 @@ class Utils {
         vc.present(alert, animated: true, completion: nil)
     }
     
+    static func boldPreferredFont(style:UIFontTextStyle) -> UIFont {
+        let font = UIFont.preferredFont(forTextStyle: style)
+        return UIFont.boldSystemFont(ofSize: font.pointSize)
+    }
+    
     static func fontAwesomeBarButtonItem(icon: FontAwesome, target: AnyObject, action: Selector) -> UIBarButtonItem {
         let ret = UIBarButtonItem(title: String.fontAwesomeIcon(name: icon), style: UIBarButtonItemStyle.plain, target: target, action: action)
         ret.setTitleTextAttributes([NSFontAttributeName: UIFont.fontAwesome(ofSize: 20)], for: .normal)

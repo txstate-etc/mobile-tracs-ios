@@ -29,13 +29,31 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         
         Utils.showActivity(view)
         
+        let icon = UIImageView(image: UIImage.fontAwesomeIcon(name: .home, textColor: Utils.darkred, size: CGSize(width: 30, height: 30)))
+        icon.contentMode = .center
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        
         let titlelabel = UILabel()
         titlelabel.text = "TRACS"
         titlelabel.font = UIFont.preferredFont(forTextStyle: .headline)
         titlelabel.sizeToFit()
-        titlelabel.textColor = Utils.gold
+        titlelabel.textColor = navigationController?.navigationBar.tintColor!
+        titlelabel.translatesAutoresizingMaskIntoConstraints = false
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titlelabel)
+        let titleview = UIView()
+        titleview.addSubview(icon)
+        titleview.addSubview(titlelabel)
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleview)
+        NSLayoutConstraint.activate([
+            NSLayoutConstraint(item: icon, attribute: .leading, relatedBy: .equal, toItem: titleview, attribute: .leading, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: icon, attribute: .bottom, relatedBy: .equal, toItem: titleview, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: icon, attribute: .height, relatedBy: .equal, toItem: titleview, attribute: .height, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: icon, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30),
+            NSLayoutConstraint(item: titlelabel, attribute: .centerY, relatedBy: .equal, toItem: titleview, attribute: .centerY, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: titlelabel, attribute: .left, relatedBy: .equal, toItem: icon, attribute: .right, multiplier: 1, constant: 5)
+            ])
+        
         updateBell()
 
         back = Utils.fontAwesomeBarButtonItem(icon: .chevronLeft, target: self, action: #selector(pressedBack(sender:)))
@@ -155,7 +173,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
             let menubutton = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedMenu))
             menubutton.accessibilityLabel = "Menu"
             bellnumber = newnumber
-            let bellbutton = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.gold, badgecount:newnumber, icon: .bellO, target: self, action: #selector(pressedBell))
+            let bellbutton = Utils.fontAwesomeBadgedBarButtonItem(color: (navigationController?.navigationBar.tintColor)!, badgecount:newnumber, icon: .bellO, target: self, action: #selector(pressedBell))
             bellbutton.accessibilityLabel = String(bellnumber!)+" Notification"+(bellnumber != 1 ? "s" : "")
             bellbutton.accessibilityHint = "open notifications screen"
             navigationItem.rightBarButtonItems = [
@@ -163,10 +181,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
                 bellbutton
             ]
         }
-        if let btn = self.navigationItem.leftBarButtonItem?.customView as? UIButton {
-            btn.isEnabled = !TRACSClient.userid.isEmpty
-        }
-        if let btn = self.navigationItem.rightBarButtonItem {
+        if let btn = self.navigationItem.rightBarButtonItems?[1].customView as? UIButton {
             btn.isEnabled = !TRACSClient.userid.isEmpty
         }
    }

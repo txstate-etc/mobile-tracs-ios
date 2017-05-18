@@ -29,10 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         window = UIWindow(frame: UIScreen.main.bounds)
         let wvc = WebViewController(nibName: "WebViewController", bundle: nil)
         let nav = UINavigationController()
-        nav.navigationBar.barStyle = UIBarStyle.blackOpaque
+        nav.navigationBar.barStyle = .default
         nav.navigationBar.isTranslucent = false
-        nav.navigationBar.barTintColor = Utils.darkred
-        nav.navigationBar.tintColor = Utils.gold
+        nav.navigationBar.barTintColor = Utils.gray
+        nav.navigationBar.tintColor = Utils.darkred
         nav.viewControllers = [wvc]
         window?.rootViewController = nav
         window?.backgroundColor = UIColor.white

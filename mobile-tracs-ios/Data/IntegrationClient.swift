@@ -143,20 +143,12 @@ class IntegrationClient {
         }
     }
     
-    static func markNotificationsSeen(notifications:[Notification], completion:@escaping(Bool)->Void) {
-        let dispatchgroup = DispatchGroup()
-        var wasfailure = false
-        for n in notifications {
-            if let id = n.id {
-                dispatchgroup.enter()
-                Utils.patch(url: notificationsurl+"/"+id+"?token="+deviceToken, jsonobject: ["seen":true], completion: { (success) in
-                    wasfailure = wasfailure || !success
-                    dispatchgroup.leave()
-                })
-            }
+    static func markNotificationsSeen(_ notis:[Notification], completion:@escaping(Bool)->Void) {
+        let ids = notis.map { (n) -> String in
+            n.id!
         }
-        dispatchgroup.notify(queue: .main) { 
-            completion(!wasfailure)
+        Utils.patch(url: notificationsurl+"?token="+deviceToken, jsonobject: ["ids":ids, "patches":["seen":true]]) { (success) in
+            completion(success)
         }
     }
     

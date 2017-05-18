@@ -15,6 +15,7 @@
 		09071A231EC7A368008560B5 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A221EC7A368008560B5 /* MenuItem.swift */; };
 		09071A261EC948F2008560B5 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A241EC948F2008560B5 /* FeedbackViewController.swift */; };
 		09071A271EC948F2008560B5 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09071A251EC948F2008560B5 /* FeedbackViewController.xib */; };
+		09071A291ECDEB6A008560B5 /* NotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A281ECDEB6A008560B5 /* NotificationObserver.swift */; };
 		0918543E1E98A03300DAF3B6 /* Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0918543D1E98A03300DAF3B6 /* Registration.swift */; };
 		092700CE1E884D720089821D /* JSONSerialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700CD1E884D720089821D /* JSONSerialize.swift */; };
 		092700D11E884DB00089821D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700CF1E884DB00089821D /* Settings.swift */; };
@@ -68,6 +69,7 @@
 		09071A221EC7A368008560B5 /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuItem.swift; path = UIWidgets/MenuItem.swift; sourceTree = "<group>"; };
 		09071A241EC948F2008560B5 /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		09071A251EC948F2008560B5 /* FeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackViewController.xib; sourceTree = "<group>"; };
+		09071A281ECDEB6A008560B5 /* NotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationObserver.swift; path = UIWidgets/NotificationObserver.swift; sourceTree = "<group>"; };
 		0918543D1E98A03300DAF3B6 /* Registration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Registration.swift; path = Data/Registration.swift; sourceTree = "<group>"; };
 		092700CD1E884D720089821D /* JSONSerialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONSerialize.swift; path = Data/JSONSerialize.swift; sourceTree = "<group>"; };
 		092700CF1E884DB00089821D /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = Data/Settings.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				09DDA8AB1E9D3143004220CF /* BadgeSwift.swift */,
 				09071A201EC79D06008560B5 /* MenuViewController.swift */,
 				09071A221EC7A368008560B5 /* MenuItem.swift */,
+				09071A281ECDEB6A008560B5 /* NotificationObserver.swift */,
 			);
 			name = UIWidgets;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				09DDA8B31EA084F8004220CF /* Secrets.swift in Sources */,
 				098FCFC21E9AA3FF00D4C66D /* Utils.swift in Sources */,
 				09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */,
+				09071A291ECDEB6A008560B5 /* NotificationObserver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

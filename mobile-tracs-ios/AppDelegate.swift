@@ -90,5 +90,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Analytics.event(category: "External Launch", action: url.absoluteString, label: sourceApplication ?? "null", value: nil)
         return true
     }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+        if application.applicationState == .active {
+            NSLog("received notification: %@", userInfo)
+            let top = application.keyWindow?.rootViewController as? UINavigationController
+            if let observer = top?.viewControllers.last as? NotificationObserver {
+                observer.incomingNotification(badgeCount: 0, message: "test")
+            }
+        }
+    }
 }
 

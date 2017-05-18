@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate, MenuViewControllerDelegate {
+class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate, MenuViewControllerDelegate, NotificationObserver {
     @IBOutlet var webView: UIWebView!
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var back: UIBarButtonItem!
@@ -317,5 +317,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         }
     }
     
-
+    func incomingNotification(badgeCount: Int, message: String) {
+        updateBell()
+    }
 }

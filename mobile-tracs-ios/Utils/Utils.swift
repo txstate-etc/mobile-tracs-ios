@@ -287,6 +287,7 @@ class Utils {
         
         let titleview = UIView()
         titleview.translatesAutoresizingMaskIntoConstraints = false
+        titleview.accessibilityLabel = title
         titleview.addSubview(icon)
         titleview.addSubview(titlelabel)
         

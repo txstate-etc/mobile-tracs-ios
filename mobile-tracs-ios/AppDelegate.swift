@@ -92,11 +92,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
+    func getActiveViewController() -> NotificationObserver? {
+        let top = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
+        return top?.viewControllers.last as? NotificationObserver
+    }
+    
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
         if application.applicationState == .active {
             NSLog("received notification: %@", userInfo)
-            let top = application.keyWindow?.rootViewController as? UINavigationController
-            if let observer = top?.viewControllers.last as? NotificationObserver {
+            if let observer = getActiveViewController() {
                 var badge:Int?
                 var msg:String?
                 if let aps = userInfo["aps"] as? [String:Any] {
@@ -110,7 +114,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.alert])
+        NSLog("userNotificationCenter %i %@", notification.request.content.badge ?? 0, notification.request.content.body)
+        if let observer = getActiveViewController() {
+            observer.incomingNotification(badgeCount: notification.request.content.badge as? Int, message: notification.request.content.body)
+        }
+        completionHandler([.alert, .badge])
     }
 }
 

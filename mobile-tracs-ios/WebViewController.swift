@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate, MenuViewControllerDelegate, NotificationObserver {
+class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate, MenuViewControllerDelegate, NotificationObserver, UIScrollViewDelegate {
     @IBOutlet var webView: UIWebView!
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var back: UIBarButtonItem!
@@ -175,9 +175,14 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     func webViewDidStartLoad(_ webView: UIWebView) {
         updateButtons()
     }
+    var currentscale:CGFloat = 1.0
     func webViewDidFinishLoad(_ webView: UIWebView) {
         Utils.hideActivity()
         updateButtons()
+        currentscale = 1.0
+        webView.scrollView.delegate = self
+        webView.scrollView.minimumZoomScale = 1
+        webView.scrollView.maximumZoomScale = 5
         if let urlstring = webView.request?.url?.absoluteString {
             if urlstring.hasPrefix(TRACSClient.tracsurl) && TRACSClient.userid.isEmpty {
                 loginIfNecessary(completion: { (loggedin) in
@@ -187,7 +192,6 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         }
 
         registrationlock.notify(queue: .main) {
-            NSLog("got inside the notify")
             self.registrationlock.enter();
             if self.needtoregister {
                 TRACSClient.waitForLogin(completion: { (loggedin) in
@@ -206,6 +210,11 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
                 self.registrationlock.leave()
             }
         }
+    }
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        currentscale = currentscale * scale
+        scrollView.minimumZoomScale = 1/currentscale
+        scrollView.maximumZoomScale = 5/currentscale
     }
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         updateButtons()

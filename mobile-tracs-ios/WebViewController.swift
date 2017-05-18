@@ -327,14 +327,15 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
                 Utils.hideActivity()
             })
         } else if pressed == MenuItem.txstate {
-            if let url = URL(string: "txstate://") {
+            if let url = URL(string: "edu.txstate.mobile://") {
                 if UIApplication.shared.canOpenURL(url) {
                     Analytics.event(category: "External", action: "click", label: "txstate://", value: nil)
                     UIApplication.shared.openURL(url)
                 }
             }
         } else if pressed == MenuItem.feedback {
-            
+            let fvc = FeedbackViewController(nibName: "FeedbackViewController", bundle: nil)
+            navigationController?.pushViewController(fvc, animated: true)
         } else if pressed == MenuItem.intro {
             activateIntroScreen()
         }

@@ -200,7 +200,8 @@ class Utils {
                     completion(true)
                 } else {
                     let body = String(data: request.httpBody!, encoding: .utf8)
-                    NSLog("patch failed url=%@ body=%@ statusCode=%i", url, body ?? "nil", httpresp.statusCode)
+                    let respbody = String(data: data!, encoding: .utf8)
+                    NSLog("patch failed url=%@ requestBody=%@ statusCode=%i responseBody=%@", url, body ?? "nil", httpresp.statusCode, respbody ?? "nil")
                 }
             } else {
                 completion(false)
@@ -270,6 +271,37 @@ class Utils {
         }
         let ret = UIBarButtonItem(customView: button)
         return ret;
+    }
+    
+    static func fontAwesomeTitledBarButtonItem(color: UIColor, icon: FontAwesome, title:String, textStyle:UIFontTextStyle, target:AnyObject, action:Selector) -> UIBarButtonItem {
+        let icon = UIImageView(image: UIImage.fontAwesomeIcon(name: icon, textColor: color, size: CGSize(width: 30, height: 30)))
+        icon.contentMode = .center
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        
+        let titlelabel = UILabel()
+        titlelabel.text = title
+        titlelabel.font = UIFont.preferredFont(forTextStyle: textStyle)
+        titlelabel.sizeToFit()
+        titlelabel.textColor = color
+        titlelabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let titleview = UIView()
+        titleview.translatesAutoresizingMaskIntoConstraints = false
+        titleview.addSubview(icon)
+        titleview.addSubview(titlelabel)
+        
+        NSLayoutConstraint.activate([
+            NSLayoutConstraint(item: icon, attribute: .leading, relatedBy: .equal, toItem: titleview, attribute: .leading, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: icon, attribute: .bottom, relatedBy: .equal, toItem: titleview, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: icon, attribute: .height, relatedBy: .equal, toItem: titleview, attribute: .height, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: icon, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30),
+            NSLayoutConstraint(item: titlelabel, attribute: .centerY, relatedBy: .equal, toItem: titleview, attribute: .centerY, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: titlelabel, attribute: .left, relatedBy: .equal, toItem: icon, attribute: .right, multiplier: 1, constant: 2),
+            NSLayoutConstraint(item: titlelabel, attribute: .trailing, relatedBy: .equal, toItem: titleview, attribute: .trailing, multiplier: 1, constant: 0)
+            ])
+        
+        titleview.addGestureRecognizer(UITapGestureRecognizer(target: target, action: action))
+        return UIBarButtonItem(customView: titleview)
     }
     
     static func constrainToContainer(view: UIView, container: UIView) {

@@ -170,6 +170,15 @@ class IntegrationClient {
         }
     }
     
+    static func markAllNotificationsCleared(_ notis:[Notification], completion:@escaping(Bool)->Void) {
+        let ids = notis.map { (n) -> String in
+            n.id!
+        }
+        Utils.patch(url: notificationsurl+"?token="+deviceToken, jsonobject: ["ids":ids, "patches":["cleared":true]]) { (success) in
+            completion(success)
+        }
+    }
+    
     static func markNotificationRead(_ notify:Notification, completion:@escaping(Bool)->Void) {
         if let id = notify.id {
             Utils.patch(url: notificationsurl+"/"+id+"?token="+deviceToken, jsonobject:["read":true]) { (success) in

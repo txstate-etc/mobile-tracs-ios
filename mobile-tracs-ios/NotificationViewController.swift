@@ -16,7 +16,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         //navigationItem.hidesBackButton = true
         tableView.register(UINib(nibName:"NotificationCell", bundle: nil), forCellReuseIdentifier: "notification")
-        navigationItem.rightBarButtonItem = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedSettings))
+        navigationItem.rightBarButtonItem = Utils.fontAwesomeTitledBarButtonItem(color: (navigationController?.navigationBar.tintColor)!, icon: .timesCircle, title: "Clear All", textStyle: .body, target: self, action: #selector(clearAllPressed))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,8 +101,15 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    func pressedSettings() {
-        let svc = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
-        navigationController?.pushViewController(svc, animated: true)
+    func clearAllPressed() {
+        IntegrationClient.markAllNotificationsCleared(notifications) { (success) in
+            if success {
+                DispatchQueue.main.async {
+                    self.notifications = []
+                    self.tableView.reloadData()
+                    Analytics.event(category: "Notification", action: "cleared", label: "all", value: nil)
+                }
+            }
+        }
     }
 }

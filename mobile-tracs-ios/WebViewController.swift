@@ -29,31 +29,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         
         Utils.showActivity(view)
         
-        let icon = UIImageView(image: UIImage.fontAwesomeIcon(name: .home, textColor: Utils.darkred, size: CGSize(width: 30, height: 30)))
-        icon.contentMode = .center
-        icon.translatesAutoresizingMaskIntoConstraints = false
-        
-        let titlelabel = UILabel()
-        titlelabel.text = "TRACS"
-        titlelabel.font = UIFont.preferredFont(forTextStyle: .headline)
-        titlelabel.sizeToFit()
-        titlelabel.textColor = navigationController?.navigationBar.tintColor!
-        titlelabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        let titleview = UIView()
-        titleview.addSubview(icon)
-        titleview.addSubview(titlelabel)
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleview)
-        NSLayoutConstraint.activate([
-            NSLayoutConstraint(item: icon, attribute: .leading, relatedBy: .equal, toItem: titleview, attribute: .leading, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: icon, attribute: .bottom, relatedBy: .equal, toItem: titleview, attribute: .bottom, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: icon, attribute: .height, relatedBy: .equal, toItem: titleview, attribute: .height, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: icon, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30),
-            NSLayoutConstraint(item: titlelabel, attribute: .centerY, relatedBy: .equal, toItem: titleview, attribute: .centerY, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: titlelabel, attribute: .left, relatedBy: .equal, toItem: icon, attribute: .right, multiplier: 1, constant: 5)
-            ])
-        
+        navigationItem.leftBarButtonItem = Utils.fontAwesomeTitledBarButtonItem(color: (navigationController?.navigationBar.tintColor)!, icon: .home, title: "TRACS", textStyle: .headline, target: self, action: #selector(pressedHome))
         updateBell()
 
         back = Utils.fontAwesomeBarButtonItem(icon: .chevronLeft, target: self, action: #selector(pressedBack(sender:)))
@@ -147,6 +123,15 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     func pressedBell() {
         let nvc = NotificationViewController(nibName: "NotificationViewController", bundle: nil)
         navigationController?.pushViewController(nvc, animated: true)
+    }
+    func pressedHome() {
+        Utils.showActivity(view)
+        loginIfNecessary(completion: { (loggedin) in
+            let urlStringToLoad = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
+            if let urlToLoad = URL(string: urlStringToLoad) {
+                self.webView.loadRequest(URLRequest(url: urlToLoad))
+            }
+        })
     }
     func updateButtons() {
         forward.isEnabled = webView.canGoForward
@@ -317,15 +302,6 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         if pressed == MenuItem.settings {
             let svc = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
             navigationController?.pushViewController(svc, animated: true)
-        } else if pressed == MenuItem.home {
-            Utils.showActivity(view)
-            loginIfNecessary(completion: { (loggedin) in
-                let urlStringToLoad = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
-                if let urlToLoad = URL(string: urlStringToLoad) {
-                    self.webView.loadRequest(URLRequest(url: urlToLoad))
-                }
-                Utils.hideActivity()
-            })
         } else if pressed == MenuItem.txstate {
             if let url = URL(string: "edu.txstate.mobile://") {
                 if UIApplication.shared.canOpenURL(url) {

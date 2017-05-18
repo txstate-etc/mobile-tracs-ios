@@ -9,5 +9,5 @@
 import Foundation
 
 protocol NotificationObserver {
-    func incomingNotification(badgeCount:Int, message:String)
+    func incomingNotification(badgeCount:Int?, message:String?)
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotificationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationCellDelegate {
+class NotificationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationCellDelegate, NotificationObserver {
     @IBOutlet var tableView: UITableView!
     var notifications: [Notification] = []
 
@@ -21,29 +21,8 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Utils.showActivity(view)
         Analytics.viewWillAppear("Notifications")
-        IntegrationClient.getNotifications { (notifications) in
-            let notis = notifications ?? []
-            var unseen:[Notification] = []
-            for n in notis {
-                if !n.seen {
-                    unseen.append(n)
-                }
-            }
-            IntegrationClient.markNotificationsSeen(notifications: unseen, completion: { (success) in
-                DispatchQueue.main.async {
-                    UIApplication.shared.applicationIconBadgeNumber = 0
-                    self.notifications = notis
-                    self.tableView.reloadData()
-                    Utils.hideActivity()
-                }
-            })
-        }
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        loadNotifications(true)
     }
     
     // MARK: - UITableViewDataSource
@@ -101,6 +80,30 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+    // MARK: - More functions
+    
+    func loadNotifications(_ showactivity:Bool) {
+        if showactivity { Utils.showActivity(view) }
+        IntegrationClient.getNotifications { (notifications) in
+            if let notis = notifications {
+                var unseen:[Notification] = []
+                for n in notis {
+                    if !n.seen {
+                        unseen.append(n)
+                    }
+                }
+                IntegrationClient.markNotificationsSeen(unseen, completion: { (success) in
+                    DispatchQueue.main.async {
+                        UIApplication.shared.applicationIconBadgeNumber = 0
+                        self.notifications = notis
+                        self.tableView.reloadData()
+                        Utils.hideActivity()
+                    }
+                })
+            }
+        }
+    }
+    
     func clearAllPressed() {
         IntegrationClient.markAllNotificationsCleared(notifications) { (success) in
             if success {
@@ -111,5 +114,9 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                 }
             }
         }
+    }
+    
+    func incomingNotification(badgeCount: Int?, message: String?) {
+        loadNotifications(false)
     }
 }

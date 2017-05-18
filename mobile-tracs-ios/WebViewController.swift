@@ -317,7 +317,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         }
     }
     
-    func incomingNotification(badgeCount: Int, message: String) {
+    func incomingNotification(badgeCount: Int?, message: String?) {
         updateBell()
     }
 }

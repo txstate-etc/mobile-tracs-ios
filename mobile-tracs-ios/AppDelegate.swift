@@ -47,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             center.requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
                 if error == nil && granted { application.registerForRemoteNotifications() }
             }
+            center.delegate = self
         } else {
             let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             application.registerUserNotificationSettings(settings)
@@ -96,9 +97,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             NSLog("received notification: %@", userInfo)
             let top = application.keyWindow?.rootViewController as? UINavigationController
             if let observer = top?.viewControllers.last as? NotificationObserver {
-                observer.incomingNotification(badgeCount: 0, message: "test")
+                var badge:Int?
+                var msg:String?
+                if let aps = userInfo["aps"] as? [String:Any] {
+                    badge = aps["badge"] as? Int
+                    msg = aps["alert"] as? String
+                }
+                observer.incomingNotification(badgeCount: badge, message: msg)
             }
         }
+    }
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert])
     }
 }
 

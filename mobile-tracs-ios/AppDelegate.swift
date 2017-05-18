@@ -85,5 +85,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         IntegrationClient.deviceToken = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
         NSLog("deviceToken: %@", IntegrationClient.deviceToken)
     }
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        Analytics.event(category: "External Launch", action: url.absoluteString, label: sourceApplication ?? "null", value: nil)
+        return true
+    }
 }
 

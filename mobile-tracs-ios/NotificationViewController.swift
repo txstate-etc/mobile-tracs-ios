@@ -75,7 +75,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                 })
                 Analytics.event(category: "Notification", action: "click", label: notifications[indexPath.row].object_type ?? "", value: nil)
                 navigationController!.popViewController(animated: true)
-                (navigationController!.viewControllers[0] as! WebViewController).webView.loadRequest(URLRequest(url: url))
+                (navigationController!.viewControllers[0] as! WebViewController).webview.load(URLRequest(url: url))
             }
         }
     }

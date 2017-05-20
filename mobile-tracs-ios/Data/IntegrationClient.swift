@@ -144,6 +144,7 @@ class IntegrationClient {
     }
     
     static func markNotificationsSeen(_ notis:[Notification], completion:@escaping(Bool)->Void) {
+        if notis.count == 0 { return completion(true) }
         let ids = notis.map { (n) -> String in
             n.id!
         }
@@ -163,6 +164,7 @@ class IntegrationClient {
     }
     
     static func markAllNotificationsCleared(_ notis:[Notification], completion:@escaping(Bool)->Void) {
+        if notis.count == 0 { return completion(true) }
         let ids = notis.map { (n) -> String in
             n.id!
         }

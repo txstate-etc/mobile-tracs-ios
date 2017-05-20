@@ -17,7 +17,7 @@
                 <outlet property="refresh" destination="lh6-QP-Ijc" id="0cm-JC-Ytf"/>
                 <outlet property="toolBar" destination="Y3C-xs-mBL" id="SDm-eA-6L3"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bj5-qa-TIm"/>
-                <outlet property="webView" destination="jpO-w7-VVe" id="b4s-80-Am9"/>
+                <outlet property="wvContainer" destination="UcJ-Nt-JKX" id="Q7V-6Z-flk"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -39,23 +39,20 @@
                         <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="yfc-br-iEF"/>
                     </items>
                 </toolbar>
-                <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jpO-w7-VVe">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UcJ-Nt-JKX">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
-                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="iB4-eo-Ka1"/>
-                    </connections>
-                </webView>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="UcJ-Nt-JKX" secondAttribute="trailing" id="71V-2y-msP"/>
+                <constraint firstItem="UcJ-Nt-JKX" firstAttribute="bottom" secondItem="Y3C-xs-mBL" secondAttribute="top" id="AmL-c6-XJ0"/>
+                <constraint firstItem="UcJ-Nt-JKX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="G2M-ec-45e"/>
                 <constraint firstAttribute="bottom" secondItem="Y3C-xs-mBL" secondAttribute="bottom" id="Lz8-lb-bZm"/>
-                <constraint firstAttribute="trailing" secondItem="jpO-w7-VVe" secondAttribute="trailing" id="RIS-Zt-kFP"/>
                 <constraint firstAttribute="trailing" secondItem="Y3C-xs-mBL" secondAttribute="trailing" id="Xb4-nZ-ePu"/>
-                <constraint firstItem="jpO-w7-VVe" firstAttribute="bottom" secondItem="Y3C-xs-mBL" secondAttribute="top" id="Y6n-ts-dXN"/>
-                <constraint firstItem="jpO-w7-VVe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ahb-8S-sQt"/>
                 <constraint firstItem="Y3C-xs-mBL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="g4O-ND-W8T"/>
-                <constraint firstItem="jpO-w7-VVe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="pNK-vw-Iuw"/>
+                <constraint firstItem="UcJ-Nt-JKX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="pSt-b9-oV8"/>
             </constraints>
             <point key="canvasLocation" x="24.5" y="52.5"/>
         </view>

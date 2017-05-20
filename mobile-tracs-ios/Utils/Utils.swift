@@ -202,6 +202,7 @@ class Utils {
                     let body = String(data: request.httpBody!, encoding: .utf8)
                     let respbody = String(data: data!, encoding: .utf8)
                     NSLog("patch failed url=%@ requestBody=%@ statusCode=%i responseBody=%@", url, body ?? "nil", httpresp.statusCode, respbody ?? "nil")
+                    completion(false)
                 }
             } else {
                 completion(false)

@@ -8,14 +8,16 @@
 
 import UIKit
 import MessageUI
+import WebKit
 
-class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate, MenuViewControllerDelegate, NotificationObserver, UIScrollViewDelegate {
-    @IBOutlet var webView: UIWebView!
+class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate, MenuViewControllerDelegate, NotificationObserver {
+    @IBOutlet var wvContainer: UIView!
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var back: UIBarButtonItem!
     @IBOutlet var forward: UIBarButtonItem!
     @IBOutlet var refresh: UIBarButtonItem!
     @IBOutlet var interaction: UIBarButtonItem!
+    var webview:WKWebView!
 
     var documentInteractionController: UIDocumentInteractionController?
     let documentsPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
@@ -28,6 +30,16 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         super.viewDidLoad()
         
         Utils.showActivity(view)
+        
+        let config = WKWebViewConfiguration()
+        if #available(iOS 10.0, *) {
+            config.ignoresViewportScaleLimits = true
+        }
+        webview = WKWebView(frame: wvContainer.bounds, configuration: config)
+        wvContainer.addSubview(webview)
+        Utils.constrainToContainer(view: webview, container: wvContainer)
+        webview.navigationDelegate = self
+        webview.uiDelegate = self
         
         navigationItem.leftBarButtonItem = Utils.fontAwesomeTitledBarButtonItem(color: (navigationController?.navigationBar.tintColor)!, icon: .home, title: "TRACS", textStyle: .headline, target: self, action: #selector(pressedHome))
         updateBell()
@@ -48,9 +60,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         
         TRACSClient.waitForLogin { (loggedin) in
             let urlStringToLoad = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
-            if let urlToLoad = URL(string: urlStringToLoad) {
-                self.webView.loadRequest(URLRequest(url: urlToLoad))
-            }
+            self.load(url: urlStringToLoad)
         }
         
         if !Utils.flag("introScreen", val: true) {
@@ -67,6 +77,34 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     }
     
     // MARK: - Helper functions
+    func load(url:String) {
+        if let urlToLoad = URL(string: url) {
+            var req = URLRequest(url: urlToLoad)
+            if let cookies = HTTPCookieStorage.shared.cookies(for: urlToLoad) {
+                req.allHTTPHeaderFields = HTTPCookie.requestHeaderFields(with: cookies)
+            }
+            self.webview.load(req)
+        }
+    }
+    
+    func cookiesToJavascript(_ cookies: [HTTPCookie]) -> String {
+        var result = ""
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.dateFormat = "EEE, d MMM yyyy HH:mm:ss zzz"
+        
+        for cookie in cookies {
+            result += "document.cookie='\(cookie.name)=\(cookie.value); domain=\(cookie.domain); path=\(cookie.path); "
+            if let date = cookie.expiresDate {
+                result += "expires=\(dateFormatter.string(from:date)); "
+            }
+            if (cookie.isSecure) {
+                result += "secure; "
+            }
+            result += "'; "
+        }
+        return result
+    }
     
     func loginIfNecessary(completion:@escaping(Bool)->Void) {
         TRACSClient.loginIfNecessary { (loggedin) in
@@ -79,17 +117,17 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
     
     // MARK: - Button Presses
     func pressedBack(sender: UIBarButtonItem!) {
-        webView.goBack()
+        webview.goBack()
     }
     func pressedForward(sender: UIBarButtonItem!) {
-        webView.goForward()
+        webview.goForward()
     }
     func pressedRefresh(sender: UIBarButtonItem!) {
-        if webView.isLoading { webView.stopLoading() }
-        else { webView.reload() }
+        if webview.isLoading { webview.stopLoading() }
+        else { webview.reload() }
     }
     func pressedInteraction(sender: UIBarButtonItem!) {
-        let fileUrl = webView.request?.url;
+        let fileUrl = webview.url
         if fileUrl == nil { return }
         
         let filename = fileUrl?.lastPathComponent;
@@ -128,26 +166,21 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
         Utils.showActivity(view)
         loginIfNecessary(completion: { (loggedin) in
             let urlStringToLoad = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
-            if let urlToLoad = URL(string: urlStringToLoad) {
-                self.webView.loadRequest(URLRequest(url: urlToLoad))
-            }
+            self.load(url: urlStringToLoad)
         })
     }
     func updateButtons() {
-        forward.isEnabled = webView.canGoForward
-        back.isEnabled = webView.canGoBack
+        forward.isEnabled = webview.canGoForward
+        back.isEnabled = webview.canGoBack
         var tb = toolBar.items!
-        tb[5] = (webView.isLoading ? stop : refresh);
+        tb[5] = (webview.isLoading ? stop : refresh);
         toolBar.setItems(tb, animated: false)
 
         interaction.isEnabled = false
-        if URLCache.shared.cachedResponse(for: webView.request!) != nil {
-            interaction.isEnabled = true
-        } else {
-            if let ext = webView.request?.url?.pathExtension.lowercased() {
-                if !ext.isEmpty && ext != "html" {
-                    interaction.isEnabled = true
-                }
+        
+        if let ext = webview.url?.pathExtension.lowercased() {
+            if !ext.isEmpty && ext != "html" {
+                interaction.isEnabled = true
             }
         }
     }
@@ -172,25 +205,25 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
    }
     
     // MARK: - UIWebViewDelegate
-    func webViewDidStartLoad(_ webView: UIWebView) {
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         updateButtons()
     }
-    var currentscale:CGFloat = 1.0
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        Utils.hideActivity()
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if let cookies = HTTPCookieStorage.shared.cookies {
+            let script = cookiesToJavascript(cookies)
+            webView.evaluateJavaScript(script, completionHandler: nil)
+        }
         updateButtons()
-        currentscale = 1.0
-        webView.scrollView.delegate = self
-        webView.scrollView.minimumZoomScale = 1
-        webView.scrollView.maximumZoomScale = 5
-        if let urlstring = webView.request?.url?.absoluteString {
+        Utils.hideActivity()
+        if let urlstring = webView.url?.absoluteString {
             if urlstring.hasPrefix(TRACSClient.tracsurl) && TRACSClient.userid.isEmpty {
                 loginIfNecessary(completion: { (loggedin) in
                     
                 })
             }
         }
-
+        
         registrationlock.notify(queue: .main) {
             self.registrationlock.enter();
             if self.needtoregister {
@@ -211,28 +244,34 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
             }
         }
     }
-    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        currentscale = currentscale * scale
-        scrollView.minimumZoomScale = 1/currentscale
-        scrollView.maximumZoomScale = 5/currentscale
-    }
-    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        NSLog("webView didFail navigation %@", error.localizedDescription)
         updateButtons()
     }
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if request.url?.scheme == "mailto" {
-            Analytics.event(category: "E-mail", action: "compose", label: request.url?.absoluteString ?? "", value: nil)
-            let mvc = MFMailComposeViewController()
-            mvc.mailComposeDelegate = self
-            
-            let rawcomponents = request.url?.absoluteString.characters.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: false).map(String.init)
-            let mailtocomponents = rawcomponents?[1].characters.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).map(String.init)
-            let recipients = mailtocomponents?[0].components(separatedBy: ";")
-            var params = [String:String]()
-            if mailtocomponents?.count == 2 {
-                let pairs = mailtocomponents?[1].components(separatedBy: "&")
-                if pairs != nil {
-                    for pair in pairs! {
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let url = navigationAction.request.url, let allHeaderFields = navigationAction.request.allHTTPHeaderFields {
+            let cookies = HTTPCookie.cookies(withResponseHeaderFields: allHeaderFields, for: url)
+            for cookie in cookies {
+                HTTPCookieStorage.shared.setCookie(cookie)
+            }
+        }
+
+        if let urlstring = navigationAction.request.url?.absoluteString {
+            NSLog(urlstring)
+            if navigationAction.request.url?.scheme == "mailto" {
+                Analytics.event(category: "E-mail", action: "compose", label: urlstring, value: nil)
+                let mvc = MFMailComposeViewController()
+                mvc.mailComposeDelegate = self
+                
+                let rawcomponents = urlstring.characters.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: false).map(String.init)
+                let mailtocomponents = rawcomponents[1].characters.split(separator: "?", maxSplits: 1, omittingEmptySubsequences: false).map(String.init)
+                let recipients = mailtocomponents[0].components(separatedBy: ";")
+                var params = [String:String]()
+                if mailtocomponents.count == 2 {
+                    let pairs = mailtocomponents[1].components(separatedBy: "&")
+                    for pair in pairs {
                         let p = pair.components(separatedBy: "=")
                         let key = p[0].removingPercentEncoding?.lowercased()
                         let value = p[1].removingPercentEncoding
@@ -241,24 +280,21 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
                         }
                     }
                 }
+                
+                mvc.setToRecipients(recipients)
+                if !(params["subject"] ?? "").isEmpty { mvc.setSubject(params["subject"]!) }
+                if !(params["body"] ?? "").isEmpty { mvc.setMessageBody(params["body"]!, isHTML: false) }
+                if !(params["cc"] ?? "").isEmpty { mvc.setCcRecipients(params["cc"]?.components(separatedBy: ";")) }
+                if !(params["bcc"] ?? "").isEmpty { mvc.setBccRecipients(params["bcc"]?.components(separatedBy: ";")) }
+                self.present(mvc, animated: true, completion: nil)
+                return decisionHandler(.cancel)
             }
-            
-            if recipients != nil { mvc.setToRecipients(recipients!) }
-            if !(params["subject"] ?? "").isEmpty { mvc.setSubject(params["subject"]!) }
-            if !(params["body"] ?? "").isEmpty { mvc.setMessageBody(params["body"]!, isHTML: false) }
-            if !(params["cc"] ?? "").isEmpty { mvc.setCcRecipients(params["cc"]?.components(separatedBy: ";")) }
-            if !(params["bcc"] ?? "").isEmpty { mvc.setBccRecipients(params["bcc"]?.components(separatedBy: ";")) }
-            self.present(mvc, animated: true, completion: nil)
-            return false;
-        }
-        if let urlstring = request.url?.absoluteString {
-            NSLog(urlstring)
             Analytics.linkClick(urlstring)
             if urlstring == "about:blank" {
-                return false
+                return decisionHandler(.cancel)
             }
-            if request.httpMethod == "POST" {
-                if let body = request.httpBody {
+            if navigationAction.request.httpMethod == "POST" {
+                if let body = navigationAction.request.httpBody {
                     if let body = String(data: body, encoding: .utf8) {
                         let params = Utils.stringToParams(body)
                         if params["publicWorkstation"] == nil {
@@ -277,7 +313,50 @@ class WebViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewC
                 updateBell()
             }
         }
-        return true
+        decisionHandler(.allow)
+    }
+    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        if let resp = navigationResponse.response as? HTTPURLResponse {
+            if let url = resp.url, let allHeaderFields = resp.allHeaderFields as? [String : String] {
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: allHeaderFields, for: url)
+                for cookie in cookies {
+                    HTTPCookieStorage.shared.setCookie(cookie)
+                }
+            }
+        }
+        decisionHandler(.allow)
+    }
+    
+    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        webview.evaluateJavaScript("document.cookie") { (resp, err) in
+            NSLog("didReceiveServerRedirect %@", resp as? String ?? "nil")
+            if let unparsed = resp as? String {
+                let pairs = unparsed.components(separatedBy: ";")
+                for pair in pairs {
+                    let keyval = pair.characters.split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false).map(String.init)
+                    let key = keyval[0]
+                    let val = keyval[1]
+                    if let host = webView.url?.host {
+                        NSLog("%@ %@ %@", host, key, val)
+                        let cookie = HTTPCookie(properties: [
+                            HTTPCookiePropertyKey.domain: host,
+                            HTTPCookiePropertyKey.path: "/",
+                            HTTPCookiePropertyKey.name: key,
+                            HTTPCookiePropertyKey.value: val
+                            ])!
+                        HTTPCookieStorage.shared.setCookie(cookie)
+                    }
+                }
+            }
+        }
+    }
+    
+    // this handles target=_blank links by opening them in the same view
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        if navigationAction.targetFrame == nil {
+            webView.load(navigationAction.request)
+        }
+        return nil
     }
 
     // MARK: - UIDocumentInteractionControllerDelegate

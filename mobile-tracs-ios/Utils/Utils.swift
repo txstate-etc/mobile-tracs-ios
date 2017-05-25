@@ -8,6 +8,7 @@
 
 import UIKit
 import LocalAuthentication
+import WebKit
 
 class Utils {
     static let red = UIColor(red: 80/255.0, green: 18/255.0, blue: 20/255.0, alpha: 1)
@@ -18,8 +19,12 @@ class Utils {
     static let colordisabled = UIColor(white: 0.8, alpha: 0.2)
     static let urlsession = URLSession.shared
     static let userAgent = UIWebView().stringByEvaluatingJavaScript(from:"navigator.userAgent")! + " TRACS Mobile"
-    internal static let post_queue = DispatchGroup()
-    internal static var indicators:[Int:UIActivityIndicatorView] = [:]
+    private static let wkprocesspool = WKProcessPool()
+    private static let post_queue = DispatchGroup()
+    private static var indicators:[Int:UIActivityIndicatorView] = [:]
+    private static var user = ""
+    private static var pw = ""
+    private static var longterm = false
     
     static func isSimulator()->Bool {
         #if arch(i386) || arch(x86_64)
@@ -58,6 +63,19 @@ class Utils {
     }
     
     // MARK: - HTTP Helpers
+    static func getWebView() -> WKWebView {
+        let config = WKWebViewConfiguration()
+        return getWebView(config: config)
+    }
+    
+    static func getWebView(config:WKWebViewConfiguration) -> WKWebView {
+        if #available(iOS 10.0, *) {
+            config.ignoresViewportScaleLimits = true
+        }
+        config.processPool = Utils.wkprocesspool
+        return WKWebView(frame: CGRect.zero, configuration: config)
+    }
+
     private static func standardRequest(_ url: URL)->URLRequest {
         var req = URLRequest(url: url)
         req.setValue(userAgent, forHTTPHeaderField: "User-Agent")
@@ -66,7 +84,7 @@ class Utils {
         }
         return req
     }
-    
+
     static func fetch(_ url:String, completion:@escaping (String)->Void) {
         if let targeturl = URL(string: url) {
             var req = standardRequest(targeturl)
@@ -231,6 +249,24 @@ class Utils {
         }.resume()
     }
     
+    static func logCookieStore() {
+        if let cookies = HTTPCookieStorage.shared.cookies {
+            for cookie in cookies {
+                NSLog("logCookieStore: %@", cookie)
+            }
+        }
+    }
+    
+    static func logCookieStore(forurl:String) {
+        if let url = URL(string: forurl) {
+            if let cookies = HTTPCookieStorage.shared.cookies(for: url) {
+                for cookie in cookies {
+                    NSLog("logCookieStore: %@", cookie)
+                }
+            }
+        }
+    }
+    
     // MARK: - UI Helpers
     
     static func alert(vc: UIViewController, message:String) {
@@ -363,15 +399,27 @@ class Utils {
     }
     
     // MARK: - Login Credentials
-    static func store(netid:String, pw:String) {
-        save(Date(), withKey: "logintime")
-        save(netid, withKey: "netid")
-        KeychainSwift.shared.set(pw, forKey: "password")
+    static func store(netid:String, pw:String, longterm:Bool) {
+        Utils.user = netid
+        Utils.pw = pw
+        Utils.longterm = longterm
+        if longterm {
+            save(longterm, withKey: "longterm")
+            save(Date(), withKey: "logintime")
+            save(netid, withKey: "netid")
+            KeychainSwift.shared.set(pw, forKey: "password")
+        }
+    }
+    static func extendedlogin()->Bool {
+        if netidExpired() { return false }
+        return grab("longterm") as? Bool ?? false
     }
     static func haveCredentials()->Bool {
         return !netid().isEmpty && !password().isEmpty
     }
     static func removeCredentials() {
+        user = ""
+        pw = ""
         zap("logintime")
         zap("netid")
         KeychainSwift.shared.delete("password")
@@ -390,10 +438,12 @@ class Utils {
         return true
     }
     static func netid() -> String {
+        if !user.isEmpty { return user }
         if netidExpired() { return "" }
         return grab("netid") as? String ?? ""
     }
     static func password() -> String {
+        if !pw.isEmpty { return pw }
         if netidExpired() { return "" }
         return KeychainSwift.shared.get("password") ?? ""
     }

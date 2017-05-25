@@ -25,17 +25,30 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     var bellnumber: Int?
     var needtoregister = false
     private var registrationlock = DispatchGroup()
+    var introsequence = false
+    
+    let loginscript = "function get_login_details_tracsmobile() { " +
+        "var username, password, publicStation; " +
+        "var inputs = document.getElementsByTagName('input'); " +
+        "for (var i = 0; i < inputs.length; i++) { " +
+        "    if (inputs[i].name.toLowerCase() === 'password') { " +
+        "        password = inputs[i] === null ? '' : inputs[i].value; " +
+        "    } else if (inputs[i].name.toLowerCase() === 'username') { " +
+        "        username = inputs[i] === null ? '' : inputs[i].value; " +
+        "    } else if (inputs[i].name === 'publicWorkstation') { " +
+        "        publicStation = inputs[i].checked; " +
+        "    } " +
+        "} " +
+        "return {netid: username, pw: password, public: publicStation}; " +
+    "} " +
+    "get_login_details_tracsmobile();"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         Utils.showActivity(view)
         
-        let config = WKWebViewConfiguration()
-        if #available(iOS 10.0, *) {
-            config.ignoresViewportScaleLimits = true
-        }
-        webview = WKWebView(frame: wvContainer.bounds, configuration: config)
+        webview = Utils.getWebView()
         wvContainer.addSubview(webview)
         Utils.constrainToContainer(view: webview, container: wvContainer)
         webview.navigationDelegate = self
@@ -58,10 +71,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         back.accessibilityLabel = "back"
         forward.accessibilityLabel = "forward"
         
-        TRACSClient.waitForLogin { (loggedin) in
-            let urlStringToLoad = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
-            self.load(url: urlStringToLoad)
-        }
+        self.load()
         
         if !Utils.flag("introScreen", val: true) {
             activateIntroScreen()
@@ -77,33 +87,61 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     }
     
     // MARK: - Helper functions
-    func load(url:String) {
-        if let urlToLoad = URL(string: url) {
-            var req = URLRequest(url: urlToLoad)
-            if let cookies = HTTPCookieStorage.shared.cookies(for: urlToLoad) {
-                req.allHTTPHeaderFields = HTTPCookie.requestHeaderFields(with: cookies)
+    func load() {
+        introsequence = true
+        let completion:()->Void = {
+            if let urlToLoad = URL(string: TRACSClient.portalurl) {
+                let req = URLRequest(url: urlToLoad)
+                self.webview.load(req)
             }
-            self.webview.load(req)
+        }
+        if #available(iOS 9.0, *) {
+            let dataStore = WKWebsiteDataStore.default()
+            dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { (records) in
+                dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: records, completionHandler: completion)
+            }
+        } else {
+            // Fallback on earlier versions
+            let librarypath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
+            let cookiespath = librarypath + "/Cookies"
+            try? FileManager.default.removeItem(atPath: cookiespath)
+            completion()
         }
     }
     
-    func cookiesToJavascript(_ cookies: [HTTPCookie]) -> String {
-        var result = ""
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "EEE, d MMM yyyy HH:mm:ss zzz"
-        
-        for cookie in cookies {
-            result += "document.cookie='\(cookie.name)=\(cookie.value); domain=\(cookie.domain); path=\(cookie.path); "
-            if let date = cookie.expiresDate {
-                result += "expires=\(dateFormatter.string(from:date)); "
+    func loadpart2() {
+        introsequence = false
+        loginIfNecessary { (loggedin) in
+            let urlString = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
+            if let urlToLoad = URL(string: urlString) {
+                let req = URLRequest(url: urlToLoad)
+                self.webview.load(req)
             }
-            if (cookie.isSecure) {
-                result += "secure; "
-            }
-            result += "'; "
         }
-        return result
+    }
+    
+    func syncWebviewCookiesToShared(_ currenturl:URL) {
+        webview.evaluateJavaScript("document.cookie") { (resp, err) in
+            if let unparsed = resp as? String {
+                if unparsed.isEmpty { return }
+                let pairs = unparsed.components(separatedBy: ";")
+                for pair in pairs {
+                    let keyval = pair.characters.split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false).map(String.init)
+                    let key = keyval[0]
+                    let val = keyval[1]
+                    if let host = currenturl.host {
+                        NSLog("saving cookie from javascript to shared %@ %@ %@", host, key, val)
+                        let cookie = HTTPCookie(properties: [
+                            HTTPCookiePropertyKey.domain: host,
+                            HTTPCookiePropertyKey.path: "/",
+                            HTTPCookiePropertyKey.name: key,
+                            HTTPCookiePropertyKey.value: val
+                            ])!
+                        HTTPCookieStorage.shared.setCookie(cookie)
+                    }
+                }
+            }
+        }
     }
     
     func loginIfNecessary(completion:@escaping(Bool)->Void) {
@@ -164,10 +202,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     }
     func pressedHome() {
         Utils.showActivity(view)
-        loginIfNecessary(completion: { (loggedin) in
-            let urlStringToLoad = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
-            self.load(url: urlStringToLoad)
-        })
+        self.load()
     }
     func updateButtons() {
         forward.isEnabled = webview.canGoForward
@@ -210,12 +245,9 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        if let cookies = HTTPCookieStorage.shared.cookies {
-            let script = cookiesToJavascript(cookies)
-            webView.evaluateJavaScript(script, completionHandler: nil)
-        }
         updateButtons()
         Utils.hideActivity()
+        syncWebviewCookiesToShared(webView.url!)
         if let urlstring = webView.url?.absoluteString {
             if urlstring.hasPrefix(TRACSClient.tracsurl) && TRACSClient.userid.isEmpty {
                 loginIfNecessary(completion: { (loggedin) in
@@ -225,22 +257,16 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         }
         
         registrationlock.notify(queue: .main) {
-            self.registrationlock.enter();
             if self.needtoregister {
+                self.registrationlock.enter();
                 TRACSClient.waitForLogin(completion: { (loggedin) in
-                    if loggedin {
-                        IntegrationClient.register({ (success) in
-                            if success {
-                                self.needtoregister = false
-                            }
-                            self.registrationlock.leave()
-                        })
-                    } else {
+                    IntegrationClient.register({ (success) in
+                        if success {
+                            self.needtoregister = false
+                        }
                         self.registrationlock.leave()
-                    }
+                    })
                 })
-            } else {
-                self.registrationlock.leave()
             }
         }
     }
@@ -251,13 +277,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     }
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let url = navigationAction.request.url, let allHeaderFields = navigationAction.request.allHTTPHeaderFields {
-            let cookies = HTTPCookie.cookies(withResponseHeaderFields: allHeaderFields, for: url)
-            for cookie in cookies {
-                HTTPCookieStorage.shared.setCookie(cookie)
-            }
-        }
-
         if let urlstring = navigationAction.request.url?.absoluteString {
             NSLog(urlstring)
             if navigationAction.request.url?.scheme == "mailto" {
@@ -294,17 +313,14 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                 return decisionHandler(.cancel)
             }
             if navigationAction.request.httpMethod == "POST" {
-                if let body = navigationAction.request.httpBody {
-                    if let body = String(data: body, encoding: .utf8) {
-                        let params = Utils.stringToParams(body)
-                        if params["publicWorkstation"] == nil {
-                            if let netid = params["username"] ?? params["eid"], let pw = params["password"] ?? params["pw"] {
-                                Utils.store(netid: netid, pw: pw)
-                                needtoregister = true
-                            }
+                webView.evaluateJavaScript(loginscript, completionHandler: { (resp, err) in
+                    if let params = resp as? [String:Any] {
+                        if let netid = params["netid"] as? String, let pw = params["pw"] as? String {
+                            Utils.store(netid: netid, pw: pw, longterm: !(params["public"] as? Bool ?? false))
                         }
+                        self.needtoregister = true
                     }
-                }
+                })
             }
             if urlstring.contains(TRACSClient.logouturl) || urlstring.contains(TRACSClient.altlogouturl) {
                 TRACSClient.userid = ""
@@ -324,31 +340,16 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                 }
             }
         }
-        decisionHandler(.allow)
+        if introsequence {
+            loadpart2()
+            decisionHandler(.cancel)
+        } else {
+            decisionHandler(.allow)
+        }
     }
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        webview.evaluateJavaScript("document.cookie") { (resp, err) in
-            NSLog("didReceiveServerRedirect %@", resp as? String ?? "nil")
-            if let unparsed = resp as? String {
-                let pairs = unparsed.components(separatedBy: ";")
-                for pair in pairs {
-                    let keyval = pair.characters.split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false).map(String.init)
-                    let key = keyval[0]
-                    let val = keyval[1]
-                    if let host = webView.url?.host {
-                        NSLog("%@ %@ %@", host, key, val)
-                        let cookie = HTTPCookie(properties: [
-                            HTTPCookiePropertyKey.domain: host,
-                            HTTPCookiePropertyKey.path: "/",
-                            HTTPCookiePropertyKey.name: key,
-                            HTTPCookiePropertyKey.value: val
-                            ])!
-                        HTTPCookieStorage.shared.setCookie(cookie)
-                    }
-                }
-            }
-        }
+        syncWebviewCookiesToShared(webView.backForwardList.currentItem!.url)
     }
     
     // this handles target=_blank links by opening them in the same view

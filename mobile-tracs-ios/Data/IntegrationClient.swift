@@ -29,7 +29,14 @@ class IntegrationClient {
         reg.user_id = TRACSClient.userid
         
         saveRegistration(reg: reg) { (success) in
-            completion(success)
+            if success {
+                getBadgeCount(completion: { (badgecount) in
+                    UIApplication.shared.applicationIconBadgeNumber = badgecount
+                    completion(success)
+                })
+            } else {
+                completion(false)
+            }
         }
     }
     
@@ -180,6 +187,12 @@ class IntegrationClient {
             }
         } else {
             completion(false)
+        }
+    }
+    
+    static func getBadgeCount(completion:@escaping(Int)->Void) {
+        Utils.fetchJSONObject(url: notificationsurl+"/count?token="+deviceToken) { (dict) in
+            completion(dict?["count"] as? Int ?? 0)
         }
     }
     

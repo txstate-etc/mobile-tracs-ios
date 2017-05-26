@@ -207,7 +207,6 @@ class TRACSClient {
     }
     
     private static func attemptLogin(netid:String, password:String, completion:@escaping(Bool, Bool)->Void) {
-        NSLog("attemptLogin")
         var loginerror = false
         var othererror = false
         if netid.isEmpty || password.isEmpty { return completion(true, false) }

@@ -264,6 +264,9 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                     IntegrationClient.register({ (success) in
                         if success {
                             self.needtoregister = false
+                            DispatchQueue.main.async {
+                                self.updateBell()
+                            }
                         }
                         self.registrationlock.leave()
                     })
@@ -330,6 +333,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                 TRACSClient.userid = ""
                 Utils.removeCredentials()
                 IntegrationClient.unregister()
+                UIApplication.shared.applicationIconBadgeNumber = 0
                 updateBell()
             }
         }

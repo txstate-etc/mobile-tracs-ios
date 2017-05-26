@@ -160,16 +160,17 @@ class TRACSClient {
             checkForNewUser {
                 if userid.isEmpty {
                     // try our saved credentials
-                    attemptLogin(netid: Utils.netid(), password: Utils.password(), completion: { (sessionid) in
-                        NSLog("login attempt made, got %@ back", sessionid)
-                        if !sessionid.isEmpty {
+                    attemptLogin(netid: Utils.netid(), password: Utils.password(), completion: { (loginerror, othererror) in
+                        if !loginerror && !othererror {
                             checkForNewUser {
                                 tracslock.leave()
                                 completion(true)
                             }
                         } else {
-                            userid = ""
-                            Utils.removeCredentials()
+                            if loginerror {
+                                userid = ""
+                                Utils.removeCredentials()
+                            }
                             tracslock.leave()
                             completion(false)
                         }
@@ -205,13 +206,20 @@ class TRACSClient {
         }
     }
     
-    private static func attemptLogin(netid:String, password:String, completion:@escaping(String)->Void) {
-        if netid.isEmpty || password.isEmpty { return completion("") }
-        Utils.post(url: baseurl+"/session", params: ["_username":netid, "_password":password]) { (data, success) in
-            if let body = data as? String {
-                return completion(body.trimmingCharacters(in: .whitespacesAndNewlines))
+    private static func attemptLogin(netid:String, password:String, completion:@escaping(Bool, Bool)->Void) {
+        NSLog("attemptLogin")
+        var loginerror = false
+        var othererror = false
+        if netid.isEmpty || password.isEmpty { return completion(true, false) }
+        Utils.post(url: portalurl+"/relogin", params: ["eid":netid, "pw":password]) { (data, success) in
+            if !success {
+                othererror = true
+            } else if let body = data as? String {
+                if !body.contains("\"loggedIn\": true") {
+                    loginerror = true
+                }
             }
-            return completion("")
+            completion(loginerror, othererror)
         }
     }
 }

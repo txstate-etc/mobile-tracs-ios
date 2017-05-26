@@ -87,14 +87,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     }
     
     // MARK: - Helper functions
-    func load() {
-        introsequence = true
-        let completion:()->Void = {
-            if let urlToLoad = URL(string: TRACSClient.portalurl) {
-                let req = URLRequest(url: urlToLoad)
-                self.webview.load(req)
-            }
-        }
+    func wipecookies(completion:@escaping()->Void) {
         if #available(iOS 9.0, *) {
             let dataStore = WKWebsiteDataStore.default()
             dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { (records) in
@@ -106,6 +99,16 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
             let cookiespath = librarypath + "/Cookies"
             try? FileManager.default.removeItem(atPath: cookiespath)
             completion()
+        }
+    }
+    
+    func load() {
+        introsequence = true
+        wipecookies {
+            if let urlToLoad = URL(string: TRACSClient.portalurl) {
+                let req = URLRequest(url: urlToLoad)
+                self.webview.load(req)
+            }
         }
     }
     
@@ -130,7 +133,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                     let key = keyval[0]
                     let val = keyval[1]
                     if let host = currenturl.host {
-                        NSLog("saving cookie from javascript to shared %@ %@ %@", host, key, val)
                         let cookie = HTTPCookie(properties: [
                             HTTPCookiePropertyKey.domain: host,
                             HTTPCookiePropertyKey.path: "/",
@@ -255,10 +257,9 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                 })
             }
         }
-        
         registrationlock.notify(queue: .main) {
+            self.registrationlock.enter();
             if self.needtoregister {
-                self.registrationlock.enter();
                 TRACSClient.waitForLogin(completion: { (loggedin) in
                     IntegrationClient.register({ (success) in
                         if success {
@@ -267,6 +268,8 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                         self.registrationlock.leave()
                     })
                 })
+            } else {
+                self.registrationlock.leave()
             }
         }
     }
@@ -278,7 +281,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let urlstring = navigationAction.request.url?.absoluteString {
-            NSLog(urlstring)
             if navigationAction.request.url?.scheme == "mailto" {
                 Analytics.event(category: "E-mail", action: "compose", label: urlstring, value: nil)
                 let mvc = MFMailComposeViewController()
@@ -316,9 +318,11 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                 webView.evaluateJavaScript(loginscript, completionHandler: { (resp, err) in
                     if let params = resp as? [String:Any] {
                         if let netid = params["netid"] as? String, let pw = params["pw"] as? String {
-                            Utils.store(netid: netid, pw: pw, longterm: !(params["public"] as? Bool ?? false))
+                            if !netid.isEmpty && !pw.isEmpty {
+                                self.needtoregister = true
+                                Utils.store(netid: netid, pw: pw, longterm: !(params["public"] as? Bool ?? false))
+                            }
                         }
-                        self.needtoregister = true
                     }
                 })
             }
@@ -349,7 +353,9 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     }
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        syncWebviewCookiesToShared(webView.backForwardList.currentItem!.url)
+        if let ci = webView.backForwardList.currentItem {
+            syncWebviewCookiesToShared(ci.url)
+        }
     }
     
     // this handles target=_blank links by opening them in the same view

@@ -281,14 +281,15 @@ class Utils {
     }
     
     static func fontAwesomeBarButtonItem(icon: FontAwesome, target: AnyObject, action: Selector) -> UIBarButtonItem {
-        let ret = UIBarButtonItem(title: String.fontAwesomeIcon(name: icon), style: UIBarButtonItemStyle.plain, target: target, action: action)
-        ret.setTitleTextAttributes([NSFontAttributeName: UIFont.fontAwesome(ofSize: 20)], for: .normal)
+        let ret = UIBarButtonItem(title: " "+String.fontAwesomeIcon(name: icon)+" ", style: UIBarButtonItemStyle.plain, target: target, action: action)
+        ret.setTitleTextAttributes([NSFontAttributeName: UIFont.fontAwesome(ofSize: 28)], for: .normal)
         return ret
     }
     
     static func fontAwesomeBadgedBarButtonItem(color: UIColor, badgecount: Int, icon: FontAwesome, target: AnyObject, action: Selector) -> UIBarButtonItem {
         let button = UIButton(type: .custom)
-        button.frame = CGRect(x: 0, y: 0, width: 40, height: 34)
+        button.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        button.titleEdgeInsets = UIEdgeInsets.init(top: 5, left: 10, bottom: 15, right: 10)
         button.addTarget(target, action: action, for: .touchUpInside)
         button.titleLabel?.font = UIFont.fontAwesome(ofSize: 28)
         button.setTitleColor(color, for: .normal)
@@ -311,7 +312,7 @@ class Utils {
     }
     
     static func fontAwesomeTitledBarButtonItem(color: UIColor, icon: FontAwesome, title:String, textStyle:UIFontTextStyle, target:AnyObject, action:Selector) -> UIBarButtonItem {
-        let icon = UIImageView(image: UIImage.fontAwesomeIcon(name: icon, textColor: color, size: CGSize(width: 30, height: 30)))
+        let icon = UIImageView(image: UIImage.fontAwesomeIcon(name: icon, textColor: color, size: CGSize(width: 34, height: 34)))
         icon.contentMode = .center
         icon.translatesAutoresizingMaskIntoConstraints = false
         

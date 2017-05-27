@@ -111,9 +111,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        NSLog("userNotificationCenter %i %@", notification.request.content.badge ?? 0, notification.request.content.body)
+        UIApplication.shared.applicationIconBadgeNumber = notification.request.content.badge?.intValue ?? 0
         if let observer = getActiveViewController() {
-            observer.incomingNotification(badgeCount: notification.request.content.badge as? Int, message: notification.request.content.body)
+            observer.incomingNotification(badgeCount: notification.request.content.badge?.intValue, message: notification.request.content.body)
         }
         completionHandler([.alert, .badge])
     }

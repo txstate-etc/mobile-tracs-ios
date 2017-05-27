@@ -416,6 +416,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         }
     }
     
+    // MARK: - NotificationObserver
     func incomingNotification(badgeCount: Int?, message: String?) {
         updateBell()
     }

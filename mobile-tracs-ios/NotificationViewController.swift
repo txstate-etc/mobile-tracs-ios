@@ -86,12 +86,9 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         if showactivity { Utils.showActivity(view) }
         IntegrationClient.getNotifications { (notifications) in
             if let notis = notifications {
-                var unseen:[Notification] = []
-                for n in notis {
-                    if !n.seen {
-                        unseen.append(n)
-                    }
-                }
+                let unseen = notis.filter({ (n) -> Bool in
+                    return !n.seen
+                })
                 IntegrationClient.markNotificationsSeen(unseen, completion: { (success) in
                     DispatchQueue.main.async {
                         UIApplication.shared.applicationIconBadgeNumber = 0

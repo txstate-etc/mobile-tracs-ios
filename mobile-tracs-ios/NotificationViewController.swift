@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotificationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationCellDelegate, NotificationObserver {
+class NotificationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationObserver {
     @IBOutlet var tableView: UITableView!
     var notifications: [Notification] = []
 
@@ -36,18 +36,23 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath) as! NotificationCell
-        cell.delegate = self
         let notify = notifications[indexPath.row]
-        cell.notify = notify
         if let tracsobj = notify.object {
+            cell.imageView?.image = UIImage.fontAwesomeIcon(name: tracsobj.getIcon(), textColor: Utils.nearblack, size:CGSize(width: 200, height: 200))
+            cell.backgroundColor = notify.read ? UIColor.white : Utils.gray
             cell.textLabel?.text = tracsobj.tableTitle()
             cell.textLabel?.font = notify.read ? UIFont.preferredFont(forTextStyle: .body) : Utils.boldPreferredFont(style: .body)
             cell.detailTextLabel?.text = tracsobj.tableSubtitle()
+            cell.detailTextLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
             if !tracsobj.getUrl().isEmpty {
                 cell.accessoryType = .disclosureIndicator
             }
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UIFont.preferredFont(forTextStyle: .body).pointSize * 2.5
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {

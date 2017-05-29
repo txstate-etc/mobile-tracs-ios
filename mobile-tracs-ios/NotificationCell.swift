@@ -8,13 +8,7 @@
 
 import UIKit
 
-protocol NotificationCellDelegate {
-}
-
 class NotificationCell: UITableViewCell {
-    var delegate:NotificationCellDelegate?
-    var notify:Notification?
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

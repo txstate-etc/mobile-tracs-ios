@@ -33,4 +33,8 @@ class Announcement : TRACSObjectBase, TRACSObject {
     func getType()->String {
         return Announcement.type
     }
+    
+    func getIcon() -> FontAwesome {
+        return .bullhorn
+    }
 }

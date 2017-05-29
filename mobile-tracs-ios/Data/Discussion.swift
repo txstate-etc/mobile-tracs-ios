@@ -33,4 +33,8 @@ class Discussion : TRACSObjectBase, TRACSObject {
     func getType()->String {
         return Discussion.type
     }
+    
+    func getIcon() -> FontAwesome {
+        return .comments
+    }
 }

@@ -15,6 +15,7 @@ protocol TRACSObject {
     func tableTitle()->String
     func getType()->String
     func getUrl()->String
+    func getIcon()->FontAwesome
 }
 
 extension TRACSObject {

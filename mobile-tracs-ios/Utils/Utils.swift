@@ -16,6 +16,7 @@ class Utils {
     static let gold = UIColor(red: 140/255.0, green: 115/255.0, blue: 74/255.0, alpha: 1)
     static let darkblue = UIColor(red: 40/255.0, green: 40/255.0, blue: 59/255.0, alpha: 1)
     static let gray = UIColor(red: 238/255.0, green: 238/255.0, blue: 238/255.0, alpha: 1)
+    static let nearblack = UIColor(white: 0.15, alpha: 1)
     static let colordisabled = UIColor(white: 0.8, alpha: 0.2)
     static let urlsession = URLSession.shared
     static let userAgent = UIWebView().stringByEvaluatingJavaScript(from:"navigator.userAgent")! + " TRACS Mobile"

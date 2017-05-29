@@ -10,7 +10,7 @@ import UIKit
 import MessageUI
 import WebKit
 
-class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate, MenuViewControllerDelegate, NotificationObserver {
+class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate, NotificationObserver {
     @IBOutlet var wvContainer: UIView!
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var back: UIBarButtonItem!
@@ -206,6 +206,15 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         Utils.showActivity(view)
         self.load()
     }
+    func pressedMenu() {
+        let mvc = MenuViewController()
+        navigationController?.pushViewController(mvc, animated: true)
+    }    
+    func activateIntroScreen() {
+        let ivc = IntroViewController()
+        self.present(ivc, animated: true, completion: nil)
+    }
+
     func updateButtons() {
         forward.isEnabled = webview.canGoForward
         back.isEnabled = webview.canGoBack
@@ -384,36 +393,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     // MARK: - MFMailComposeViewControllerDelegate
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         self.dismiss(animated: true, completion: nil)
-    }
-
-    func activateIntroScreen() {
-        let ivc = IntroViewController()
-        self.present(ivc, animated: true, completion: nil)
-    }
-    
-    func pressedMenu() {
-        let popover = MenuViewController(delegate: self, bbi: navigationItem.rightBarButtonItem!)
-        self.present(popover, animated: false, completion: nil)
-    }
-        
-    func menuViewController(_ mvc: MenuViewController, pressed: MenuItem) {
-        mvc.dismiss(animated: false, completion: nil)
-        if pressed == MenuItem.settings {
-            let svc = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
-            navigationController?.pushViewController(svc, animated: true)
-        } else if pressed == MenuItem.txstate {
-            if let url = URL(string: "edu.txstate.mobile://") {
-                if UIApplication.shared.canOpenURL(url) {
-                    Analytics.event(category: "External", action: "click", label: "txstate://", value: nil)
-                    UIApplication.shared.openURL(url)
-                }
-            }
-        } else if pressed == MenuItem.feedback {
-            let fvc = FeedbackViewController(nibName: "FeedbackViewController", bundle: nil)
-            navigationController?.pushViewController(fvc, animated: true)
-        } else if pressed == MenuItem.intro {
-            activateIntroScreen()
-        }
     }
     
     // MARK: - NotificationObserver

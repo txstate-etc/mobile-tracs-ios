@@ -7,16 +7,25 @@
 //
 
 import UIKit
+import StoreKit
 
-class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SKStoreProductViewControllerDelegate {
     @IBOutlet var tableView:UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "menuitem")
+        NotificationCenter.default.addObserver(self, selector: #selector(deselectRow), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(deselectRow), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        deselectRow()
+    }
+    
+    // MARK: - Helper functions
+    
+    func deselectRow() {
         if let ip = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: ip, animated: true)
         }
@@ -25,7 +34,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: - UITableViewDataSource
  
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -71,9 +80,22 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 Analytics.event(category: "External", action: "click", label: url.absoluteString, value: nil)
                 if UIApplication.shared.canOpenURL(url) {
                     UIApplication.shared.openURL(url)
+                } else {
+                    let appstore = SKStoreProductViewController()
+                    appstore.delegate = self
+                    let parameters = [SKStoreProductParameterITunesItemIdentifier:NSNumber(value: 373345139)]
+                    appstore.loadProduct(withParameters: parameters, completionBlock: { (result, err) in
+                        if result {
+                            self.present(appstore, animated: true, completion: nil)
+                        }
+                    })
                 }
             }
         }
     }
 
+    // MARK: - SKStoreProductViewControllerDelegate
+    func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+        viewController.dismiss(animated:true, completion:nil)
+    }
 }

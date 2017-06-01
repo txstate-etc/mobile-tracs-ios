@@ -316,7 +316,6 @@ class Utils {
         let icon = UIImageView(image: UIImage.fontAwesomeIcon(name: icon, textColor: color, size: CGSize(width: 34, height: 34)))
         icon.frame = CGRect(x: 0, y: 3, width: 34, height: 34)
         icon.contentMode = .center
-        icon.translatesAutoresizingMaskIntoConstraints = false
         
         let titlelabel = UILabel()
         titlelabel.text = title
@@ -324,14 +323,12 @@ class Utils {
         titlelabel.sizeToFit()
         titlelabel.frame = CGRect(x: icon.bounds.width+2, y: (42-titlelabel.frame.height)/2.0, width: titlelabel.frame.width, height: titlelabel.frame.height)
         titlelabel.textColor = color
-        titlelabel.translatesAutoresizingMaskIntoConstraints = false
         
         let titleview = UIButton(frame: CGRect(x: 0, y: 0, width: titlelabel.frame.origin.x+titlelabel.frame.width, height: 50))
-        titleview.translatesAutoresizingMaskIntoConstraints = false
         titleview.accessibilityLabel = title
         titleview.addSubview(icon)
         titleview.addSubview(titlelabel)
-                
+        
         titleview.addTarget(target, action: action, for: .touchUpInside)
         return UIBarButtonItem(customView: titleview)
     }

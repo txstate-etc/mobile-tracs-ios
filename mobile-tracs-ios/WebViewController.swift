@@ -72,10 +72,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         forward.accessibilityLabel = "forward"
         
         self.load()
-        
-        if !Utils.flag("introScreen", val: true) {
-            activateIntroScreen()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,6 +79,12 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         Analytics.viewWillAppear("WebView")
         TRACSClient.waitForLogin { (loggedin) in
             self.updateBell()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if !Utils.flag("introScreen", val: true) {
+            activateIntroScreen()
         }
     }
     
@@ -266,10 +268,11 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                 })
             }
         }
-        registrationlock.notify(queue: .main) {
-            self.registrationlock.enter();
-            if self.needtoregister {
-                TRACSClient.waitForLogin(completion: { (loggedin) in
+        
+        TRACSClient.waitForLogin(completion: { (loggedin) in
+            self.registrationlock.notify(queue: .main) {
+                if self.needtoregister {
+                    self.registrationlock.enter();
                     IntegrationClient.register({ (success) in
                         if success {
                             self.needtoregister = false
@@ -279,11 +282,9 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                         }
                         self.registrationlock.leave()
                     })
-                })
-            } else {
-                self.registrationlock.leave()
+                }
             }
-        }
+        })
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

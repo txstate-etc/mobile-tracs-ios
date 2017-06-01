@@ -331,7 +331,7 @@ class Utils {
         titleview.accessibilityLabel = title
         titleview.addSubview(icon)
         titleview.addSubview(titlelabel)
-        
+                
         titleview.addTarget(target, action: action, for: .touchUpInside)
         return UIBarButtonItem(customView: titleview)
     }

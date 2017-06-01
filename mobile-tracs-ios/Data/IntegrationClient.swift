@@ -61,6 +61,7 @@ class IntegrationClient {
             }
         } else {
             NSLog("saveRegistration: reg was not valid %@ %@", reg.user_id ?? "nil", reg.token ?? "nil")
+            completion(false)
         }
     }
     

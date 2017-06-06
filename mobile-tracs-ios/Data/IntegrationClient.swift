@@ -138,16 +138,19 @@ class IntegrationClient {
         
         dispatchgroup.notify(queue: .main) { 
             // add the Site into each TRACSObject
+            // also create a new return array and exclude notifications with nil target objects
             NSLog("loadAll complete")
+            var ret:[Notification] = []
             for n in notifications {
                 if var obj = n.object {
                     if obj.read { n.read = true }
                     if !(n.site_id ?? "").isEmpty {
                         obj.site = sitehash[n.site_id!]
                     }
+                    ret.append(n)
                 }
             }
-            completion(notifications)
+            completion(ret)
         }
     }
     

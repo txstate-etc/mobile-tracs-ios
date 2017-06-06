@@ -470,4 +470,21 @@ class Utils {
     static func date(_ d:Date, isOlderThan:Int, units:Calendar.Component) -> Bool {
         return !date(d, isNewerThan: isOlderThan, units: units)
     }
+    
+    // MARK: - Other Utilities
+    static func randomHexString(length: Int) -> String {
+        
+        let letters : NSString = "0123456789abcdef"
+        let len = UInt32(letters.length)
+        
+        var randomString = ""
+        
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        
+        return randomString
+    }
 }

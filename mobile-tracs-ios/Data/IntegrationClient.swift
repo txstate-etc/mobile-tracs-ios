@@ -23,6 +23,12 @@ class IntegrationClient {
         return Registration()
     }
     
+    static func getRegistration(completion:@escaping(Registration)->Void) {
+        Utils.fetchJSONObject(url: registrationurl+"/"+deviceToken) { (dict) in
+            completion(Registration(dict))
+        }
+    }
+    
     public static func register(_ completion:@escaping (Bool)->Void) {
         let reg = getRegistration()
         reg.token = deviceToken
@@ -30,6 +36,7 @@ class IntegrationClient {
         
         saveRegistration(reg: reg) { (success) in
             if success {
+                Utils.save(deviceToken, withKey: "lastregisteredtoken")
                 getBadgeCount(completion: { (badgecount) in
                     UIApplication.shared.applicationIconBadgeNumber = badgecount
                     completion(success)
@@ -64,11 +71,12 @@ class IntegrationClient {
             completion(false)
         }
     }
-    
+        
     public static func unregister() {
         if !deviceToken.isEmpty {
             Utils.delete(url: registrationurl, params: ["token":deviceToken], completion: { (data, success) in
                 Utils.zap("registration")
+                Utils.zap("lastregisteredtoken")
             })
         }
     }

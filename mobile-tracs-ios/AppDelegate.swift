@@ -25,6 +25,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
+        // register for push notifications
+        if #available(iOS 10, *) {
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
+                if error == nil && granted { application.registerForRemoteNotifications() }
+            }
+            center.delegate = self
+        } else {
+            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+            application.registerForRemoteNotifications()
+        }
+        if IntegrationClient.deviceToken.isEmpty {
+            IntegrationClient.deviceToken = (Utils.grab("deviceToken") as? String) ?? ""
+        }
+        if IntegrationClient.deviceToken.isEmpty {
+            IntegrationClient.deviceToken = Utils.randomHexString(length:32)
+            Utils.save(IntegrationClient.deviceToken, withKey: "deviceToken")
+        }
+        if let lastregisteredtoken = Utils.grab("lastregisteredtoken") as? String {
+            if IntegrationClient.deviceToken != lastregisteredtoken {
+                Utils.removeCredentials()
+            }
+        }
+        
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
         let wvc = WebViewController(nibName: "WebViewController", bundle: nil)
@@ -41,20 +66,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //Set a custom user agent so that UIWebView and URLSession dataTasks will match
         UserDefaults.standard.register(defaults: ["UserAgent": Utils.userAgent])
         
-        // register for push notifications
-        if #available(iOS 10, *) {
-            let center = UNUserNotificationCenter.current()
-            center.requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
-                if error == nil && granted { application.registerForRemoteNotifications() }
-                else { IntegrationClient.deviceToken = (Utils.grab("deviceToken") as? String) ?? "" }
-            }
-            center.delegate = self
-        } else {
-            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            application.registerUserNotificationSettings(settings)
-            application.registerForRemoteNotifications()
-        }
-                
         return true
     }
 
@@ -89,6 +100,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         Analytics.event(category: "External Launch", action: url.absoluteString, label: sourceApplication ?? "null", value: nil)
         return true
+    }
+        
+    func getWebViewController() -> WebViewController? {
+        let top = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
+        return top?.viewControllers.first as? WebViewController
     }
     
     func getActiveViewController() -> NotificationObserver? {

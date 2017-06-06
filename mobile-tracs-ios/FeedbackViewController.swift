@@ -7,28 +7,24 @@
 //
 
 import UIKit
+import WebKit
 
-class FeedbackViewController: UIViewController {
-
-    @IBOutlet var sendButton:UIButton!
-    @IBOutlet var reviewButton:UIButton!
-    @IBOutlet var textView:UITextView!
+class FeedbackViewController: UIViewController, WKNavigationDelegate {
+    @IBOutlet var webView:WKWebView!
+    var urltoload:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        sendButton.addTarget(self, action: #selector(pressedSend), for: .touchUpInside)
-        reviewButton.addTarget(self, action: #selector(pressedReview), for: .touchUpInside)
+        Utils.showActivity(view)
+        webView = Utils.getWebView()
+        view.addSubview(webView)
+        Utils.constrainToContainer(view: webView, container: view)
+        if let urltoload = self.urltoload, let url = URL(string: urltoload) {
+            webView.load(URLRequest(url:url))
+        }
     }
     
-    func pressedSend() {
-        
-    }
-    func pressedReview() {
-        let appId = "YOUR_APP_ID"
-        let url_string = "itms-apps://itunes.apple.com/app/id\(appId)"
-        if let url = URL(string: url_string) {
-            UIApplication.shared.openURL(url)
-        }
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        Utils.hideActivity()
     }
 }

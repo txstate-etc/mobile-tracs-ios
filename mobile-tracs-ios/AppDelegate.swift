@@ -46,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let center = UNUserNotificationCenter.current()
             center.requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
                 if error == nil && granted { application.registerForRemoteNotifications() }
+                else { IntegrationClient.deviceToken = (Utils.grab("deviceToken") as? String) ?? "" }
             }
             center.delegate = self
         } else {
@@ -81,6 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         IntegrationClient.deviceToken = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        Utils.save(IntegrationClient.deviceToken, withKey: "deviceToken")
         NSLog("deviceToken: %@", IntegrationClient.deviceToken)
     }
     

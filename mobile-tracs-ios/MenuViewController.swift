@@ -69,11 +69,14 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if indexPath.row == 0 {
                 let vc = IntroViewController()
                 self.present(vc, animated: true, completion: nil)
-            } else if indexPath.row == 1 {
+            } else if indexPath.row == 1 { // Give us Feedback
                 let vc = FeedbackViewController()
+                vc.urltoload = Secrets.shared.surveyurl
                 navigationController?.pushViewController(vc, animated: true)
-            } else if indexPath.row == 2 {
-                // start an email?
+            } else if indexPath.row == 2 { // TRACS Support
+                let vc = FeedbackViewController()
+                vc.urltoload = Secrets.shared.contacturl
+                navigationController?.pushViewController(vc, animated: true)
             }
         } else if indexPath.section == 2 && indexPath.row == 0 {
             if let url = URL(string: "edu.txstate.mobile://") {

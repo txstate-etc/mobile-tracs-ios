@@ -14,6 +14,8 @@ class Secrets {
     var integrationbaseurl:String?
     var jwtservicebaseurl:String?
     var tracsbaseurl:String?
+    var surveyurl:String?
+    var contacturl:String?
     
     init() {
         if let path = Bundle.main.path(forResource: "Config", ofType: "plist") {
@@ -22,6 +24,8 @@ class Secrets {
                 integrationbaseurl = dict["integrationbaseurl"] as? String
                 jwtservicebaseurl = dict["jwtservicebaseurl"] as? String
                 tracsbaseurl = dict["tracsbaseurl"] as? String
+                surveyurl = dict["surveyurl"] as? String
+                contacturl = dict["contacturl"] as? String
             }
         }
     }

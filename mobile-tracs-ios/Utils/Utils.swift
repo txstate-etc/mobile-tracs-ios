@@ -224,6 +224,7 @@ class Utils {
                     completion(false)
                 }
             } else {
+                NSLog("response was not an HTTPURLResponse")
                 completion(false)
             }
         }.resume()

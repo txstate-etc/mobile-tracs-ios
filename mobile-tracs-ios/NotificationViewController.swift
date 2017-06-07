@@ -39,9 +39,9 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         let notify = notifications[indexPath.row]
         if let tracsobj = notify.object {
             cell.imageView?.image = UIImage.fontAwesomeIcon(name: tracsobj.getIcon(), textColor: Utils.nearblack, size:CGSize(width: 200, height: 200))
-            cell.backgroundColor = notify.read ? UIColor.white : Utils.gray
+            cell.backgroundColor = notify.isRead() ? UIColor.white : Utils.gray
             cell.textLabel?.text = tracsobj.tableTitle()
-            cell.textLabel?.font = notify.read ? UIFont.preferredFont(forTextStyle: .body) : Utils.boldPreferredFont(style: .body)
+            cell.textLabel?.font = notify.isRead() ? UIFont.preferredFont(forTextStyle: .body) : Utils.boldPreferredFont(style: .body)
             cell.detailTextLabel?.text = tracsobj.tableSubtitle()
             cell.detailTextLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
             if !tracsobj.getUrl().isEmpty {
@@ -75,8 +75,6 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         if let tracsobj = notify.object {
             if let url = URL(string: tracsobj.getUrl()) {
                 IntegrationClient.markNotificationRead(notify, completion: { (success) in
-                    notify.read = true
-                    tableView.reloadRows(at: [indexPath], with: .automatic)
                 })
                 Analytics.event(category: "Notification", action: "click", label: notifications[indexPath.row].object_type ?? "", value: nil)
                 navigationController!.popViewController(animated: true)

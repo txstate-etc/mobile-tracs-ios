@@ -39,6 +39,10 @@ class Notification : Equatable {
         seen = dict["seen"] as? Bool ?? false
         read = dict["read"] as? Bool ?? false
     }
+
+    func isRead() -> Bool {
+        return read || object?.read ?? false
+    }
     
     static func ==(lhs: Notification, rhs: Notification) -> Bool {
         return lhs.id != nil && lhs.id == rhs.id

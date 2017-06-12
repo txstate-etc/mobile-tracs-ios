@@ -37,12 +37,12 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath) as! NotificationCell
         let notify = notifications[indexPath.row]
         if let tracsobj = notify.object {
-            cell.imageView?.image = UIImage.fontAwesomeIcon(name: tracsobj.getIcon(), textColor: Utils.nearblack, size:CGSize(width: 200, height: 200))
-            cell.backgroundColor = notify.isRead() ? UIColor.white : Utils.gray
-            cell.textLabel?.text = tracsobj.tableTitle()
-            cell.textLabel?.font = notify.isRead() ? UIFont.preferredFont(forTextStyle: .body) : Utils.boldPreferredFont(style: .body)
-            cell.detailTextLabel?.text = tracsobj.tableSubtitle()
-            cell.detailTextLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
+            cell.iView.image = UIImage.fontAwesomeIcon(name: tracsobj.getIcon(), textColor: Utils.nearblack, size:CGSize(width: 200, height: 200))
+            cell.iViewContainer.backgroundColor = notify.isRead() ? UIColor.white : Utils.gray
+            cell.titleLabel.text = tracsobj.tableTitle()
+            cell.titleLabel.font = notify.isRead() ? UIFont.preferredFont(forTextStyle: .body) : Utils.boldPreferredFont(style: .body)
+            cell.subtitleLabel.text = tracsobj.tableSubtitle()
+            cell.subtitleLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
             if !tracsobj.getUrl().isEmpty {
                 cell.accessoryType = .disclosureIndicator
             }
@@ -51,7 +51,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIFont.preferredFont(forTextStyle: .body).pointSize * 2.5
+        return UIFont.preferredFont(forTextStyle: .body).pointSize * 2.8
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {

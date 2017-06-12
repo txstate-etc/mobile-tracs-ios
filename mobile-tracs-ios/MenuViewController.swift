@@ -49,7 +49,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.textLabel?.text = "Notification Settings"
         } else if indexPath.section == 1 {
             if indexPath.row == 0 {
-                cell.textLabel?.text = "Intro Page"
+                cell.textLabel?.text = "About the App"
             } else if indexPath.row == 1 {
                 cell.textLabel?.text = "Give us Feedback"
             } else if indexPath.row == 2 {

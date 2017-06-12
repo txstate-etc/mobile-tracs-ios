@@ -37,8 +37,8 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath) as! NotificationCell
         let notify = notifications[indexPath.row]
         if let tracsobj = notify.object {
+            cell.isRead = notify.isRead()
             cell.iView.image = UIImage.fontAwesomeIcon(name: tracsobj.getIcon(), textColor: Utils.nearblack, size:CGSize(width: 200, height: 200))
-            cell.iViewContainer.backgroundColor = notify.isRead() ? UIColor.white : Utils.gray
             cell.titleLabel.text = tracsobj.tableTitle()
             cell.titleLabel.font = notify.isRead() ? UIFont.preferredFont(forTextStyle: .body) : Utils.boldPreferredFont(style: .body)
             cell.subtitleLabel.text = tracsobj.tableSubtitle()

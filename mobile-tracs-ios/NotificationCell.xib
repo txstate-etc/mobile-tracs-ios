@@ -20,20 +20,27 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M21-Q2-rMv" userLabel="Unread Bar">
+                        <rect key="frame" x="0.0" y="0.0" width="4" height="43.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="4" id="Xq6-mv-KH6"/>
+                        </constraints>
+                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XEi-Vu-q8a">
-                        <rect key="frame" x="0.0" y="0.0" width="43.5" height="43.5"/>
+                        <rect key="frame" x="10" y="5" width="33.5" height="33.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jDG-oy-iwn" userLabel="ImageView">
-                                <rect key="frame" x="8" y="8" width="27.5" height="27.5"/>
+                                <rect key="frame" x="5" y="5" width="23.5" height="23.5"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="XEi-Vu-q8a" secondAttribute="height" multiplier="1:1" id="UMQ-Q4-INQ"/>
-                            <constraint firstItem="jDG-oy-iwn" firstAttribute="top" secondItem="XEi-Vu-q8a" secondAttribute="top" constant="8" id="fIV-DC-bTv"/>
-                            <constraint firstAttribute="bottom" secondItem="jDG-oy-iwn" secondAttribute="bottom" constant="8" id="gFd-f7-mAa"/>
-                            <constraint firstAttribute="right" secondItem="jDG-oy-iwn" secondAttribute="right" constant="8" id="nBb-Ir-cSJ"/>
-                            <constraint firstItem="jDG-oy-iwn" firstAttribute="left" secondItem="XEi-Vu-q8a" secondAttribute="left" constant="8" id="ou2-8K-Rgn"/>
+                            <constraint firstItem="jDG-oy-iwn" firstAttribute="top" secondItem="XEi-Vu-q8a" secondAttribute="top" constant="5" id="fIV-DC-bTv"/>
+                            <constraint firstAttribute="bottom" secondItem="jDG-oy-iwn" secondAttribute="bottom" constant="5" id="gFd-f7-mAa"/>
+                            <constraint firstAttribute="right" secondItem="jDG-oy-iwn" secondAttribute="right" constant="5" id="nBb-Ir-cSJ"/>
+                            <constraint firstItem="jDG-oy-iwn" firstAttribute="left" secondItem="XEi-Vu-q8a" secondAttribute="left" constant="5" id="ou2-8K-Rgn"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EQ0-JR-3l2">
@@ -50,15 +57,18 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="XEi-Vu-q8a" firstAttribute="left" secondItem="3ew-8Z-tGV" secondAttribute="left" id="6yY-MR-edB"/>
                     <constraint firstItem="EQ0-JR-3l2" firstAttribute="bottom" secondItem="3ew-8Z-tGV" secondAttribute="centerY" multiplier="1.1" id="Owt-nI-kDP"/>
                     <constraint firstAttribute="centerY" secondItem="Nk0-zB-YWe" secondAttribute="top" multiplier="0.9" id="XwC-D9-Ay1"/>
                     <constraint firstAttribute="right" secondItem="EQ0-JR-3l2" secondAttribute="right" id="Xxa-UB-WbQ"/>
                     <constraint firstItem="Nk0-zB-YWe" firstAttribute="left" secondItem="XEi-Vu-q8a" secondAttribute="right" constant="10" id="ZPH-Rj-sVa"/>
                     <constraint firstItem="EQ0-JR-3l2" firstAttribute="left" secondItem="XEi-Vu-q8a" secondAttribute="right" constant="10" id="bUF-pD-zdI"/>
-                    <constraint firstItem="XEi-Vu-q8a" firstAttribute="top" secondItem="3ew-8Z-tGV" secondAttribute="top" id="mdm-t4-5hQ"/>
-                    <constraint firstAttribute="bottom" secondItem="XEi-Vu-q8a" secondAttribute="bottom" id="qtD-bH-0Jq"/>
+                    <constraint firstAttribute="bottom" secondItem="M21-Q2-rMv" secondAttribute="bottom" id="fOb-4z-zZf"/>
+                    <constraint firstItem="XEi-Vu-q8a" firstAttribute="left" secondItem="M21-Q2-rMv" secondAttribute="right" constant="6" id="hGC-lP-OMI"/>
+                    <constraint firstItem="XEi-Vu-q8a" firstAttribute="top" secondItem="3ew-8Z-tGV" secondAttribute="top" constant="5" id="mdm-t4-5hQ"/>
+                    <constraint firstAttribute="bottom" secondItem="XEi-Vu-q8a" secondAttribute="bottom" constant="5" id="qtD-bH-0Jq"/>
                     <constraint firstAttribute="right" secondItem="Nk0-zB-YWe" secondAttribute="right" id="sWd-KK-JVb"/>
+                    <constraint firstItem="M21-Q2-rMv" firstAttribute="left" secondItem="3ew-8Z-tGV" secondAttribute="left" id="smo-GN-fXy"/>
+                    <constraint firstItem="M21-Q2-rMv" firstAttribute="top" secondItem="3ew-8Z-tGV" secondAttribute="top" id="uha-zc-FMo"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -67,6 +77,7 @@
                 <outlet property="iViewContainer" destination="XEi-Vu-q8a" id="ToN-UW-HEa"/>
                 <outlet property="subtitleLabel" destination="Nk0-zB-YWe" id="E4k-kU-UH3"/>
                 <outlet property="titleLabel" destination="EQ0-JR-3l2" id="TL7-QC-A8g"/>
+                <outlet property="unreadBar" destination="M21-Q2-rMv" id="gPI-b1-qav"/>
             </connections>
             <point key="canvasLocation" x="32.5" y="67"/>
         </tableViewCell>

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SettingsCellDelegate {
+protocol SettingsCellDelegate:class {
     func cellDidToggle(_ cell:SettingsCell, toggle:UISwitch)
 }
 
@@ -17,7 +17,7 @@ class SettingsCell: UITableViewCell {
     @IBOutlet var title: UILabel!
     
     var entry:SettingsEntry?
-    var delegate:SettingsCellDelegate?
+    weak var delegate:SettingsCellDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()

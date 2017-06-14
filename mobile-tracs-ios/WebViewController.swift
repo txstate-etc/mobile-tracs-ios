@@ -26,6 +26,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     var needtoregister = false
     private var registrationlock = DispatchGroup()
     var introsequence = false
+    var wasLogout = false
     
     let loginscript = "function get_login_details_tracsmobile() { " +
         "var username, password, publicStation; " +
@@ -105,6 +106,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     }
     
     func load() {
+        if introsequence { return }
         introsequence = true
         wipecookies {
             if let urlToLoad = URL(string: TRACSClient.portalurl) {
@@ -115,13 +117,13 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     }
     
     func loadpart2() {
-        introsequence = false
         loginIfNecessary { (loggedin) in
             let urlString = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
             if let urlToLoad = URL(string: urlString) {
                 let req = URLRequest(url: urlToLoad)
                 self.webview.load(req)
             }
+            self.introsequence = false
         }
     }
     
@@ -333,6 +335,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                         if let netid = params["netid"] as? String, let pw = params["pw"] as? String {
                             if !netid.isEmpty && !pw.isEmpty {
                                 self.needtoregister = true
+                                TRACSClient.userid = ""
                                 Utils.store(netid: netid, pw: pw, longterm: !(params["public"] as? Bool ?? false))
                             }
                         }
@@ -344,7 +347,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                 Utils.removeCredentials()
                 IntegrationClient.unregister()
                 UIApplication.shared.applicationIconBadgeNumber = 0
-                updateBell()
+                wasLogout = true
             }
         }
         decisionHandler(.allow)
@@ -358,7 +361,11 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                 }
             }
         }
-        if introsequence {
+        if wasLogout {
+            wasLogout = false
+            load()
+            decisionHandler(.cancel)
+        } else if introsequence {
             loadpart2()
             decisionHandler(.cancel)
         } else {

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="font-awesome.min.css">
+    <style>
+        html, body {
+            background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #698E91), color-stop(100%, #1C3F63));
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            color: white;
+            font-family: "Helvetica Neue",Arial,sans-serif;
+        }
+        .container {
+            height: 100%;
+            margin-top: 10%;
+
+        }
+
+        #introContainer, #feedbackContainer {
+                text-align: center;
+
+            }
+
+        #tracsLogo {
+            max-width:60%;
+            margin: auto;
+        }
+
+        .mobile-phones {
+          padding-bottom: 3px;
+        }
+
+        h2{
+            font-weight: 400;
+            font-size: 1.25em;
+        }
+
+        h3{
+            font-weight: 400;
+            font-size: 1.2em;
+        }
+        h5{
+            font-weight: 400;
+                    }
+
+         .fa-ul li{
+            line-height: 1.25em;
+
+         }
+        .fa {
+            color: #FFCC4F;
+        }
+
+        .phones {
+            display: inline-block;
+            width: 40px;
+        }
+
+        .icon-container {
+            width: 40px;
+        }
+
+        .list-item {
+            margin-bottom: 10px;
+            padding-left: 5px;
+        }
+
+        .fa-mobile-phone {
+            font-size: 1.35em;
+            width: 15px;
+            margin-left: 10px;
+        }
+
+        .fa-rotate-90 {
+            position: absolute;
+            margin-left: 25px;
+            right: 0;
+            top: 5px;
+            float: right;
+        }
+
+        #feedbackContainer {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 500px) and (orientation: landscape) {
+            #feature-list, #introContainer {
+                float: left;
+                width: 50%;
+                min-height: 60vh;
+            }
+
+
+
+            #topSpacer {
+                min-height: 10vh;
+            }
+
+            #thingsYouCanDo {
+                padding-left: 25px;
+            }
+        }
+
+        @media (orientation: portrait) {
+            #topSpacer {
+                min-height: 15vh;
+            }
+
+            #feature-list {
+                margin: 0 auto;
+            }
+
+            #introContainer, #thingsYouCanDo, #feedbackContainer {
+                text-align: center;
+            }
+
+            #introContainer, #feature-list {
+                min-height: 30vh;
+            }
+        }
+
+        @media (max-width: 599px) and (orientation: portrait){
+            #feature-list {
+                width: 75%;
+            }
+        }
+
+        @media (min-width: 600px) and (orientation: portrait) {
+            #feature-list {
+                width: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="content">
+        <div id="introContainer">
+            <h2>Welcome to</h2>
+            <img id="tracsLogo" src="tracsb.logo.png">
+        </div>
+        <div id="feature-list">
+            <div id="thingsYouCanDo">
+                <h3>THINGS YOU CAN DO...</h3>
+            </div>
+            <ul class="fa-ul">
+                <li class="list-item"><i class="icon-container fa-li fa fa-clock-o fa-fw" aria-hidden="true"></i>Stay logged into
+                    TRACS longer
+                </li>
+                <li class="list-item"><i class="icon-container fa-li fa fa-file-o fa-fw" aria-hidden="true"></i>Interact with your
+                    documents
+                </li>
+                <li class="list-item">
+                    <div class="mobile-phones">
+                        <i class="fa fa-mobile-phone fa-li" aria-hidden="true"></i>
+                        <i class="fa fa-mobile-phone fa-li fa-rotate-90" aria-hidden="true"></i>
+                    </div>Rotate your device
+                </li>
+                <li class="list-item"><i class="icon-container fa-li fa fa-bell-o fa-fw" aria-hidden="true"></i>Receive course Announcement notifications
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="feedbackContainer"><h5>This version is being heavily tested over summer <br> PLEASE give us your feedback
+    </h5></div>
+
+</div>
+
+</body>
+</html>

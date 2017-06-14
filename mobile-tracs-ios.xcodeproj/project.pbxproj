@@ -53,6 +53,10 @@
 		2D88E2851ECB9197000DB020 /* IntroViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D88E2831ECB9197000DB020 /* IntroViewController.xib */; };
 		2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */; };
 		2D9161AA1E81E7F90090A5C6 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9161A91E81E7F90090A5C6 /* Site.swift */; };
+		2DB0CF041EF1B78100B19252 /* tracsb.logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0CF021EF1B78100B19252 /* tracsb.logo.png */; };
+		2DB0CF051EF1B78100B19252 /* welcome_page.html in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0CF031EF1B78100B19252 /* welcome_page.html */; };
+		2DB0CF071EF1E1EB00B19252 /* bootstrap.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0CF061EF1E1EB00B19252 /* bootstrap.min.css */; };
+		2DB0CF091EF1E21200B19252 /* font-awesome.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0CF081EF1E21200B19252 /* font-awesome.min.css */; };
 		2DD215C31EA0369000A6C30F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C21EA0369000A6C30F /* CoreData.framework */; };
 		2DD215C51EA0369900A6C30F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C41EA0369900A6C30F /* SystemConfiguration.framework */; };
 		2DD215C71EA036B900A6C30F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C61EA036B900A6C30F /* libz.tbd */; };
@@ -111,6 +115,10 @@
 		2D88E2831ECB9197000DB020 /* IntroViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroViewController.xib; sourceTree = "<group>"; };
 		2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 		2D9161A91E81E7F90090A5C6 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Site.swift; path = Data/Site.swift; sourceTree = "<group>"; };
+		2DB0CF021EF1B78100B19252 /* tracsb.logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tracsb.logo.png; sourceTree = "<group>"; };
+		2DB0CF031EF1B78100B19252 /* welcome_page.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = welcome_page.html; sourceTree = "<group>"; };
+		2DB0CF061EF1E1EB00B19252 /* bootstrap.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bootstrap.min.css; sourceTree = "<group>"; };
+		2DB0CF081EF1E21200B19252 /* font-awesome.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "font-awesome.min.css"; sourceTree = "<group>"; };
 		2DD215C21EA0369000A6C30F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		2DD215C41EA0369900A6C30F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2DD215C61EA036B900A6C30F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -212,6 +220,7 @@
 		09B527FB1E7CBD6500BACF81 /* mobile-tracs-ios */ = {
 			isa = PBXGroup;
 			children = (
+				2DB0CF011EF1B78100B19252 /* about_the_app */,
 				2DD215CA1EA036E700A6C30F /* Google Analytics */,
 				098FCFCA1E9D239900D4C66D /* UIWidgets */,
 				0918543F1E9A9FCD00DAF3B6 /* Utils */,
@@ -259,6 +268,17 @@
 				0918543D1E98A03300DAF3B6 /* Registration.swift */,
 			);
 			name = Data;
+			sourceTree = "<group>";
+		};
+		2DB0CF011EF1B78100B19252 /* about_the_app */ = {
+			isa = PBXGroup;
+			children = (
+				2DB0CF081EF1E21200B19252 /* font-awesome.min.css */,
+				2DB0CF061EF1E1EB00B19252 /* bootstrap.min.css */,
+				2DB0CF021EF1B78100B19252 /* tracsb.logo.png */,
+				2DB0CF031EF1B78100B19252 /* welcome_page.html */,
+			);
+			path = about_the_app;
 			sourceTree = "<group>";
 		};
 		2DD215CA1EA036E700A6C30F /* Google Analytics */ = {
@@ -357,10 +377,14 @@
 				2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */,
 				099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */,
 				09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */,
+				2DB0CF071EF1E1EB00B19252 /* bootstrap.min.css in Resources */,
 				2D88E2851ECB9197000DB020 /* IntroViewController.xib in Resources */,
 				099C81731E7CC94500529530 /* WebViewController.xib in Resources */,
 				098FCFD11E9D23DF00D4C66D /* FontAwesome.otf in Resources */,
+				2DB0CF051EF1B78100B19252 /* welcome_page.html in Resources */,
 				099BC2441E882AED009EEF0D /* SettingsViewController.xib in Resources */,
+				2DB0CF041EF1B78100B19252 /* tracsb.logo.png in Resources */,
+				2DB0CF091EF1E21200B19252 /* font-awesome.min.css in Resources */,
 				09071A271EC948F2008560B5 /* FeedbackViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

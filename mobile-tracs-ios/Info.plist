@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Used to upload a photo</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used to upload a photo</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Used to upload media</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>edu.txstate.mobile</string>

@@ -25,7 +25,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     var bellnumber: Int?
     var needtoregister = false
     private var registrationlock = DispatchGroup()
-    var introsequence = false
+    var introsequence = Date(timeIntervalSince1970: 0)
     var wasLogout = false
     
     let loginscript = "function get_login_details_tracsmobile() { " +
@@ -106,8 +106,8 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     }
     
     func load() {
-        if introsequence { return }
-        introsequence = true
+        if introsequence.timeIntervalSinceNow > -5 { return }
+        introsequence = Date()
         wipecookies {
             if let urlToLoad = URL(string: TRACSClient.portalurl) {
                 let req = URLRequest(url: urlToLoad)
@@ -123,7 +123,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                 let req = URLRequest(url: urlToLoad)
                 self.webview.load(req)
             }
-            self.introsequence = false
+            self.introsequence = Date(timeIntervalSince1970: 0)
         }
     }
     
@@ -365,7 +365,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
             wasLogout = false
             load()
             decisionHandler(.cancel)
-        } else if introsequence {
+        } else if introsequence.timeIntervalSinceNow > -5 {
             loadpart2()
             decisionHandler(.cancel)
         } else {

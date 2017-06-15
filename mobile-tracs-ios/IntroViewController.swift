@@ -33,8 +33,11 @@ class IntroViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        webView.scrollView.zoomScale = 1.0
-        webView.evaluateJavaScript("document.body.style.zoom = 1.0", completionHandler: nil)
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: nil) { _ in
+            self.webView.scrollView.zoomScale = 1.0
+            self.webView.evaluateJavaScript("document.body.style.zoom = 1.0", completionHandler: nil)
+        }
     }
     
     func okPressed() {

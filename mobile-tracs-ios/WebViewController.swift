@@ -35,6 +35,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         "    if (inputs[i].name.toLowerCase() === 'password') { " +
         "        password = inputs[i] === null ? '' : inputs[i].value; " +
         "    } else if (inputs[i].name.toLowerCase() === 'username') { " +
+        "        inputs[i].value = inputs[i].value.trim(); " +
         "        username = inputs[i] === null ? '' : inputs[i].value; " +
         "    } else if (inputs[i].name === 'publicWorkstation') { " +
         "        publicStation = inputs[i].checked; " +

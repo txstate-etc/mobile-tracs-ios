@@ -22,7 +22,7 @@ class Site : NSObject, Cacheable {
         title = dict["title"] as? String ?? ""
         coursesite = dict["type"] as? String == "course"
         created_at = Date()
-        invalid = (dict["sitePages"] as? [Any] ?? []).count == 0 || !(dict["published"] as? Bool ?? false)
+        invalid = (dict["sitePages"] as? [Any] ?? []).count == 0
     }
     
     func findUrls(jsonarray: [Any]) {

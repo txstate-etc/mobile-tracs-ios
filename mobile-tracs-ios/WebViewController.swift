@@ -30,20 +30,19 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     
     let loginscript = "function get_login_details_tracsmobile() { " +
         "var username, password, publicStation; " +
-        "var inputs = document.getElementsByTagName('input'); " +
-        "for (var i = 0; i < inputs.length; i++) { " +
-        "    if (inputs[i].name.toLowerCase() === 'password') { " +
-        "        password = inputs[i] === null ? '' : inputs[i].value; " +
-        "    } else if (inputs[i].name.toLowerCase() === 'username') { " +
-        "        inputs[i].value = inputs[i].value.trim(); " +
-        "        username = inputs[i] === null ? '' : inputs[i].value; " +
-        "    } else if (inputs[i].name === 'publicWorkstation') { " +
-        "        publicStation = inputs[i].checked; " +
-        "    } " +
-        "} " +
-        "return {netid: username, pw: password, public: publicStation}; " +
+        "var usernameelement = document.querySelector('form input[name=\"username\"]'); " +
+        "usernameelement.value = usernameelement.value.trim(); " +
+        "var pwelement = document.querySelector('form input[name=\"password\"]'); " +
+        "var publicelement = document.querySelector('form input[name=\"publicWorkstation\"]'); " +
+        "var publicStation = publicelement.checked; " +
+        "publicelement.checked = false; " +
+        "return {netid: usernameelement.value, pw: pwelement.value, public: publicStation}; " +
     "} " +
     "get_login_details_tracsmobile();"
+    
+    let fixloginscript = "var publicelement = document.querySelector('form input[name=\"publicWorkstation\"]'); " +
+        "var publiclabelelement = document.querySelector('form label[for=\"publicWorkstation\"]'); " +
+        "publicelement.style.display = 'none'; publiclabelelement.style.display = 'none'; "
     
     override func viewDidLoad() {
         super.viewDidLoad()

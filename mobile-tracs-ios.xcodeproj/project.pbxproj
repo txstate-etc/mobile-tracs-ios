@@ -133,7 +133,7 @@
 		2DD215EB1EA037CD00A6C30F /* GAITrackedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = GoogleAnalytics/GAITrackedViewController.h; sourceTree = "<group>"; };
 		2DD215EC1EA037CD00A6C30F /* GAITracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = GoogleAnalytics/GAITracker.h; sourceTree = "<group>"; };
 		2DD215ED1EA037E000A6C30F /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = "mobile-tracs-ios/GoogleAnalytics/libGoogleAnalyticsServices.a"; sourceTree = "<group>"; };
-		82500CAA1EF97F80004AB219 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Config.plist; path = ../../../Downloads/Config.plist; sourceTree = "<group>"; };
+		82500CAA1EF97F80004AB219 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

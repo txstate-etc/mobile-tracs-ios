@@ -136,7 +136,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
         if application.applicationState == .active {
-            NSLog("received notification: %@", userInfo)
             if let observer = getActiveNotificationObserver() {
                 var badge:Int?
                 var msg:String?
@@ -144,6 +143,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     badge = aps["badge"] as? Int
                     msg = aps["alert"] as? String
                 }
+                UIApplication.shared.applicationIconBadgeNumber = badge ?? 0
                 observer.incomingNotification(badgeCount: badge, message: msg)
             }
         }

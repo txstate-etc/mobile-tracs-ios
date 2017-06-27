@@ -31,7 +31,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     
     let loginscript = "function get_login_details_tracsmobile() { " +
         "var usernameelement = document.querySelector('form input[name=\"username\"]'); " +
-        "usernameelement.value = usernameelement.value.trim(); " +
         "var pwelement = document.querySelector('form input[name=\"password\"]'); " +
         "var publicelement = document.querySelector('form input[name=\"publicWorkstation\"]'); " +
         "var publicStation = publicelement.checked; " +
@@ -270,8 +269,9 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         Utils.hideActivity()
 
 
-        if webView.url?.absoluteString.contains(loginUrl) ?? false {
-            webView.evaluateJavaScript(onSubmitExtend, completionHandler: { _ in })
+        if webView.url?.absoluteString.hasPrefix(loginUrl) ?? false {
+            webView.evaluateJavaScript(onSubmitExtend, completionHandler: nil)
+            webView.evaluateJavaScript(fixloginscript, completionHandler: nil)
         }
         syncWebviewCookiesToShared(webView.url!)
         if let urlstring = webView.url?.absoluteString {

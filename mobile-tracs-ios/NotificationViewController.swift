@@ -16,12 +16,17 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         tableView.register(UINib(nibName:"NotificationCell", bundle: nil), forCellReuseIdentifier: "notification")
         //navigationItem.rightBarButtonItem = Utils.fontAwesomeTitledBarButtonItem(color: (navigationController?.navigationBar.tintColor)!, icon: .timesCircle, title: "Clear All", textStyle: .body, target: self, action: #selector(clearAllPressed))
+        NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Analytics.viewWillAppear("Notifications")
-        loadNotifications(true)
+        loadOnAppear()
     }
     
     // MARK: - UITableViewDataSource
@@ -84,21 +89,32 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - More functions
     
+    func loadOnAppear() {
+        Analytics.viewWillAppear("Notifications")
+        loadNotifications(true)
+    }
+    
     func loadNotifications(_ showactivity:Bool) {
         if showactivity { Utils.showActivity(view) }
-        IntegrationClient.getNotifications { (notifications) in
-            if let notis = notifications {
-                let unseen = notis.filter({ (n) -> Bool in
-                    return !n.seen
-                })
-                IntegrationClient.markNotificationsSeen(unseen, completion: { (success) in
-                    DispatchQueue.main.async {
-                        UIApplication.shared.applicationIconBadgeNumber = 0
-                        self.notifications = notis
-                        self.tableView.reloadData()
-                        Utils.hideActivity()
+        TRACSClient.loginIfNecessary { (loggedin) in
+            if loggedin {
+                IntegrationClient.getNotifications { (notifications) in
+                    if let notis = notifications {
+                        let unseen = notis.filter({ (n) -> Bool in
+                            return !n.seen
+                        })
+                        IntegrationClient.markNotificationsSeen(unseen, completion: { (success) in
+                            DispatchQueue.main.async {
+                                UIApplication.shared.applicationIconBadgeNumber = 0
+                                self.notifications = notis
+                                self.tableView.reloadData()
+                                Utils.hideActivity()
+                            }
+                        })
                     }
-                })
+                }
+            } else {
+                (UIApplication.shared.delegate as! AppDelegate).reloadEverything()
             }
         }
     }

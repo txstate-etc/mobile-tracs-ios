@@ -19,6 +19,10 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NotificationCenter.default.addObserver(self, selector: #selector(deselectRow), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         deselectRow()
     }

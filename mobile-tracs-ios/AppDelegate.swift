@@ -101,21 +101,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Analytics.event(category: "External Launch", action: url.absoluteString, label: sourceApplication ?? "null", value: nil)
         return true
     }
+    
+    func reloadEverything() {
+        let current = getCurrentViewController()
+        if current?.presentedViewController != nil {
+            current?.dismiss(animated: true, completion: nil)
+        }
         
+        let top = getNavController()
+        top?.popToRootViewController(animated: true)
+        
+        let wvc = getWebViewController()
+        wvc?.load()
+    }
+    
+    func getNavController() -> UINavigationController? {
+        return UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
+    }
+    
     func getWebViewController() -> WebViewController? {
-        let top = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
+        let top = getNavController()
         return top?.viewControllers.first as? WebViewController
     }
     
-    func getActiveViewController() -> NotificationObserver? {
-        let top = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
+    func getActiveNotificationObserver() -> NotificationObserver? {
+        let top = getNavController()
         return top?.viewControllers.last as? NotificationObserver
+    }
+    
+    func getCurrentViewController() -> UIViewController? {
+        let top = getNavController()
+        return top?.viewControllers.last
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
         if application.applicationState == .active {
             NSLog("received notification: %@", userInfo)
-            if let observer = getActiveViewController() {
+            if let observer = getActiveNotificationObserver() {
                 var badge:Int?
                 var msg:String?
                 if let aps = userInfo["aps"] as? [String:Any] {
@@ -130,7 +152,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         UIApplication.shared.applicationIconBadgeNumber = notification.request.content.badge?.intValue ?? 0
-        if let observer = getActiveViewController() {
+        if let observer = getActiveNotificationObserver() {
             observer.incomingNotification(badgeCount: notification.request.content.badge?.intValue, message: notification.request.content.body)
         }
         completionHandler([.alert, .badge])

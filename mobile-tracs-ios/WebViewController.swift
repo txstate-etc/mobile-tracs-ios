@@ -62,6 +62,8 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         
         navigationItem.leftBarButtonItem = Utils.fontAwesomeTitledBarButtonItem(color: (navigationController?.navigationBar.tintColor)!, icon: .home, title: "TRACS", textStyle: .headline, target: self, action: #selector(pressedHome))
         updateBell()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateBell), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateBell), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
 
         back = Utils.fontAwesomeBarButtonItem(icon: .chevronLeft, target: self, action: #selector(pressedBack(sender:)))
         forward = Utils.fontAwesomeBarButtonItem(icon: .chevronRight, target: self, action: #selector(pressedForward(sender:)))
@@ -78,6 +80,10 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         forward.accessibilityLabel = "forward"
         
         self.load()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {

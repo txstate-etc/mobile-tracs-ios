@@ -41,7 +41,6 @@
 		09DDA8AE1EA077FB004220CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09DDA8AD1EA077FB004220CF /* GoogleService-Info.plist */; };
 		09DDA8B01EA07850004220CF /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DDA8AF1EA07850004220CF /* Analytics.swift */; };
 		09DDA8B31EA084F8004220CF /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DDA8B21EA084F8004220CF /* Secrets.swift */; };
-		09DDA8B51EA0864E004220CF /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09DDA8B41EA0864E004220CF /* Config.plist */; };
 		09F10E081E7F25FF00303A96 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E051E7F25FF00303A96 /* Announcement.swift */; };
 		09F10E091E7F25FF00303A96 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E061E7F25FF00303A96 /* Notification.swift */; };
 		09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E071E7F25FF00303A96 /* TRACSClient.swift */; };
@@ -62,6 +61,7 @@
 		2DD215C71EA036B900A6C30F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C61EA036B900A6C30F /* libz.tbd */; };
 		2DD215C91EA036C500A6C30F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C81EA036C500A6C30F /* libsqlite3.tbd */; };
 		2DD215EE1EA037E000A6C30F /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215ED1EA037E000A6C30F /* libGoogleAnalyticsServices.a */; };
+		82500CAB1EF97F80004AB219 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82500CAA1EF97F80004AB219 /* Config.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,7 +103,6 @@
 		09DDA8AF1EA07850004220CF /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Analytics.swift; path = GoogleAnalytics/Analytics.swift; sourceTree = "<group>"; };
 		09DDA8B11EA07A31004220CF /* Analytics-BridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Analytics-BridgingHeader.h"; path = "GoogleAnalytics/Analytics-BridgingHeader.h"; sourceTree = "<group>"; };
 		09DDA8B21EA084F8004220CF /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = Utils/Secrets.swift; sourceTree = "<group>"; };
-		09DDA8B41EA0864E004220CF /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		09F10E051E7F25FF00303A96 /* Announcement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Announcement.swift; path = Data/Announcement.swift; sourceTree = "<group>"; };
 		09F10E061E7F25FF00303A96 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Notification.swift; path = Data/Notification.swift; sourceTree = "<group>"; };
 		09F10E071E7F25FF00303A96 /* TRACSClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRACSClient.swift; path = Data/TRACSClient.swift; sourceTree = "<group>"; };
@@ -134,6 +133,7 @@
 		2DD215EB1EA037CD00A6C30F /* GAITrackedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = GoogleAnalytics/GAITrackedViewController.h; sourceTree = "<group>"; };
 		2DD215EC1EA037CD00A6C30F /* GAITracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = GoogleAnalytics/GAITracker.h; sourceTree = "<group>"; };
 		2DD215ED1EA037E000A6C30F /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = "mobile-tracs-ios/GoogleAnalytics/libGoogleAnalyticsServices.a"; sourceTree = "<group>"; };
+		82500CAA1EF97F80004AB219 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Config.plist; path = ../../../Downloads/Config.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,7 +228,7 @@
 				099C816F1E7CBE4100529530 /* mobile-tracs-ios.entitlements */,
 				09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */,
 				09B528031E7CBD6500BACF81 /* Assets.xcassets */,
-				09DDA8B41EA0864E004220CF /* Config.plist */,
+				82500CAA1EF97F80004AB219 /* Config.plist */,
 				09B528081E7CBD6500BACF81 /* Info.plist */,
 				2D88E2821ECB9197000DB020 /* IntroViewController.swift */,
 				2D88E2831ECB9197000DB020 /* IntroViewController.xib */,
@@ -370,10 +370,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				099BC24C1E882CFF009EEF0D /* SettingsCell.xib in Resources */,
-				09DDA8B51EA0864E004220CF /* Config.plist in Resources */,
 				09071A311EDCBD8A008560B5 /* MenuViewController.xib in Resources */,
 				09DDA8AE1EA077FB004220CF /* GoogleService-Info.plist in Resources */,
 				2D88E27F1ECA6AFD000DB020 /* LaunchScreen.storyboard in Resources */,
+				82500CAB1EF97F80004AB219 /* Config.plist in Resources */,
 				2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */,
 				099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */,
 				09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */,

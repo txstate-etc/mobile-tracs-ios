@@ -16,6 +16,7 @@ class Secrets {
     var tracsbaseurl:String?
     var surveyurl:String?
     var contacturl:String?
+    var loginbaseurl:String?
     
     init() {
         if let path = Bundle.main.path(forResource: "Config", ofType: "plist") {
@@ -26,6 +27,7 @@ class Secrets {
                 tracsbaseurl = dict["tracsbaseurl"] as? String
                 surveyurl = dict["surveyurl"] as? String
                 contacturl = dict["contacturl"] as? String
+                loginbaseurl = dict["loginbaseurl"] as? String
             }
         }
     }

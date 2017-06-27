@@ -22,6 +22,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     var documentInteractionController: UIDocumentInteractionController?
     let documentsPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
     let stop = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(pressedRefresh(sender:)))
+    let loginUrl = Secrets.shared.loginbaseurl ?? "https://login.its.txstate.edu"
     var bellnumber: Int?
     var needtoregister = false
     private var registrationlock = DispatchGroup()
@@ -29,7 +30,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     var wasLogout = false
     
     let loginscript = "function get_login_details_tracsmobile() { " +
-        "var username, password, publicStation; " +
         "var usernameelement = document.querySelector('form input[name=\"username\"]'); " +
         "usernameelement.value = usernameelement.value.trim(); " +
         "var pwelement = document.querySelector('form input[name=\"password\"]'); " +
@@ -37,12 +37,18 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         "var publicStation = publicelement.checked; " +
         "publicelement.checked = false; " +
         "return {netid: usernameelement.value, pw: pwelement.value, public: publicStation}; " +
-    "} " +
-    "get_login_details_tracsmobile();"
+        "} " +
+        "get_login_details_tracsmobile();"
     
     let fixloginscript = "var publicelement = document.querySelector('form input[name=\"publicWorkstation\"]'); " +
         "var publiclabelelement = document.querySelector('form label[for=\"publicWorkstation\"]'); " +
         "publicelement.style.display = 'none'; publiclabelelement.style.display = 'none'; "
+    
+    let onSubmitExtend = "document.querySelector('form').onsubmit = " +
+        "function() { " +
+        "var username = document.querySelector('form input[name=\"username\"]');" +
+        "username.value = username.value.trim();" +
+        "return true; }"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -262,6 +268,11 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         updateButtons()
         Utils.hideActivity()
+
+
+        if webView.url?.absoluteString.contains(loginUrl) ?? false {
+            webView.evaluateJavaScript(onSubmitExtend, completionHandler: { _ in })
+        }
         syncWebviewCookiesToShared(webView.url!)
         if let urlstring = webView.url?.absoluteString {
             if urlstring.hasPrefix(TRACSClient.tracsurl) && TRACSClient.userid.isEmpty {

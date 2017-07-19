@@ -25,8 +25,7 @@ class LoginTextField: UITextField {
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: 8, dy: 7)
-        
+        return bounds.insetBy(dx: 8, dy: (self.layer.bounds.height / 4))
     }
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {

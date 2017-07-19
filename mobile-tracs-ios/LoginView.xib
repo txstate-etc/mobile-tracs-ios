@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="landscape">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -22,23 +22,26 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nTb-Lg-mqb">
-                    <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="loginBg" translatesAutoresizingMaskIntoConstraints="NO" id="anX-5x-isN">
-                            <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             <gestureRecognizers/>
                             <connections>
                                 <outletCollection property="gestureRecognizers" destination="m9e-Sw-x4P" appends="YES" id="wjX-3k-yb1"/>
                                 <outletCollection property="gestureRecognizers" destination="m9e-Sw-x4P" appends="YES" id="vSc-Qx-SDR"/>
                             </connections>
                         </imageView>
-                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6WJ-dA-Hge" userLabel="NETID" customClass="LoginTextField" customModule="mobile_tracs_ios" customModuleProvider="target">
-                            <rect key="frame" x="60" y="271" width="546" height="50"/>
+                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="netid" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6WJ-dA-Hge" userLabel="NETID" customClass="LoginTextField" customModule="mobile_tracs_ios" customModuleProvider="target">
+                            <rect key="frame" x="60" y="271" width="254" height="40"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="aiR-ir-sgH"/>
+                            </constraints>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="next"/>
@@ -48,9 +51,12 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zPk-ru-pz6" userLabel="PASSWORD" customClass="LoginTextField" customModule="mobile_tracs_ios" customModuleProvider="target">
-                            <rect key="frame" x="60" y="337" width="546" height="50"/>
+                        <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zPk-ru-pz6" userLabel="PASSWORD" customClass="LoginTextField" customModule="mobile_tracs_ios" customModuleProvider="target">
+                            <rect key="frame" x="60" y="327" width="254" height="40"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="0Zn-ji-RXn"/>
+                            </constraints>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="send" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
@@ -61,7 +67,7 @@
                             </userDefinedRuntimeAttributes>
                         </textField>
                         <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TRACSLogo" translatesAutoresizingMaskIntoConstraints="NO" id="QuH-07-S9U" customClass="LoginLogoImage" customModule="mobile_tracs_ios" customModuleProvider="target">
-                            <rect key="frame" x="260.5" y="80" width="146" height="146"/>
+                            <rect key="frame" x="114.5" y="80" width="146" height="146"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="146" id="hOw-zm-JiZ"/>
@@ -73,23 +79,8 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NetId" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PqL-W6-zzU" userLabel="NetIdLabel">
-                            <rect key="frame" x="68" y="271" width="61" height="17"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="61" id="O4w-L8-Qn3"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
-                            <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKT-1D-4wC" userLabel="PasswordLabel">
-                            <rect key="frame" x="68" y="337" width="67" height="17"/>
-                            <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
-                            <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gc8-o3-kbM" customClass="LoginButton" customModule="mobile_tracs_ios" customModuleProvider="target">
-                            <rect key="frame" x="60" y="411" width="546" height="50"/>
+                            <rect key="frame" x="60" y="391" width="254" height="50"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="8uu-5F-iBe"/>
@@ -103,26 +94,20 @@
                         </button>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="PqL-W6-zzU" firstAttribute="top" secondItem="QuH-07-S9U" secondAttribute="bottom" constant="45" id="1wJ-cr-S9E"/>
+                        <constraint firstItem="zPk-ru-pz6" firstAttribute="top" secondItem="6WJ-dA-Hge" secondAttribute="bottom" constant="16" id="0N0-ze-LQ2"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="centerX" secondItem="QuH-07-S9U" secondAttribute="centerX" id="3S5-JK-GTh"/>
                         <constraint firstItem="zPk-ru-pz6" firstAttribute="trailing" secondItem="Gc8-o3-kbM" secondAttribute="trailing" id="42i-6k-nQv"/>
                         <constraint firstItem="QuH-07-S9U" firstAttribute="top" secondItem="nTb-Lg-mqb" secondAttribute="top" constant="80" id="4rz-k1-wPG"/>
-                        <constraint firstItem="zPk-ru-pz6" firstAttribute="top" secondItem="ZKT-1D-4wC" secondAttribute="top" id="GAf-CN-ngf"/>
-                        <constraint firstItem="PqL-W6-zzU" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" constant="68" id="GjL-yj-bO3"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="trailing" secondItem="zPk-ru-pz6" secondAttribute="trailing" id="Ik2-73-IfF"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="centerX" secondItem="nTb-Lg-mqb" secondAttribute="centerX" id="L2B-V5-wiX"/>
-                        <constraint firstItem="6WJ-dA-Hge" firstAttribute="top" secondItem="PqL-W6-zzU" secondAttribute="top" id="Odb-Un-eHV"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" constant="60" id="Opm-Vx-kI7"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="centerY" secondItem="nTb-Lg-mqb" secondAttribute="centerY" id="Scu-o3-1NW"/>
                         <constraint firstAttribute="bottom" secondItem="anX-5x-isN" secondAttribute="bottom" id="Zxc-UL-k8p"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="top" secondItem="nTb-Lg-mqb" secondAttribute="top" id="dMo-b7-Rc1"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="leading" secondItem="zPk-ru-pz6" secondAttribute="leading" id="eC0-CI-aSD"/>
-                        <constraint firstItem="PqL-W6-zzU" firstAttribute="leading" secondItem="ZKT-1D-4wC" secondAttribute="leading" id="eCz-aK-O3P"/>
-                        <constraint firstItem="ZKT-1D-4wC" firstAttribute="top" secondItem="6WJ-dA-Hge" secondAttribute="bottom" constant="16" id="fDt-Wo-dss"/>
                         <constraint firstItem="QuH-07-S9U" firstAttribute="centerX" secondItem="6WJ-dA-Hge" secondAttribute="centerX" id="g9i-VJ-cwS"/>
-                        <constraint firstItem="Gc8-o3-kbM" firstAttribute="top" secondItem="ZKT-1D-4wC" secondAttribute="bottom" constant="57" id="iwZ-20-mnG"/>
+                        <constraint firstItem="6WJ-dA-Hge" firstAttribute="top" secondItem="QuH-07-S9U" secondAttribute="bottom" constant="45" id="goU-0Q-WQd"/>
                         <constraint firstItem="Gc8-o3-kbM" firstAttribute="top" secondItem="zPk-ru-pz6" secondAttribute="bottom" constant="24" id="jFF-ed-cjZ"/>
-                        <constraint firstItem="ZKT-1D-4wC" firstAttribute="top" secondItem="PqL-W6-zzU" secondAttribute="bottom" constant="49" id="mM3-x7-Q4m"/>
                         <constraint firstAttribute="trailing" secondItem="anX-5x-isN" secondAttribute="trailing" id="tIe-MB-H5v"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" id="yoV-XI-YuY"/>
                         <constraint firstItem="zPk-ru-pz6" firstAttribute="leading" secondItem="Gc8-o3-kbM" secondAttribute="leading" id="zrp-n4-r3c"/>

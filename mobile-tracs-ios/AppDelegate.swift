@@ -52,21 +52,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
-        let lvc = LoginViewController()
-        window?.rootViewController = lvc
+        let clvc = CourseListController()
+        let nav = UINavigationController()
+        nav.navigationBar.barStyle = .default
+        nav.navigationBar.isTranslucent = false
+        nav.navigationBar.barTintColor = Utils.gray
+        nav.navigationBar.tintColor = Utils.darkred
+        nav.viewControllers = [clvc]
+        window?.rootViewController = nav
+        window?.backgroundColor = UIColor.white
         window?.makeKeyAndVisible()
-//        let loginController = LoginViewController();
-//        let wvc = WebViewController(nibName: "WebViewController", bundle: nil)
-//        let nav = UINavigationController()
-//        nav.navigationBar.barStyle = .default
-//        nav.navigationBar.isTranslucent = false
-//        nav.navigationBar.barTintColor = Utils.gray
-//        nav.navigationBar.tintColor = Utils.darkred
-//        nav.viewControllers = [wvc]
-//        window?.rootViewController = nav
-//        window?.backgroundColor = UIColor.white
-//        window?.makeKeyAndVisible()
-//        
+        
         //Set a custom user agent so that UIWebView and URLSession dataTasks will match
         UserDefaults.standard.register(defaults: ["UserAgent": Utils.userAgent])
 

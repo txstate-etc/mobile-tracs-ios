@@ -115,7 +115,15 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
                         //If the device registered you wind up here and
                         //you have a valid TRACS login.
                         NSLog(registered ? "Registered" : "Not Registered")
-                })
+                        if registered {
+                            self.dismiss(animated: true, completion: nil)
+                        } else {
+                            // clear the login info and tell the user to try again
+                        }
+                    }
+                )
+            } else {
+                // clear the login info and tell the user to try again
             }
         })
     }

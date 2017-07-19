@@ -148,7 +148,7 @@ class TRACSClient {
             })
         }
         
-        dispatchgroup.notify(queue: .main) { 
+        dispatchgroup.notify(queue: tracslockqueue) {
             completion(sitehash)
         }
     }

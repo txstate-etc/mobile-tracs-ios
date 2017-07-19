@@ -62,7 +62,15 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                             projects.append(site)
                         }
                     }
+                    let comparator: (Site,Site)->Bool = { (a, b) in
+                        (!a.coursesite && b.coursesite) ||
+                            a.title.trimmingCharacters(in:CharacterSet.whitespacesAndNewlines).lowercased() < b.title.trimmingCharacters(in:CharacterSet.whitespacesAndNewlines).lowercased()
+                    }
+                    courses.sort(by: comparator)
+                    projects.sort(by: comparator)
+
                     DispatchQueue.main.async {
+                        Utils.hideActivity()
                         self.coursesites = courses
                         self.projectsites = projects
                         self.tableView.reloadData()
@@ -75,9 +83,6 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.4, execute: {
                     self.refresh.endRefreshing()
                 })
-                DispatchQueue.main.async {
-                    Utils.hideActivity()
-                }
             }
         }
     }

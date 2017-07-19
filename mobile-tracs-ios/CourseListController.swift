@@ -12,16 +12,20 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet var tableView:UITableView!
     var coursesites:[Site] = []
     var projectsites:[Site] = []
+    var refresh = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName:"CourseCell", bundle: nil), forCellReuseIdentifier: "courselist")
-        NotificationCenter.default.addObserver(self, selector: #selector(load), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(load), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         
         let menubutton = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedMenu))
         menubutton.accessibilityLabel = "Menu"
         navigationItem.rightBarButtonItem = menubutton
+        
+        refresh.addTarget(self, action: #selector(load), for: .valueChanged)
+        tableView.addSubview(refresh)
         
         let lvc = LoginViewController()
         self.present(lvc, animated: true, completion: nil)
@@ -32,7 +36,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        load()
+        loadWithActivity()
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,8 +44,12 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
-    func load() {
+    func loadWithActivity() {
         Utils.showActivity(view)
+        load()
+    }
+    
+    func load() {
         if !TRACSClient.userid.isEmpty {
             TRACSClient.fetchSitesByMembership { (sitehash) in
                 var courses:[Site] = []
@@ -54,16 +62,21 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                             projects.append(site)
                         }
                     }
+                    DispatchQueue.main.async {
+                        self.coursesites = courses
+                        self.projectsites = projects
+                        self.tableView.reloadData()
+                    }
                 } else {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5, execute: { 
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5, execute: {
                         self.load()
                     })
                 }
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.4, execute: {
+                    self.refresh.endRefreshing()
+                })
                 DispatchQueue.main.async {
                     Utils.hideActivity()
-                    self.coursesites = courses
-                    self.projectsites = projects
-                    self.tableView.reloadData()
                 }
             }
         }

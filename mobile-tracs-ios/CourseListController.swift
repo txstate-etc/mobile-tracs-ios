@@ -78,13 +78,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:CourseCell = tableView.dequeueReusableCell(withIdentifier: "courselist", for: indexPath) as! CourseCell
-        let site = (indexPath.section == 0 ? coursesites : projectsites)[indexPath.row]
-        
-        cell.titleLabel.text = site.title
-        if indexPath.section == 0 {
-        } else {
-        }
-        
+        cell.site = (indexPath.section == 0 ? coursesites : projectsites)[indexPath.row]        
         return cell
     }
     

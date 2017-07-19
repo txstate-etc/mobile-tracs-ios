@@ -10,7 +10,11 @@ import UIKit
 
 class CourseCell: UITableViewCell {
     @IBOutlet var titleLabel:UILabel!
-    var site:Site?
+    var site:Site? {
+        didSet {
+            updateUI()
+        }
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,6 +25,10 @@ class CourseCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func updateUI() {
+        titleLabel.text = site?.title
     }
     
 }

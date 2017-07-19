@@ -246,7 +246,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         }
     }
     
-func updateBell() {
+    func updateBell() {
         let newnumber = UIApplication.shared.applicationIconBadgeNumber
         if bellnumber != newnumber {
             let menubutton = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedMenu))
@@ -263,7 +263,7 @@ func updateBell() {
         if let btn = self.navigationItem.rightBarButtonItems?[1].customView as? UIButton {
             btn.isEnabled = !TRACSClient.userid.isEmpty
         }
-   }
+    }
     
     // MARK: - UIWebViewDelegate
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {

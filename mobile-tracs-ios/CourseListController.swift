@@ -18,6 +18,11 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.register(UINib(nibName:"CourseCell", bundle: nil), forCellReuseIdentifier: "courselist")
         NotificationCenter.default.addObserver(self, selector: #selector(load), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(load), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        
+        let menubutton = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedMenu))
+        menubutton.accessibilityLabel = "Menu"
+        navigationItem.rightBarButtonItem = menubutton
+        
         let lvc = LoginViewController()
         self.present(lvc, animated: true, completion: nil)
     }
@@ -37,27 +42,38 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func load() {
         Utils.showActivity(view)
-        TRACSClient.fetchSitesByMembership { (sitehash) in
-            var courses:[Site] = []
-            var projects:[Site] = []
-            if let sitehash = sitehash {
-                for site in sitehash.values {
-                    if site.coursesite {
-                        courses.append(site)
-                    } else {
-                        projects.append(site)
+        if !TRACSClient.userid.isEmpty {
+            TRACSClient.fetchSitesByMembership { (sitehash) in
+                var courses:[Site] = []
+                var projects:[Site] = []
+                if let sitehash = sitehash {
+                    for site in sitehash.values {
+                        if site.coursesite {
+                            courses.append(site)
+                        } else {
+                            projects.append(site)
+                        }
                     }
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5, execute: { 
+                        self.load()
+                    })
                 }
-            }
-            DispatchQueue.main.async {
-                Utils.hideActivity()
-                self.coursesites = courses
-                self.projectsites = projects
-                self.tableView.reloadData()
+                DispatchQueue.main.async {
+                    Utils.hideActivity()
+                    self.coursesites = courses
+                    self.projectsites = projects
+                    self.tableView.reloadData()
+                }
             }
         }
     }
     
+    func pressedMenu() {
+        let mvc = MenuViewController()
+        navigationController?.pushViewController(mvc, animated: true)
+    }
+
     // MARK: - UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {

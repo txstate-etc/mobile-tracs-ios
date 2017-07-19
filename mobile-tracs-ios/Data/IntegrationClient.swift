@@ -29,12 +29,12 @@ class IntegrationClient {
         }
     }
     
-    public static func register(_ completion:@escaping (Bool)->Void) {
+    public static func register(userId: String, password: String, _ completion:@escaping (Bool)->Void) {
         let reg = getRegistration()
         reg.token = deviceToken
         reg.user_id = TRACSClient.userid
         
-        saveRegistration(reg: reg) { (success) in
+        saveRegistration(reg: reg, password: password) { (success) in
             if success {
                 Utils.save(deviceToken, withKey: "lastregisteredtoken")
                 getBadgeCount(completion: { (badgecount) in
@@ -47,10 +47,10 @@ class IntegrationClient {
         }
     }
     
-    public static func saveRegistration(reg:Registration, completion:@escaping(Bool)->Void) {
+    public static func saveRegistration(reg:Registration, password:String, completion:@escaping(Bool)->Void) {
         if reg.valid() {
             if let body = reg.toJSON() {
-                Utils.fetch(jwtserviceurl, completion: { (jwt) in
+                Utils.fetch(jwtserviceurl, netid: reg.user_id, password: password, completion: { (jwt) in
                     if jwt.isEmpty || jwt.contains("<html") {
                         NSLog("did not get a good JWT from service")
                         return completion(false)

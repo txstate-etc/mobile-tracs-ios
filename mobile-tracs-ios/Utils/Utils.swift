@@ -86,10 +86,17 @@ class Utils {
         }
         return req
     }
-
-    static func fetch(_ url:String, completion:@escaping (String)->Void) {
+    
+    static func fetch(_ url: String, netid: String?, password: String?, completion:@escaping (String)->Void) {
+        if (netid?.isEmpty)! || (password?.isEmpty)! {
+            completion("")
+        }
         if let targeturl = URL(string: url) {
             var req = standardRequest(targeturl)
+            let basicAuthString = "\(netid!):\(password!)"
+            let basic64AuthData = basicAuthString.data(using: .utf8)?.base64EncodedString()
+            req.setValue("Basic \(basic64AuthData ?? "")", forHTTPHeaderField: "Authorization")
+            req.httpMethod = "POST"
             req.cachePolicy = .reloadIgnoringLocalCacheData
             urlsession.dataTask(with: req, completionHandler: { (data, response, error) in
                 if let data = data {

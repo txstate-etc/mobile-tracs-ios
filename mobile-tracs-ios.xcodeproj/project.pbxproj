@@ -62,6 +62,11 @@
 		2DD215C91EA036C500A6C30F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C81EA036C500A6C30F /* libsqlite3.tbd */; };
 		2DD215EE1EA037E000A6C30F /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215ED1EA037E000A6C30F /* libGoogleAnalyticsServices.a */; };
 		82500CAB1EF97F80004AB219 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82500CAA1EF97F80004AB219 /* Config.plist */; };
+		826501991F166848007DE87C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826501981F166848007DE87C /* LoginViewController.swift */; };
+		8265019B1F16685A007DE87C /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8265019A1F16685A007DE87C /* LoginView.xib */; };
+		8265019D1F167B7F007DE87C /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8265019C1F167B7F007DE87C /* LoginTextField.swift */; };
+		8265019F1F16A082007DE87C /* LoginLogoImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8265019E1F16A082007DE87C /* LoginLogoImage.swift */; };
+		826501A11F16A303007DE87C /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826501A01F16A303007DE87C /* LoginButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -134,6 +139,11 @@
 		2DD215EC1EA037CD00A6C30F /* GAITracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = GoogleAnalytics/GAITracker.h; sourceTree = "<group>"; };
 		2DD215ED1EA037E000A6C30F /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = "mobile-tracs-ios/GoogleAnalytics/libGoogleAnalyticsServices.a"; sourceTree = "<group>"; };
 		82500CAA1EF97F80004AB219 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
+		826501981F166848007DE87C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8265019A1F16685A007DE87C /* LoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
+		8265019C1F167B7F007DE87C /* LoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginTextField.swift; path = UIWidgets/LoginTextField.swift; sourceTree = "<group>"; };
+		8265019E1F16A082007DE87C /* LoginLogoImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginLogoImage.swift; path = UIWidgets/LoginLogoImage.swift; sourceTree = "<group>"; };
+		826501A01F16A303007DE87C /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginButton.swift; path = UIWidgets/LoginButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +191,7 @@
 		098FCFCA1E9D239900D4C66D /* UIWidgets */ = {
 			isa = PBXGroup;
 			children = (
+				826501A31F16A314007DE87C /* LoginView */,
 				098FCFCB1E9D23DF00D4C66D /* FontAwesome */,
 				09DDA8AB1E9D3143004220CF /* BadgeSwift.swift */,
 				09071A281ECDEB6A008560B5 /* NotificationObserver.swift */,
@@ -247,6 +258,8 @@
 				2D88E27E1ECA6AFD000DB020 /* LaunchScreen.storyboard */,
 				09071A2E1EDCBD8A008560B5 /* MenuViewController.swift */,
 				09071A2F1EDCBD8A008560B5 /* MenuViewController.xib */,
+				826501981F166848007DE87C /* LoginViewController.swift */,
+				8265019A1F16685A007DE87C /* LoginView.xib */,
 			);
 			path = "mobile-tracs-ios";
 			sourceTree = "<group>";
@@ -299,6 +312,16 @@
 				09DDA8B11EA07A31004220CF /* Analytics-BridgingHeader.h */,
 			);
 			name = "Google Analytics";
+			sourceTree = "<group>";
+		};
+		826501A31F16A314007DE87C /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				8265019C1F167B7F007DE87C /* LoginTextField.swift */,
+				8265019E1F16A082007DE87C /* LoginLogoImage.swift */,
+				826501A01F16A303007DE87C /* LoginButton.swift */,
+			);
+			name = LoginView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -371,6 +394,7 @@
 			files = (
 				099BC24C1E882CFF009EEF0D /* SettingsCell.xib in Resources */,
 				09071A311EDCBD8A008560B5 /* MenuViewController.xib in Resources */,
+				8265019B1F16685A007DE87C /* LoginView.xib in Resources */,
 				09DDA8AE1EA077FB004220CF /* GoogleService-Info.plist in Resources */,
 				2D88E27F1ECA6AFD000DB020 /* LaunchScreen.storyboard in Resources */,
 				82500CAB1EF97F80004AB219 /* Config.plist in Resources */,
@@ -397,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09F10E0C1E7F3C3400303A96 /* TRACSObject.swift in Sources */,
+				826501A11F16A303007DE87C /* LoginButton.swift in Sources */,
 				09071A1F1EADB764008560B5 /* Extensions.swift in Sources */,
 				09F10E081E7F25FF00303A96 /* Announcement.swift in Sources */,
 				2D88E27D1EB9433A000DB020 /* Discussion.swift in Sources */,
@@ -419,6 +444,8 @@
 				2D88E2841ECB9197000DB020 /* IntroViewController.swift in Sources */,
 				099C81781E7DEEB600529530 /* NotificationViewController.swift in Sources */,
 				2D9161AA1E81E7F90090A5C6 /* Site.swift in Sources */,
+				8265019F1F16A082007DE87C /* LoginLogoImage.swift in Sources */,
+				8265019D1F167B7F007DE87C /* LoginTextField.swift in Sources */,
 				09F10E0F1E7F629A00303A96 /* IntegrationClient.swift in Sources */,
 				098FCFC01E9AA1AA00D4C66D /* KeychainSwift.swift in Sources */,
 				098FCFD21E9D23DF00D4C66D /* FontAwesome.swift in Sources */,
@@ -426,6 +453,7 @@
 				09071A261EC948F2008560B5 /* FeedbackViewController.swift in Sources */,
 				09DDA8B31EA084F8004220CF /* Secrets.swift in Sources */,
 				098FCFC21E9AA3FF00D4C66D /* Utils.swift in Sources */,
+				826501991F166848007DE87C /* LoginViewController.swift in Sources */,
 				09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */,
 				09071A291ECDEB6A008560B5 /* NotificationObserver.swift in Sources */,
 			);

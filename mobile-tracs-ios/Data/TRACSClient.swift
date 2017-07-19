@@ -21,6 +21,7 @@ class TRACSClient {
     static let logouturl = tracsurl+"/portal/pda/?force.logout=yes"
     static let altlogouturl = tracsurl+"/portal/logout"
     
+    
     // MARK: - Static Variables
     private static var tracslockqueue = DispatchQueue(label: "tracslock")
     static var sitecache = Cache(cacheName: "sitecache")
@@ -183,7 +184,7 @@ class TRACSClient {
             tracslock.wait()
         }
     }
-
+    
     private static func fetchCurrentUserId(completion:@escaping (String?)->Void) {
         let sessionurl = baseurl+"/session/current.json"
         Utils.fetchJSONObject(url: sessionurl) { (parsed) in

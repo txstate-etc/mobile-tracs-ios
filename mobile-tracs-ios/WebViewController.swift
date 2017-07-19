@@ -246,7 +246,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         }
     }
     
-    func updateBell() {
+func updateBell() {
         let newnumber = UIApplication.shared.applicationIconBadgeNumber
         if bellnumber != newnumber {
             let menubutton = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedMenu))
@@ -291,8 +291,10 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         TRACSClient.waitForLogin(completion: { (loggedin) in
             self.registrationlock.notify(queue: .main) {
                 if self.needtoregister {
-                    self.registrationlock.enter();
-                    IntegrationClient.register({ (success) in
+                    self.registrationlock.enter()
+                    IntegrationClient.register(userId: TRACSClient.userid,
+                                               password: Utils.password(),
+                                               { (success) in
                         if success {
                             self.needtoregister = false
                             DispatchQueue.main.async {

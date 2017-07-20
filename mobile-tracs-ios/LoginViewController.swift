@@ -15,8 +15,10 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
     @IBOutlet weak var loginLogoImage: LoginLogoImage!
     @IBOutlet weak var loginScrollView: UIScrollView!
     @IBOutlet weak var loginSubmitButton: LoginButton!
+    @IBOutlet weak var loginAdvisory: AdvisoryLabel!
     @IBOutlet var viewTap: UIView!
-
+    
+    let loginAdvisoryText = "Use of computer and network facilities owned or operated by Texas State University requires prior authorization. Unauthorized access is prohibited. Usage may be subject to security testing and monitoring, and affords no privacy guarantees or expectations except as otherwise provided by applicable privacy laws. Abuse is subject to criminal prosecution. Use of these facilities implies agreement to comply with the policies of Texas State University."
     
     var activeField: UITextField?
     var keyboardDismissTouch = UITapGestureRecognizer()
@@ -35,6 +37,14 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
         //Keyboard show and hide notification registrations
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        //Advisory text setup
+        loginAdvisory.text = loginAdvisoryText
+        
+        //ScrollView Sizing
+        loginScrollView.sizeToFit()
+        loginScrollView.contentSize = CGSize(width: loginScrollView.frame.width, height: loginAdvisory.frame.height + loginScrollView.frame.height)
+        
     }
     
     override func didReceiveMemoryWarning() {

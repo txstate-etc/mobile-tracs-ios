@@ -71,6 +71,7 @@
 		8265019D1F167B7F007DE87C /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8265019C1F167B7F007DE87C /* LoginTextField.swift */; };
 		8265019F1F16A082007DE87C /* LoginLogoImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8265019E1F16A082007DE87C /* LoginLogoImage.swift */; };
 		826501A11F16A303007DE87C /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826501A01F16A303007DE87C /* LoginButton.swift */; };
+		826501A51F1FFB6F007DE87C /* AdvisoryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826501A41F1FFB6F007DE87C /* AdvisoryLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,6 +153,7 @@
 		8265019C1F167B7F007DE87C /* LoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginTextField.swift; path = UIWidgets/LoginTextField.swift; sourceTree = "<group>"; };
 		8265019E1F16A082007DE87C /* LoginLogoImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginLogoImage.swift; path = UIWidgets/LoginLogoImage.swift; sourceTree = "<group>"; };
 		826501A01F16A303007DE87C /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginButton.swift; path = UIWidgets/LoginButton.swift; sourceTree = "<group>"; };
+		826501A41F1FFB6F007DE87C /* AdvisoryLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvisoryLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,6 +334,7 @@
 				8265019C1F167B7F007DE87C /* LoginTextField.swift */,
 				8265019E1F16A082007DE87C /* LoginLogoImage.swift */,
 				826501A01F16A303007DE87C /* LoginButton.swift */,
+				826501A41F1FFB6F007DE87C /* AdvisoryLabel.swift */,
 			);
 			name = LoginView;
 			sourceTree = "<group>";
@@ -468,6 +471,7 @@
 				09071A171EAD5331008560B5 /* Cache.swift in Sources */,
 				09071A261EC948F2008560B5 /* FeedbackViewController.swift in Sources */,
 				09DDA8B31EA084F8004220CF /* Secrets.swift in Sources */,
+				826501A51F1FFB6F007DE87C /* AdvisoryLabel.swift in Sources */,
 				098FCFC21E9AA3FF00D4C66D /* Utils.swift in Sources */,
 				826501991F166848007DE87C /* LoginViewController.swift in Sources */,
 				09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */,

@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="mobile_tracs_ios" customModuleProvider="target">
             <connections>
                 <outlet property="keyboardDismissTouch" destination="m9e-Sw-x4P" id="q3a-xH-kMm"/>
+                <outlet property="loginAdvisory" destination="gLO-dC-l4y" id="kHa-eR-wBa"/>
                 <outlet property="loginLogoImage" destination="QuH-07-S9U" id="6us-jd-jhP"/>
                 <outlet property="loginNetid" destination="6WJ-dA-Hge" id="esO-Ar-zkH"/>
                 <outlet property="loginPassword" destination="zPk-ru-pz6" id="hVw-RD-Kgd"/>
@@ -37,7 +38,7 @@
                             </connections>
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="netid" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6WJ-dA-Hge" userLabel="NETID" customClass="LoginTextField" customModule="mobile_tracs_ios" customModuleProvider="target">
-                            <rect key="frame" x="60" y="271" width="254" height="40"/>
+                            <rect key="frame" x="60" y="241" width="254" height="40"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="aiR-ir-sgH"/>
@@ -52,7 +53,7 @@
                             </userDefinedRuntimeAttributes>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zPk-ru-pz6" userLabel="PASSWORD" customClass="LoginTextField" customModule="mobile_tracs_ios" customModuleProvider="target">
-                            <rect key="frame" x="60" y="327" width="254" height="40"/>
+                            <rect key="frame" x="60" y="289" width="254" height="40"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="0Zn-ji-RXn"/>
@@ -67,7 +68,7 @@
                             </userDefinedRuntimeAttributes>
                         </textField>
                         <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TRACSLogo" translatesAutoresizingMaskIntoConstraints="NO" id="QuH-07-S9U" customClass="LoginLogoImage" customModule="mobile_tracs_ios" customModuleProvider="target">
-                            <rect key="frame" x="114.5" y="80" width="146" height="146"/>
+                            <rect key="frame" x="114.5" y="50" width="146" height="146"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="146" id="hOw-zm-JiZ"/>
@@ -80,7 +81,7 @@
                             </userDefinedRuntimeAttributes>
                         </imageView>
                         <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gc8-o3-kbM" customClass="LoginButton" customModule="mobile_tracs_ios" customModuleProvider="target">
-                            <rect key="frame" x="60" y="391" width="254" height="50"/>
+                            <rect key="frame" x="60" y="353" width="254" height="50"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="8uu-5F-iBe"/>
@@ -92,22 +93,56 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </button>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEt-TH-U0a">
+                            <rect key="frame" x="0.0" y="419" width="375" height="248"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5mc-79-syP">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLO-dC-l4y" customClass="AdvisoryLabel" customModule="mobile_tracs_ios" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                            <color key="backgroundColor" white="0.11713324652777778" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="gLO-dC-l4y" secondAttribute="bottom" id="Du9-6x-ARX"/>
+                                        <constraint firstAttribute="trailing" secondItem="gLO-dC-l4y" secondAttribute="trailing" id="JQC-XU-m5z"/>
+                                        <constraint firstItem="gLO-dC-l4y" firstAttribute="leading" secondItem="5mc-79-syP" secondAttribute="leading" id="Z5k-R4-JjU"/>
+                                        <constraint firstItem="gLO-dC-l4y" firstAttribute="top" secondItem="5mc-79-syP" secondAttribute="top" id="rWY-3u-HUc"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="5mc-79-syP" firstAttribute="top" secondItem="aEt-TH-U0a" secondAttribute="top" id="86o-Nq-tsy"/>
+                                <constraint firstAttribute="bottom" secondItem="5mc-79-syP" secondAttribute="bottom" id="BZw-S6-BI7"/>
+                                <constraint firstItem="5mc-79-syP" firstAttribute="leading" secondItem="aEt-TH-U0a" secondAttribute="leading" id="eiK-Hh-1p7"/>
+                                <constraint firstAttribute="trailing" secondItem="5mc-79-syP" secondAttribute="trailing" id="hnK-Ih-cVy"/>
+                            </constraints>
+                        </scrollView>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="zPk-ru-pz6" firstAttribute="top" secondItem="6WJ-dA-Hge" secondAttribute="bottom" constant="16" id="0N0-ze-LQ2"/>
+                        <constraint firstItem="zPk-ru-pz6" firstAttribute="top" secondItem="6WJ-dA-Hge" secondAttribute="bottom" constant="8" id="0N0-ze-LQ2"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="centerX" secondItem="QuH-07-S9U" secondAttribute="centerX" id="3S5-JK-GTh"/>
                         <constraint firstItem="zPk-ru-pz6" firstAttribute="trailing" secondItem="Gc8-o3-kbM" secondAttribute="trailing" id="42i-6k-nQv"/>
-                        <constraint firstItem="QuH-07-S9U" firstAttribute="top" secondItem="nTb-Lg-mqb" secondAttribute="top" constant="80" id="4rz-k1-wPG"/>
+                        <constraint firstItem="QuH-07-S9U" firstAttribute="top" secondItem="nTb-Lg-mqb" secondAttribute="top" constant="50" id="4rz-k1-wPG"/>
+                        <constraint firstAttribute="trailing" secondItem="aEt-TH-U0a" secondAttribute="trailing" id="93s-ig-neK"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="trailing" secondItem="zPk-ru-pz6" secondAttribute="trailing" id="Ik2-73-IfF"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="centerX" secondItem="nTb-Lg-mqb" secondAttribute="centerX" id="L2B-V5-wiX"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" constant="60" id="Opm-Vx-kI7"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="centerY" secondItem="nTb-Lg-mqb" secondAttribute="centerY" id="Scu-o3-1NW"/>
-                        <constraint firstAttribute="bottom" secondItem="anX-5x-isN" secondAttribute="bottom" id="Zxc-UL-k8p"/>
+                        <constraint firstAttribute="bottom" secondItem="aEt-TH-U0a" secondAttribute="bottom" id="bRC-vx-3Sn"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="top" secondItem="nTb-Lg-mqb" secondAttribute="top" id="dMo-b7-Rc1"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="leading" secondItem="zPk-ru-pz6" secondAttribute="leading" id="eC0-CI-aSD"/>
                         <constraint firstItem="QuH-07-S9U" firstAttribute="centerX" secondItem="6WJ-dA-Hge" secondAttribute="centerX" id="g9i-VJ-cwS"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="top" secondItem="QuH-07-S9U" secondAttribute="bottom" constant="45" id="goU-0Q-WQd"/>
                         <constraint firstItem="Gc8-o3-kbM" firstAttribute="top" secondItem="zPk-ru-pz6" secondAttribute="bottom" constant="24" id="jFF-ed-cjZ"/>
+                        <constraint firstItem="aEt-TH-U0a" firstAttribute="top" secondItem="Gc8-o3-kbM" secondAttribute="bottom" constant="16" id="nNh-j7-UgK"/>
+                        <constraint firstItem="anX-5x-isN" firstAttribute="bottom" secondItem="nTb-Lg-mqb" secondAttribute="bottom" id="q6p-ea-MBd"/>
+                        <constraint firstItem="aEt-TH-U0a" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" id="qhT-vL-lVi"/>
                         <constraint firstAttribute="trailing" secondItem="anX-5x-isN" secondAttribute="trailing" id="tIe-MB-H5v"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" id="yoV-XI-YuY"/>
                         <constraint firstItem="zPk-ru-pz6" firstAttribute="leading" secondItem="Gc8-o3-kbM" secondAttribute="leading" id="zrp-n4-r3c"/>
@@ -119,6 +154,7 @@
                 <constraint firstAttribute="bottom" secondItem="nTb-Lg-mqb" secondAttribute="bottom" id="3aP-gb-YF7"/>
                 <constraint firstItem="nTb-Lg-mqb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="3iX-06-DTT"/>
                 <constraint firstItem="nTb-Lg-mqb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="PkF-Sh-ACe"/>
+                <constraint firstItem="gLO-dC-l4y" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="Qr2-4M-Qgo"/>
                 <constraint firstAttribute="trailing" secondItem="nTb-Lg-mqb" secondAttribute="trailing" id="npa-46-j1W"/>
             </constraints>
             <point key="canvasLocation" x="-1938.5" y="-657.5"/>

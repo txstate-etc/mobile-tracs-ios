@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,14 +20,33 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odb-TU-IKr">
-                        <rect key="frame" x="8" y="8" width="304" height="42"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odb-TU-IKr">
+                        <rect key="frame" x="8" y="8" width="304" height="41.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JLZ-T1-oib">
+                        <rect key="frame" x="0.0" y="49.5" width="320" height="49.5"/>
+                        <items>
+                            <barButtonItem style="plain" systemItem="flexibleSpace" id="kfm-Xn-OyK"/>
+                            <barButtonItem title="Item" id="9AT-qx-uww"/>
+                            <barButtonItem style="plain" systemItem="flexibleSpace" id="RgD-QA-lBa"/>
+                            <barButtonItem title="Item" id="A5U-8u-B3i"/>
+                            <barButtonItem style="plain" systemItem="flexibleSpace" id="mfP-ON-frX"/>
+                        </items>
+                    </toolbar>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="JLZ-T1-oib" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="8mN-XA-pFJ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="JLZ-T1-oib" secondAttribute="trailing" constant="-8" id="Iu3-Uc-Ara"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="odb-TU-IKr" secondAttribute="trailing" id="NhQ-Gj-p2m"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="odb-TU-IKr" secondAttribute="leading" id="Qxe-ED-Bnv"/>
+                    <constraint firstAttribute="topMargin" secondItem="odb-TU-IKr" secondAttribute="top" id="cUF-tF-NuW"/>
+                    <constraint firstItem="odb-TU-IKr" firstAttribute="bottom" secondItem="JLZ-T1-oib" secondAttribute="top" id="qXa-tQ-iWD"/>
+                    <constraint firstItem="JLZ-T1-oib" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.5" id="uPu-3v-gco"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="JLZ-T1-oib" secondAttribute="bottom" constant="-7.5" id="xgG-aI-ieG"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="titleLabel" destination="odb-TU-IKr" id="KqK-ic-dBJ"/>

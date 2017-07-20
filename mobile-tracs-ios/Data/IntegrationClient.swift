@@ -29,6 +29,18 @@ class IntegrationClient {
         }
     }
     
+    public static func registerIfNecessary() {
+        getRegistration { (reg) in
+            if reg.user_id != TRACSClient.userid {
+                if Utils.netid() == TRACSClient.userid {
+                    register(userId: Utils.netid(), password: Utils.password(), { (success) in
+                        
+                    })
+                }
+            }
+        }
+    }
+    
     public static func register(userId: String, password: String, _ completion:@escaping (Bool)->Void) {
         let reg = getRegistration()
         reg.token = deviceToken

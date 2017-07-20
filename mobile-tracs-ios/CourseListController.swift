@@ -27,8 +27,14 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         refresh.addTarget(self, action: #selector(load), for: .valueChanged)
         tableView.addSubview(refresh)
         
-        let lvc = LoginViewController()
-        self.present(lvc, animated: true, completion: nil)
+        TRACSClient.loginIfNecessary { (loggedin) in
+            if !loggedin {
+                let lvc = LoginViewController()
+                self.present(lvc, animated: true, completion: nil)
+            } else {
+                IntegrationClient.registerIfNecessary()
+            }
+        }
     }
     
     deinit {

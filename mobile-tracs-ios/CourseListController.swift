@@ -42,7 +42,9 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        loadWithActivity()
+        TRACSClient.waitForLogin { (loggedin) in
+            self.loadWithActivity()
+        }
     }
 
     override func didReceiveMemoryWarning() {

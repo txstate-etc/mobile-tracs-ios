@@ -12,6 +12,8 @@ class Site : NSObject, Cacheable {
     var id = ""
     var coursesite = false
     var title = ""
+    var hasannouncements = false
+    var hasdiscussions = false
     var announcementurl = ""
     var discussionurl = ""
     var created_at:Date
@@ -29,9 +31,11 @@ class Site : NSObject, Cacheable {
         for page in jsonarray as? [[String:Any]] ?? [] {
             for tool in page["tools"] as? [[String:Any]] ?? [] {
                 if tool["toolId"] as? String == "sakai.announcements" {
+                    hasannouncements = true
                     announcementurl = tool["url"] as? String ?? ""
                 }
                 if tool["toolId"] as? String == "sakai.forums" {
+                    hasdiscussions = true
                     discussionurl = tool["url"] as? String ?? ""
                 }
             }

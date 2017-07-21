@@ -12,6 +12,7 @@ class Discussion : TRACSObjectBase, TRACSObject {
     static let type = "discussion"
     static let display = "Forum Post"
     static let displayplural = "Forum Posts"
+    static let icon = FontAwesome.comments
     
     var title = ""
     var body = ""

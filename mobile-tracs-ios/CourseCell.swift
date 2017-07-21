@@ -10,6 +10,7 @@ import UIKit
 
 class CourseCell: UITableViewCell {
     @IBOutlet var titleLabel:UILabel!
+    @IBOutlet var toolbar:UIToolbar!
     var site:Site? {
         didSet {
             updateUI()
@@ -29,6 +30,12 @@ class CourseCell: UITableViewCell {
     
     func updateUI() {
         titleLabel.text = site?.title
+        if site?.hasdiscussions ?? false {
+            toolbar.items?[1] = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.darkgray, badgecount: 0, icon: Discussion.icon, target: self, action: #selector(discussionPressed))
+        }
     }
     
+    func discussionPressed() {
+        
+    }
 }

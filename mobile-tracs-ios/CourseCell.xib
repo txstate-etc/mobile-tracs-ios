@@ -27,7 +27,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JLZ-T1-oib">
-                        <rect key="frame" x="0.0" y="49.5" width="320" height="49.5"/>
+                        <rect key="frame" x="0.0" y="49" width="320" height="50"/>
                         <items>
                             <barButtonItem style="plain" systemItem="flexibleSpace" id="kfm-Xn-OyK"/>
                             <barButtonItem title="Item" id="9AT-qx-uww"/>
@@ -50,6 +50,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="titleLabel" destination="odb-TU-IKr" id="KqK-ic-dBJ"/>
+                <outlet property="toolbar" destination="JLZ-T1-oib" id="OHU-sZ-BAl"/>
             </connections>
             <point key="canvasLocation" x="26" y="80"/>
         </tableViewCell>

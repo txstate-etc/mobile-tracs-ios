@@ -23,6 +23,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     let documentsPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
     let stop = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(pressedRefresh(sender:)))
     let loginUrl = Secrets.shared.loginbaseurl ?? "https://login.its.txstate.edu"
+    var urlToLoad: String?
     var bellnumber: Int?
     var needtoregister = false
     private var registrationlock = DispatchGroup()
@@ -49,6 +50,20 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         "var username = document.querySelector('form input[name=\"username\"]');" +
         "username.value = username.value.trim();" +
         "return true; }"
+    
+    init? (urlToLoad: String, _ coder: NSCoder? = nil) {
+        self.urlToLoad = urlToLoad
+        
+        if let coder = coder {
+            super.init(coder: coder)
+        } else {
+            super.init(nibName: nil, bundle: nil)
+        }
+    }
+    
+    required convenience init(coder: NSCoder) {
+        self.init(coder: coder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,12 +110,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        if !Utils.flag("introScreen", val: true) {
-            activateIntroScreen()
-        }
-    }
-    
     // MARK: - Helper functions
     func wipecookies(completion:@escaping()->Void) {
         if #available(iOS 9.0, *) {
@@ -121,8 +130,8 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         if introsequence.timeIntervalSinceNow > -5 { return }
         introsequence = Date()
         wipecookies {
-            if let urlToLoad = URL(string: TRACSClient.portalurl) {
-                let req = URLRequest(url: urlToLoad)
+            if let url = URL(string: TRACSClient.portalurl) {
+                let req = URLRequest(url: url)
                 self.webview.load(req)
             }
         }
@@ -130,8 +139,9 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     
     func loadpart2() {
         loginIfNecessary { (loggedin) in
-            let urlString = loggedin ? TRACSClient.portalurl : TRACSClient.loginurl
-            if let urlToLoad = URL(string: urlString) {
+            let urlString = loggedin ? self.urlToLoad : TRACSClient.loginurl
+            self.urlToLoad = TRACSClient.portalurl
+            if let urlToLoad = URL(string: urlString!) {
                 let req = URLRequest(url: urlToLoad)
                 self.webview.load(req)
             }
@@ -226,11 +236,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         let mvc = MenuViewController()
         navigationController?.pushViewController(mvc, animated: true)
     }    
-    func activateIntroScreen() {
-        let ivc = IntroViewController()
-        self.present(ivc, animated: true, completion: nil)
-    }
-
+    
     func updateButtons() {
         forward.isEnabled = webview.canGoForward
         back.isEnabled = webview.canGoBack
@@ -290,22 +296,22 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         }
         
         TRACSClient.waitForLogin(completion: { (loggedin) in
-            self.registrationlock.notify(queue: .main) {
-                if self.needtoregister {
-                    self.registrationlock.enter()
-                    IntegrationClient.register(userId: TRACSClient.userid,
-                                               password: Utils.password(),
-                                               { (success) in
-                        if success {
-                            self.needtoregister = false
-                            DispatchQueue.main.async {
-                                self.updateBell()
-                            }
-                        }
-                        self.registrationlock.leave()
-                    })
-                }
-            }
+//            self.registrationlock.notify(queue: .main) {
+//                if self.needtoregister {
+//                    self.registrationlock.enter()
+//                    IntegrationClient.register(userId: TRACSClient.userid,
+//                                               password: Utils.password(),
+//                                               { (success) in
+//                        if success {
+//                            self.needtoregister = false
+//                            DispatchQueue.main.async {
+//                                self.updateBell()
+//                            }
+//                        }
+//                        self.registrationlock.leave()
+//                    })
+//                }
+//            }
         })
     }
     

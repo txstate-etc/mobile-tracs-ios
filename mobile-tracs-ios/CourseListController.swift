@@ -16,6 +16,8 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Utils.save(false, withKey: "introScreen")
         tableView.register(UINib(nibName:"CourseCell", bundle: nil), forCellReuseIdentifier: "courselist")
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
@@ -26,7 +28,18 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         
         refresh.addTarget(self, action: #selector(load), for: .valueChanged)
         tableView.addSubview(refresh)
-        
+        loginIfNecessary()
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+//        if !Utils.flag("introScreen", val: true) {
+//            let ivc = IntroViewController()
+//            self.present(ivc, animated: true, completion: nil)
+//        }
+    }
+    
+    func loginIfNecessary() {
         TRACSClient.loginIfNecessary { (loggedin) in
             if !loggedin {
                 let lvc = LoginViewController()
@@ -125,17 +138,16 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
     
+
     // MARK: - CourseCellDelegate
     
     func discussionPressed(site:Site) {
-        let wvc = WebViewController(nibName: "WebViewController", bundle: nil)
-        wvc.urltoload = site.discussionurl
-        navigationController?.pushViewController(wvc, animated: true)
+        let wvc = WebViewController(urlToLoad: site.discussionurl)
+        navigationController?.pushViewController(wvc!, animated: true)
     }
     func dashboardPressed(site: Site) {
         let nvc = NotificationViewController(nibName: "NotificationViewController", bundle: nil)
         nvc.site = site
         navigationController?.pushViewController(nvc, animated: true)
     }
-    
 }

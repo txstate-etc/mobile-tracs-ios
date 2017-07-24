@@ -44,7 +44,6 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
         //ScrollView Sizing
         loginScrollView.sizeToFit()
         loginScrollView.contentSize = CGSize(width: loginScrollView.frame.width, height: loginAdvisory.frame.height + loginScrollView.frame.height)
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -54,6 +53,8 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
     func onLoginPress(sender: UIButton!) {
         sendLoginRequest()
     }
+    
+
     
     //MARK: UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -129,6 +130,9 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
                             self.dismiss(animated: true, completion: nil)
                         } else {
                             // clear the login info and tell the user to try again
+                            let failureToast: UIAlertView = UIAlertView(title: "Login Failure", message: "Error logging in, please try again",
+                                                                         delegate: nil, cancelButtonTitle: "Cancel")
+                            failureToast.show()
                         }
                     }
                 )

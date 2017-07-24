@@ -102,12 +102,25 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                 IntegrationClient.getNotifications { (notifications) in
                     if let notis = notifications {
                         let unseen = notis.filter({ (n) -> Bool in
-                            return !n.seen
+                            var desiredSite: Bool
+                            if let site = self.site {
+                                desiredSite = n.site_id == site.id
+                            } else {
+                                desiredSite = true
+                            }
+                            return !n.seen && desiredSite
                         })
                         IntegrationClient.markNotificationsSeen(unseen, completion: { (success) in
                             DispatchQueue.main.async {
                                 UIApplication.shared.applicationIconBadgeNumber = 0
-                                self.notifications = notis
+                                self.notifications = notis.filter({ (n) -> Bool in
+                                    if let site = self.site {
+                                        return n.site_id == site.id
+                                    } else {
+                                        return true
+                                    }
+                                    
+                                })
                                 self.tableView.reloadData()
                                 Utils.hideActivity()
                             }

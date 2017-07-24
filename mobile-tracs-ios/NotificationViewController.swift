@@ -82,8 +82,8 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                 IntegrationClient.markNotificationRead(notify, completion: { (success) in
                 })
                 Analytics.event(category: "Notification", action: "click", label: notifications[indexPath.row].object_type ?? "", value: nil)
-                navigationController!.popViewController(animated: true)
-                (navigationController!.viewControllers[0] as! WebViewController).webview.load(URLRequest(url: url))
+                let wvc = WebViewController(urlToLoad: url.absoluteString)
+                navigationController?.pushViewController(wvc!, animated: true)
             }
         }
     }
@@ -119,7 +119,6 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                                     } else {
                                         return true
                                     }
-                                    
                                 })
                                 self.tableView.reloadData()
                                 Utils.hideActivity()

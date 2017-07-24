@@ -38,30 +38,52 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: - UITableViewDataSource
  
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 1 { return 3 }
-        return 1
+        var rows: Int
+        switch section {
+        case 1:
+            rows = 3
+        default:
+            rows = 1
+        }
+        return rows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "menuitem", for: indexPath)
         cell.accessoryType = .disclosureIndicator
-        if indexPath.section == 0 && indexPath.row == 0 {
-            cell.textLabel?.text = "Notification Settings"
-        } else if indexPath.section == 1 {
+        
+        switch indexPath.section {
+        case 0:
             if indexPath.row == 0 {
-                cell.textLabel?.text = "About the App"
-            } else if indexPath.row == 1 {
-                cell.textLabel?.text = "Give us Feedback"
-            } else if indexPath.row == 2 {
-                cell.textLabel?.text = "TRACS Support"
+                cell.textLabel?.text = "Notification Settings"
             }
-        } else if indexPath.section == 2 && indexPath.row == 0 {
-            cell.textLabel?.text = "Go to TXST Mobile"
+        case 1:
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.text = "About the App"
+            case 1:
+                cell.textLabel?.text = "Give us Feedback"
+            case 2:
+                cell.textLabel?.text = "TRACS Support"
+            default:
+                break
+            }
+        case 2:
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "Go to TXST Mobile"
+            }
+        case 3:
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "Logout"
+            }
+        default:
+            break
         }
+        
         return cell
     }
     
@@ -98,6 +120,19 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     })
                 }
             }
+        } else if indexPath.section == 3 && indexPath.row == 0 {
+            Utils.removeCredentials()
+            let cookies = HTTPCookieStorage.shared.cookies
+            for cookie in cookies! {
+                if cookie.name == "JSESSIONID" {
+                    HTTPCookieStorage.shared.deleteCookie(cookie)
+                }
+            }
+            for cookie in HTTPCookieStorage.shared.cookies! {
+                print("\(cookie.name): \(cookie.value)")
+            }
+            let clc = CourseListController()
+            navigationController?.pushViewController(clc, animated: true)
         }
     }
 

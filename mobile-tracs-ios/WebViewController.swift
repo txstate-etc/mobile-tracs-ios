@@ -28,6 +28,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     private var registrationlock = DispatchGroup()
     var introsequence = Date(timeIntervalSince1970: 0)
     var wasLogout = false
+    var urltoload:String?
     
     let loginscript = "function get_login_details_tracsmobile() { " +
         "var usernameelement = document.querySelector('form input[name=\"username\"]'); " +

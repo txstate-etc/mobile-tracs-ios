@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CourseListController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CourseListController: UIViewController, UITableViewDelegate, UITableViewDataSource, CourseCellDelegate {
     @IBOutlet var tableView:UITableView!
     var coursesites:[Site] = []
     var projectsites:[Site] = []
@@ -120,8 +120,22 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:CourseCell = tableView.dequeueReusableCell(withIdentifier: "courselist", for: indexPath) as! CourseCell
-        cell.site = (indexPath.section == 0 ? coursesites : projectsites)[indexPath.row]        
+        cell.site = (indexPath.section == 0 ? coursesites : projectsites)[indexPath.row]
+        cell.delegate = self
         return cell
+    }
+    
+    // MARK: - CourseCellDelegate
+    
+    func discussionPressed(site:Site) {
+        let wvc = WebViewController(nibName: "WebViewController", bundle: nil)
+        wvc.urltoload = site.discussionurl
+        navigationController?.pushViewController(wvc, animated: true)
+    }
+    func dashboardPressed(site: Site) {
+        let nvc = NotificationViewController(nibName: "NotificationViewController", bundle: nil)
+        nvc.site = site
+        navigationController?.pushViewController(nvc, animated: true)
     }
     
 }

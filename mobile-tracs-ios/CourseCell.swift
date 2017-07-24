@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol CourseCellDelegate:class {
+    func discussionPressed(site:Site)
+    func dashboardPressed(site:Site)
+}
+
 class CourseCell: UITableViewCell {
     @IBOutlet var titleLabel:UILabel!
     @IBOutlet var toolbar:UIToolbar!
+    weak var delegate:CourseCellDelegate?
     var site:Site? {
         didSet {
             updateUI()
@@ -32,10 +38,21 @@ class CourseCell: UITableViewCell {
         titleLabel.text = site?.title
         if site?.hasdiscussions ?? false {
             toolbar.items?[1] = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.darkgray, badgecount: 0, icon: Discussion.icon, target: self, action: #selector(discussionPressed))
+        } else {
+            toolbar.items?[1] = UIBarButtonItem()
         }
+        toolbar.items?[3] = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.darkgray, badgecount: 0, icon: .dashboard, target: self, action: #selector(dashboardPressed))
     }
     
     func discussionPressed() {
-        
+        if let site = site {
+            delegate?.discussionPressed(site: site)
+        }
+    }
+    
+    func dashboardPressed() {
+        if let site = site {
+            delegate?.dashboardPressed(site: site)
+        }
     }
 }

@@ -11,6 +11,7 @@ import UIKit
 class NotificationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationObserver {
     @IBOutlet var tableView: UITableView!
     var notifications: [Notification] = []
+    var site:Site?
 
     override func viewDidLoad() {
         super.viewDidLoad()

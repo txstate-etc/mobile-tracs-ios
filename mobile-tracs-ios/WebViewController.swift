@@ -229,8 +229,8 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         navigationController?.pushViewController(nvc, animated: true)
     }
     func pressedHome() {
-        Utils.showActivity(view)
-        self.load()
+        let clc = CourseListController()
+        navigationController?.pushViewController(clc, animated: true)
     }
     func pressedMenu() {
         let mvc = MenuViewController()

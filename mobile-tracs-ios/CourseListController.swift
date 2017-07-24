@@ -17,7 +17,6 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Utils.save(false, withKey: "introScreen")
         tableView.register(UINib(nibName:"CourseCell", bundle: nil), forCellReuseIdentifier: "courselist")
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)

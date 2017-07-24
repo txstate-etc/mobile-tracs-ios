@@ -90,9 +90,9 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     func load() {
         loginIfNecessary { (loggedin) in
             if loggedin {
-                let urlString = self.urltoload ?? TRACSClient.portalurl
-                if let urlToLoad = URL(string: urlString) {
-                    let req = URLRequest(url: urlToLoad)
+                let urlString = self.urlToLoad ?? TRACSClient.portalurl
+                if let url = URL(string: urlString) {
+                    let req = URLRequest(url: url)
                     self.webview.load(req)
                 }
             }

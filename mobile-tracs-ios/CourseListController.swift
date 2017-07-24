@@ -137,7 +137,13 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.delegate = self
         return cell
     }
-    
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! CourseCell
+        let siteUrl = "\(TRACSClient.tracsurl)/portal/site/\(cell.site?.id ?? "")"
+        let wvc = WebViewController(urlToLoad: siteUrl)
+        navigationController?.pushViewController(wvc!, animated: true)
+    }
 
     // MARK: - CourseCellDelegate
     

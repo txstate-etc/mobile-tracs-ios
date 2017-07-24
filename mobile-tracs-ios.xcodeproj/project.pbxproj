@@ -50,10 +50,10 @@
 		2D7ABAA21F1FF018009C86D4 /* CourseListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D7ABAA01F1FF018009C86D4 /* CourseListController.xib */; };
 		2D7ABAA51F2000C2009C86D4 /* CourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7ABAA31F2000C2009C86D4 /* CourseCell.swift */; };
 		2D7ABAA61F2000C2009C86D4 /* CourseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D7ABAA41F2000C2009C86D4 /* CourseCell.xib */; };
+		2D7ABAA81F267FAF009C86D4 /* CookieMonster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7ABAA71F267FAF009C86D4 /* CookieMonster.swift */; };
 		2D88E27D1EB9433A000DB020 /* Discussion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D88E27C1EB9433A000DB020 /* Discussion.swift */; };
 		2D88E27F1ECA6AFD000DB020 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D88E27E1ECA6AFD000DB020 /* LaunchScreen.storyboard */; };
 		2D88E2841ECB9197000DB020 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D88E2821ECB9197000DB020 /* IntroViewController.swift */; };
-		2D88E2851ECB9197000DB020 /* IntroViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D88E2831ECB9197000DB020 /* IntroViewController.xib */; };
 		2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */; };
 		2D9161AA1E81E7F90090A5C6 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9161A91E81E7F90090A5C6 /* Site.swift */; };
 		2DB0CF041EF1B78100B19252 /* tracsb.logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0CF021EF1B78100B19252 /* tracsb.logo.png */; };
@@ -122,10 +122,10 @@
 		2D7ABAA01F1FF018009C86D4 /* CourseListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseListController.xib; sourceTree = "<group>"; };
 		2D7ABAA31F2000C2009C86D4 /* CourseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCell.swift; sourceTree = "<group>"; };
 		2D7ABAA41F2000C2009C86D4 /* CourseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseCell.xib; sourceTree = "<group>"; };
+		2D7ABAA71F267FAF009C86D4 /* CookieMonster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CookieMonster.swift; path = Utils/CookieMonster.swift; sourceTree = "<group>"; };
 		2D88E27C1EB9433A000DB020 /* Discussion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Discussion.swift; path = Data/Discussion.swift; sourceTree = "<group>"; };
 		2D88E27E1ECA6AFD000DB020 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D88E2821ECB9197000DB020 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
-		2D88E2831ECB9197000DB020 /* IntroViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroViewController.xib; sourceTree = "<group>"; };
 		2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 		2D9161A91E81E7F90090A5C6 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Site.swift; path = Data/Site.swift; sourceTree = "<group>"; };
 		2DB0CF021EF1B78100B19252 /* tracsb.logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tracsb.logo.png; sourceTree = "<group>"; };
@@ -181,6 +181,7 @@
 				098FCFC11E9AA3FF00D4C66D /* Utils.swift */,
 				09DDA8B21EA084F8004220CF /* Secrets.swift */,
 				09071A1E1EADB764008560B5 /* Extensions.swift */,
+				2D7ABAA71F267FAF009C86D4 /* CookieMonster.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -252,7 +253,6 @@
 				82500CAA1EF97F80004AB219 /* Config.plist */,
 				09B528081E7CBD6500BACF81 /* Info.plist */,
 				2D88E2821ECB9197000DB020 /* IntroViewController.swift */,
-				2D88E2831ECB9197000DB020 /* IntroViewController.xib */,
 				099C81701E7CBFDD00529530 /* WebViewController.swift */,
 				099C81721E7CC94500529530 /* WebViewController.xib */,
 				099C81761E7DEEB600529530 /* NotificationViewController.swift */,
@@ -419,7 +419,6 @@
 				099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */,
 				09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */,
 				2DB0CF071EF1E1EB00B19252 /* bootstrap.min.css in Resources */,
-				2D88E2851ECB9197000DB020 /* IntroViewController.xib in Resources */,
 				099C81731E7CC94500529530 /* WebViewController.xib in Resources */,
 				098FCFD11E9D23DF00D4C66D /* FontAwesome.otf in Resources */,
 				2DB0CF051EF1B78100B19252 /* welcome_page.html in Resources */,
@@ -461,6 +460,7 @@
 				092700CE1E884D720089821D /* JSONSerialize.swift in Sources */,
 				09DDA8AC1E9D3143004220CF /* BadgeSwift.swift in Sources */,
 				2D88E2841ECB9197000DB020 /* IntroViewController.swift in Sources */,
+				2D7ABAA81F267FAF009C86D4 /* CookieMonster.swift in Sources */,
 				099C81781E7DEEB600529530 /* NotificationViewController.swift in Sources */,
 				2D9161AA1E81E7F90090A5C6 /* Site.swift in Sources */,
 				8265019F1F16A082007DE87C /* LoginLogoImage.swift in Sources */,

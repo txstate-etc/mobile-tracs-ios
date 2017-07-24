@@ -20,6 +20,7 @@ class TRACSClient {
     static let deeploginurl = tracsurl+"/sakai-login-tool"
     static let logouturl = tracsurl+"/portal/pda/?force.logout=yes"
     static let altlogouturl = tracsurl+"/portal/logout"
+    static let cookiemonster = CookieMonster()
     
     
     // MARK: - Static Variables
@@ -211,15 +212,22 @@ class TRACSClient {
         var loginerror = false
         var othererror = false
         if netid.isEmpty || password.isEmpty { return completion(true, false) }
-        Utils.post(url: portalurl+"/relogin", params: ["eid":netid, "pw":password]) { (data, success) in
-            if !success {
-                othererror = true
-            } else if let body = data as? String {
-                if !body.contains("\"loggedIn\": true") {
-                    loginerror = true
+        let dp = DispatchGroup()
+        dp.enter()
+        cookiemonster.load {
+            dp.leave()
+            NSLog("cookie monster")
+            Utils.post(url: portalurl+"/relogin", params: ["eid":netid, "pw":password]) { (data, success) in
+                if !success {
+                    othererror = true
+                } else if let body = data as? String {
+                    if !body.contains("\"loggedIn\": true") {
+                        loginerror = true
+                    }
                 }
+                completion(loginerror, othererror)
             }
-            completion(loginerror, othererror)
         }
+        dp.wait()
     }
 }

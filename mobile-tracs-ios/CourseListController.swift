@@ -28,24 +28,15 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         
         refresh.addTarget(self, action: #selector(load), for: .valueChanged)
         tableView.addSubview(refresh)
-        loginIfNecessary()
-
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-//        if !Utils.flag("introScreen", val: true) {
-//            let ivc = IntroViewController()
-//            self.present(ivc, animated: true, completion: nil)
-//        }
-    }
-    
-    func loginIfNecessary() {
         TRACSClient.loginIfNecessary { (loggedin) in
             if !loggedin {
                 let lvc = LoginViewController()
                 self.present(lvc, animated: true, completion: nil)
             } else {
                 IntegrationClient.registerIfNecessary()
+            }
+            if !Utils.flag("introScreen", val: true) {
+                self.activateIntroScreen()
             }
         }
     }
@@ -111,6 +102,10 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     func pressedMenu() {
         let mvc = MenuViewController()
         navigationController?.pushViewController(mvc, animated: true)
+    }
+    func activateIntroScreen() {
+        let ivc = IntroViewController()
+        self.present(ivc, animated: true, completion: nil)
     }
 
     // MARK: - UITableViewDataSource

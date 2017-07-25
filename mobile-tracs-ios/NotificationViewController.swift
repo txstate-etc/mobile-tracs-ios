@@ -12,10 +12,17 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet var tableView: UITableView!
     var notifications: [Notification] = []
     var site:Site?
+    var announcementCount: Int = 0
+    var discussionCount: Int = 0
+    enum Section: String {
+        case Announcements = "announcement"
+        case Discussions = "discussion"
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName:"NotificationCell", bundle: nil), forCellReuseIdentifier: "notification")
+        tableView.register(UINib(nibName:"NotificationViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "sectionlabel")
         //navigationItem.rightBarButtonItem = Utils.fontAwesomeTitledBarButtonItem(color: (navigationController?.navigationBar.tintColor)!, icon: .timesCircle, title: "Clear All", textStyle: .body, target: self, action: #selector(clearAllPressed))
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
@@ -32,21 +39,66 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notifications.count
+        switch section {
+        case 0:
+            return announcementCount
+        case 1:
+            return discussionCount
+        default:
+            return notifications.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionlabel") as! NotificationViewHeader
+        switch section {
+        case 0:
+            header.headerLabel.text = "Announcements"
+            header.headerSwitch.addTarget(self, action: #selector(getSetting), for: UIControlEvents.touchUpInside)
+            break
+        case 1:
+            header.headerLabel.text = "Discussions"
+            break
+        default:
+            break
+        }
+        return header
+    }
+
+    func getSetting() {
+        print ("Toggled")
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath) as! NotificationCell
-        let notify = notifications[indexPath.row]
-        if let tracsobj = notify.object {
-            cell.isRead = notify.isRead()
+        var cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath) as! NotificationCell
+        switch indexPath.section {
+        case 0:
+            let notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
+            cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
+        case 1:
+            let notify = getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
+            cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
+            break
+        default:
+            break
+        }
+        return cell
+    }
+    
+    func buildCell(cell: NotificationCell, indexPath: IndexPath, notify: Notification?) -> NotificationCell {
+        if let tracsobj = notify?.object {
+            cell.isRead = (notify?.isRead())!
             cell.iView.image = UIImage.fontAwesomeIcon(name: tracsobj.getIcon(), textColor: Utils.nearblack, size:CGSize(width: 200, height: 200))
             cell.titleLabel.text = tracsobj.tableTitle()
-            cell.titleLabel.font = notify.isRead() ? UIFont.preferredFont(forTextStyle: .body) : Utils.boldPreferredFont(style: .body)
+            cell.titleLabel.font = (notify?.isRead())! ? UIFont.preferredFont(forTextStyle: .body) : Utils.boldPreferredFont(style: .body)
             cell.subtitleLabel.text = tracsobj.tableSubtitle()
             cell.subtitleLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
             if !tracsobj.getUrl().isEmpty {
@@ -100,6 +152,8 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         TRACSClient.loginIfNecessary { (loggedin) in
             if loggedin {
                 IntegrationClient.getNotifications { (notifications) in
+                    self.discussionCount = 0
+                    self.announcementCount = 0
                     if let notis = notifications {
                         let unseen = notis.filter({ (n) -> Bool in
                             var desiredSite: Bool
@@ -114,11 +168,23 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                             DispatchQueue.main.async {
                                 UIApplication.shared.applicationIconBadgeNumber = 0
                                 self.notifications = notis.filter({ (n) -> Bool in
+                                    var shouldBeDisplayed = true
                                     if let site = self.site {
-                                        return n.site_id == site.id
-                                    } else {
-                                        return true
+                                        shouldBeDisplayed = n.site_id == site.id
                                     }
+                                    if (shouldBeDisplayed) {
+                                        if let type = n.object_type {
+                                            switch type {
+                                            case Section.Announcements.rawValue:
+                                                self.announcementCount += 1
+                                            case Section.Discussions.rawValue:
+                                                self.discussionCount += 1
+                                            default:
+                                                break
+                                            }
+                                        }
+                                    }
+                                    return shouldBeDisplayed
                                 })
                                 self.tableView.reloadData()
                                 Utils.hideActivity()
@@ -130,6 +196,33 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                 (UIApplication.shared.delegate as! AppDelegate).reloadEverything()
             }
         }
+    }
+    
+    func getNotification(notificationType: String, position: Int) -> Notification? {
+        var totalFound = 0
+        for notif in notifications {
+            if notif.object_type == notificationType {
+                if totalFound == position {
+                    return notif
+                }
+                totalFound += 1
+            }
+        }
+        return nil
+    }
+    
+    func countTypes(notificationType: String) -> Int {
+        var count = 0
+        
+        if self.notifications.count == 0 {
+            return count
+        }
+        for notif in self.notifications {
+            if notif.object_type == notificationType {
+                count += 1
+            }
+        }
+        return count
     }
     
     func clearAllPressed() {

@@ -72,6 +72,8 @@
 		8265019F1F16A082007DE87C /* LoginLogoImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8265019E1F16A082007DE87C /* LoginLogoImage.swift */; };
 		826501A11F16A303007DE87C /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826501A01F16A303007DE87C /* LoginButton.swift */; };
 		826501A51F1FFB6F007DE87C /* AdvisoryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826501A41F1FFB6F007DE87C /* AdvisoryLabel.swift */; };
+		8267E2CB1F279DF00066AFCC /* NotificationViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8267E2CA1F279DF00066AFCC /* NotificationViewHeader.swift */; };
+		8267E2CD1F279E0F0066AFCC /* NotificationViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8267E2CC1F279E0F0066AFCC /* NotificationViewHeader.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -154,6 +156,8 @@
 		8265019E1F16A082007DE87C /* LoginLogoImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginLogoImage.swift; path = UIWidgets/LoginLogoImage.swift; sourceTree = "<group>"; };
 		826501A01F16A303007DE87C /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginButton.swift; path = UIWidgets/LoginButton.swift; sourceTree = "<group>"; };
 		826501A41F1FFB6F007DE87C /* AdvisoryLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvisoryLabel.swift; sourceTree = "<group>"; };
+		8267E2CA1F279DF00066AFCC /* NotificationViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewHeader.swift; sourceTree = "<group>"; };
+		8267E2CC1F279E0F0066AFCC /* NotificationViewHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationViewHeader.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +259,8 @@
 				2D88E2821ECB9197000DB020 /* IntroViewController.swift */,
 				099C81701E7CBFDD00529530 /* WebViewController.swift */,
 				099C81721E7CC94500529530 /* WebViewController.xib */,
+				8267E2CA1F279DF00066AFCC /* NotificationViewHeader.swift */,
+				8267E2CC1F279E0F0066AFCC /* NotificationViewHeader.xib */,
 				099C81761E7DEEB600529530 /* NotificationViewController.swift */,
 				099C81771E7DEEB600529530 /* NotificationViewController.xib */,
 				09071A1C1EADB127008560B5 /* NotificationCell.swift */,
@@ -413,6 +419,7 @@
 				09DDA8AE1EA077FB004220CF /* GoogleService-Info.plist in Resources */,
 				2D88E27F1ECA6AFD000DB020 /* LaunchScreen.storyboard in Resources */,
 				2D7ABAA21F1FF018009C86D4 /* CourseListController.xib in Resources */,
+				8267E2CD1F279E0F0066AFCC /* NotificationViewHeader.xib in Resources */,
 				82500CAB1EF97F80004AB219 /* Config.plist in Resources */,
 				2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */,
 				2D7ABAA61F2000C2009C86D4 /* CourseCell.xib in Resources */,
@@ -467,6 +474,7 @@
 				8265019D1F167B7F007DE87C /* LoginTextField.swift in Sources */,
 				09F10E0F1E7F629A00303A96 /* IntegrationClient.swift in Sources */,
 				098FCFC01E9AA1AA00D4C66D /* KeychainSwift.swift in Sources */,
+				8267E2CB1F279DF00066AFCC /* NotificationViewHeader.swift in Sources */,
 				098FCFD21E9D23DF00D4C66D /* FontAwesome.swift in Sources */,
 				09071A171EAD5331008560B5 /* Cache.swift in Sources */,
 				09071A261EC948F2008560B5 /* FeedbackViewController.swift in Sources */,

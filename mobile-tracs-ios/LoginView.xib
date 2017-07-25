@@ -94,13 +94,13 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEt-TH-U0a">
-                            <rect key="frame" x="0.0" y="419" width="375" height="248"/>
+                            <rect key="frame" x="8" y="419" width="359" height="240"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5mc-79-syP">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="359" height="0.0"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLO-dC-l4y" customClass="AdvisoryLabel" customModule="mobile_tracs_ios" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="359" height="0.0"/>
                                             <color key="backgroundColor" white="0.11713324652777778" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -117,10 +117,11 @@
                                 </view>
                             </subviews>
                             <constraints>
+                                <constraint firstItem="gLO-dC-l4y" firstAttribute="width" secondItem="aEt-TH-U0a" secondAttribute="width" id="3xq-MA-GGZ"/>
                                 <constraint firstItem="5mc-79-syP" firstAttribute="top" secondItem="aEt-TH-U0a" secondAttribute="top" id="86o-Nq-tsy"/>
                                 <constraint firstAttribute="bottom" secondItem="5mc-79-syP" secondAttribute="bottom" id="BZw-S6-BI7"/>
-                                <constraint firstItem="5mc-79-syP" firstAttribute="leading" secondItem="aEt-TH-U0a" secondAttribute="leading" id="eiK-Hh-1p7"/>
-                                <constraint firstAttribute="trailing" secondItem="5mc-79-syP" secondAttribute="trailing" id="hnK-Ih-cVy"/>
+                                <constraint firstAttribute="trailing" secondItem="5mc-79-syP" secondAttribute="trailing" id="Kmt-8o-hQn"/>
+                                <constraint firstItem="5mc-79-syP" firstAttribute="leading" secondItem="aEt-TH-U0a" secondAttribute="leading" id="uvX-aD-4IG"/>
                             </constraints>
                         </scrollView>
                     </subviews>
@@ -129,12 +130,12 @@
                         <constraint firstItem="anX-5x-isN" firstAttribute="centerX" secondItem="QuH-07-S9U" secondAttribute="centerX" id="3S5-JK-GTh"/>
                         <constraint firstItem="zPk-ru-pz6" firstAttribute="trailing" secondItem="Gc8-o3-kbM" secondAttribute="trailing" id="42i-6k-nQv"/>
                         <constraint firstItem="QuH-07-S9U" firstAttribute="top" secondItem="nTb-Lg-mqb" secondAttribute="top" constant="50" id="4rz-k1-wPG"/>
-                        <constraint firstAttribute="trailing" secondItem="aEt-TH-U0a" secondAttribute="trailing" id="93s-ig-neK"/>
+                        <constraint firstAttribute="trailing" secondItem="aEt-TH-U0a" secondAttribute="trailing" constant="8" id="93s-ig-neK"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="trailing" secondItem="zPk-ru-pz6" secondAttribute="trailing" id="Ik2-73-IfF"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="centerX" secondItem="nTb-Lg-mqb" secondAttribute="centerX" id="L2B-V5-wiX"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" constant="60" id="Opm-Vx-kI7"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="centerY" secondItem="nTb-Lg-mqb" secondAttribute="centerY" id="Scu-o3-1NW"/>
-                        <constraint firstAttribute="bottom" secondItem="aEt-TH-U0a" secondAttribute="bottom" id="bRC-vx-3Sn"/>
+                        <constraint firstAttribute="bottom" secondItem="aEt-TH-U0a" secondAttribute="bottom" constant="8" id="bRC-vx-3Sn"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="top" secondItem="nTb-Lg-mqb" secondAttribute="top" id="dMo-b7-Rc1"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="leading" secondItem="zPk-ru-pz6" secondAttribute="leading" id="eC0-CI-aSD"/>
                         <constraint firstItem="QuH-07-S9U" firstAttribute="centerX" secondItem="6WJ-dA-Hge" secondAttribute="centerX" id="g9i-VJ-cwS"/>
@@ -142,7 +143,7 @@
                         <constraint firstItem="Gc8-o3-kbM" firstAttribute="top" secondItem="zPk-ru-pz6" secondAttribute="bottom" constant="24" id="jFF-ed-cjZ"/>
                         <constraint firstItem="aEt-TH-U0a" firstAttribute="top" secondItem="Gc8-o3-kbM" secondAttribute="bottom" constant="16" id="nNh-j7-UgK"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="bottom" secondItem="nTb-Lg-mqb" secondAttribute="bottom" id="q6p-ea-MBd"/>
-                        <constraint firstItem="aEt-TH-U0a" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" id="qhT-vL-lVi"/>
+                        <constraint firstItem="aEt-TH-U0a" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" constant="8" id="qhT-vL-lVi"/>
                         <constraint firstAttribute="trailing" secondItem="anX-5x-isN" secondAttribute="trailing" id="tIe-MB-H5v"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" id="yoV-XI-YuY"/>
                         <constraint firstItem="zPk-ru-pz6" firstAttribute="leading" secondItem="Gc8-o3-kbM" secondAttribute="leading" id="zrp-n4-r3c"/>
@@ -154,7 +155,6 @@
                 <constraint firstAttribute="bottom" secondItem="nTb-Lg-mqb" secondAttribute="bottom" id="3aP-gb-YF7"/>
                 <constraint firstItem="nTb-Lg-mqb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="3iX-06-DTT"/>
                 <constraint firstItem="nTb-Lg-mqb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="PkF-Sh-ACe"/>
-                <constraint firstItem="gLO-dC-l4y" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="Qr2-4M-Qgo"/>
                 <constraint firstAttribute="trailing" secondItem="nTb-Lg-mqb" secondAttribute="trailing" id="npa-46-j1W"/>
             </constraints>
             <point key="canvasLocation" x="-1938.5" y="-657.5"/>

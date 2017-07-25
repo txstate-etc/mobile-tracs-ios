@@ -121,6 +121,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         } else if indexPath.section == 3 && indexPath.row == 0 {
+            TRACSClient.userid = ""
             Utils.removeCredentials()
             let cookies = HTTPCookieStorage.shared.cookies
             for cookie in cookies! {

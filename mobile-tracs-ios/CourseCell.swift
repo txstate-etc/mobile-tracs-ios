@@ -39,7 +39,8 @@ class CourseCell: UITableViewCell {
         if site?.hasdiscussions ?? false {
             toolbar.items?[1] = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.darkgray, badgecount: 0, icon: Discussion.icon, target: self, action: #selector(discussionPressed))
         } else {
-            toolbar.items?[1] = UIBarButtonItem()
+            toolbar.items?[1] = Utils.fontAwesomeBadgedBarButtonItem(color: UIColor(red: 158/255.0, green: 158/255.0, blue: 158/255.0, alpha: 0), badgecount: 0, icon: Discussion.icon, target: self, action: #selector(discussionPressed))
+            (toolbar.items?[1].customView as! UIButton).isUserInteractionEnabled = false
         }
         toolbar.items?[3] = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.darkgray, badgecount: 0, icon: .dashboard, target: self, action: #selector(dashboardPressed))
     }

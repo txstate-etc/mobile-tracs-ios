@@ -10,8 +10,6 @@ import UIKit
 
 class NotificationViewHeader: UITableViewHeaderFooterView {
     @IBOutlet weak var headerLabel: UILabel!
-    @IBOutlet weak var headerSwitch: UISwitch!
+    @IBOutlet weak var headerSwitch: HeaderSwitch!
     @IBOutlet weak var viewContainer: UIView!
-    
-    
 }

@@ -74,6 +74,7 @@
 		826501A51F1FFB6F007DE87C /* AdvisoryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826501A41F1FFB6F007DE87C /* AdvisoryLabel.swift */; };
 		8267E2CB1F279DF00066AFCC /* NotificationViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8267E2CA1F279DF00066AFCC /* NotificationViewHeader.swift */; };
 		8267E2CD1F279E0F0066AFCC /* NotificationViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8267E2CC1F279E0F0066AFCC /* NotificationViewHeader.xib */; };
+		82B314801F2918E000075569 /* HeaderSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B3147F1F2918E000075569 /* HeaderSwitch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -158,6 +159,7 @@
 		826501A41F1FFB6F007DE87C /* AdvisoryLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvisoryLabel.swift; sourceTree = "<group>"; };
 		8267E2CA1F279DF00066AFCC /* NotificationViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewHeader.swift; sourceTree = "<group>"; };
 		8267E2CC1F279E0F0066AFCC /* NotificationViewHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationViewHeader.xib; sourceTree = "<group>"; };
+		82B3147F1F2918E000075569 /* HeaderSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderSwitch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +208,7 @@
 		098FCFCA1E9D239900D4C66D /* UIWidgets */ = {
 			isa = PBXGroup;
 			children = (
+				82B3147E1F2918CA00075569 /* HeaderCell */,
 				826501A31F16A314007DE87C /* LoginView */,
 				098FCFCB1E9D23DF00D4C66D /* FontAwesome */,
 				09DDA8AB1E9D3143004220CF /* BadgeSwift.swift */,
@@ -343,6 +346,14 @@
 				826501A41F1FFB6F007DE87C /* AdvisoryLabel.swift */,
 			);
 			name = LoginView;
+			sourceTree = "<group>";
+		};
+		82B3147E1F2918CA00075569 /* HeaderCell */ = {
+			isa = PBXGroup;
+			children = (
+				82B3147F1F2918E000075569 /* HeaderSwitch.swift */,
+			);
+			name = HeaderCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -483,6 +494,7 @@
 				098FCFC21E9AA3FF00D4C66D /* Utils.swift in Sources */,
 				826501991F166848007DE87C /* LoginViewController.swift in Sources */,
 				09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */,
+				82B314801F2918E000075569 /* HeaderSwitch.swift in Sources */,
 				09071A291ECDEB6A008560B5 /* NotificationObserver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

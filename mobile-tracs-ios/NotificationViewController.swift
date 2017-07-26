@@ -45,48 +45,90 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return announcementCount
+            return announcementCount > 0 ? announcementCount : 1
         case 1:
-            return discussionCount
+            return discussionCount > 0 ? discussionCount : 1
         default:
-            return notifications.count
+            return notifications.count > 0 ? notifications.count : 1
         }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 44
+        return 60
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionlabel") as! NotificationViewHeader
+        header.headerSwitch.site = site
+        header.headerSwitch.addTarget(self, action: #selector(toggleSetting(sender:)), for: UIControlEvents.touchUpInside)
         switch section {
         case 0:
             header.headerLabel.text = "Announcements"
-            header.headerSwitch.addTarget(self, action: #selector(getSetting), for: UIControlEvents.touchUpInside)
+            header.headerSwitch.notificationType = Section.Announcements.rawValue
             break
         case 1:
             header.headerLabel.text = "Discussions"
+            header.headerSwitch.notificationType = Section.Discussions.rawValue
             break
         default:
             break
         }
+        
+        let setting = [
+            "keys": [
+                "object_type": header.headerSwitch.notificationType ?? ""
+            ],
+            "other_keys": [
+                "site_id": (header.headerSwitch.site?.id)!
+            ]
+        ]
+        let settings = IntegrationClient.getRegistration().settings
+        let settingIsDisabled = settings!.entryIsDisabled(SettingsEntry(dict: setting))
+        header.headerSwitch.setOn(!settingIsDisabled, animated: true)
+        
         return header
     }
 
-    func getSetting() {
-        print ("Toggled")
+    func toggleSetting(sender: HeaderSwitch) {
+        let newSetting = [
+            "keys": [
+                "object_type": sender.notificationType ?? ""
+            ],
+            "other_keys": [
+                "site_id": (sender.site?.id)!
+            ]
+        ]
+        let settings = IntegrationClient.getRegistration().settings
+        if !sender.isOn {
+            settings?.disableEntry(SettingsEntry(dict: newSetting))
+        } else {
+            settings?.enableEntry(SettingsEntry(dict: newSetting))
+        }
+        
+        IntegrationClient.saveSettings(settings!, completion: { (success) in
+            Analytics.event(category: "Filter", action: sender.isOn ? "allow" : "block", label: "\(sender.site?.id ?? "") - \(sender.notificationType ?? "")", value: nil)
+        })
+        NSLog("\(sender.notificationType ?? "") \(sender.isOn ? "enabled" : "disabled") for \(sender.site?.title ?? "")")
+        loadNotifications(true)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath) as! NotificationCell
         switch indexPath.section {
         case 0:
-            let notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
-            cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
+            if announcementCount > 0 {
+                let notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
+                cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
+            } else {
+                cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
+            }
         case 1:
-            let notify = getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
-            cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
-            break
+            if discussionCount > 0 {
+                let notify = getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
+                cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
+            } else {
+                cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
+            }
         default:
             break
         }
@@ -104,6 +146,13 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             if !tracsobj.getUrl().isEmpty {
                 cell.accessoryType = .disclosureIndicator
             }
+            cell.isUserInteractionEnabled = true
+        } else {
+            cell.isRead = true
+            cell.iView.image = nil
+            cell.titleLabel.text = "No new notifications found"
+            cell.subtitleLabel.text = ""
+            cell.isUserInteractionEnabled = false
         }
         return cell
     }
@@ -128,6 +177,18 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
         
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            if announcementCount == 0 {
+                return
+            }
+        case 1:
+            if discussionCount == 0 {
+                return
+            }
+        default:
+            break
+        }
         let notify = notifications[indexPath.row]
         if let tracsobj = notify.object {
             if let url = URL(string: tracsobj.getUrl()) {

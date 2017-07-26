@@ -74,30 +74,19 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             break
         }
         
-        let setting = [
-            "keys": [
-                "object_type": header.headerSwitch.notificationType ?? ""
-            ],
-            "other_keys": [
-                "site_id": (header.headerSwitch.site?.id)!
-            ]
-        ]
+        let setting = makeSettingForSwitch(toggleSwitch: header.headerSwitch)
+
         let settings = IntegrationClient.getRegistration().settings
         let settingIsDisabled = settings!.entryIsDisabled(SettingsEntry(dict: setting))
-        header.headerSwitch.setOn(!settingIsDisabled, animated: true)
+        header.headerSwitch.setOn(!settingIsDisabled, animated: false)
         
         return header
     }
 
     func toggleSetting(sender: HeaderSwitch) {
-        let newSetting = [
-            "keys": [
-                "object_type": sender.notificationType ?? ""
-            ],
-            "other_keys": [
-                "site_id": (sender.site?.id)!
-            ]
-        ]
+        
+        let newSetting = makeSettingForSwitch(toggleSwitch: sender)
+        
         let settings = IntegrationClient.getRegistration().settings
         if !sender.isOn {
             settings?.disableEntry(SettingsEntry(dict: newSetting))
@@ -109,7 +98,19 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             Analytics.event(category: "Filter", action: sender.isOn ? "allow" : "block", label: "\(sender.site?.id ?? "") - \(sender.notificationType ?? "")", value: nil)
         })
         NSLog("\(sender.notificationType ?? "") \(sender.isOn ? "enabled" : "disabled") for \(sender.site?.title ?? "")")
-        loadNotifications(true)
+        loadNotifications(false)
+    }
+    
+    func makeSettingForSwitch(toggleSwitch: HeaderSwitch) -> [String: [String: String]] {
+        var newSetting = [
+            "keys": [
+                "object_type": toggleSwitch.notificationType ?? ""
+            ]
+        ]
+        if let siteID = toggleSwitch.site?.id {
+            newSetting["other_keys"] = ["site_id": siteID]
+        }
+        return newSetting
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -16,6 +16,7 @@ class IntroViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         webView = Utils.getWebView()
         webView.scrollView.minimumZoomScale = 1.0
+        webView.scrollView.bounces = false
         let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(okPressed))
         taprecognizer.delegate = self
         webView.scrollView.addGestureRecognizer(taprecognizer)

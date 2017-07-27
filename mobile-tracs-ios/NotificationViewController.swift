@@ -67,7 +67,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             header.headerSwitch.notificationType = Section.Announcements.rawValue
             break
         case 1:
-            header.headerLabel.text = "Discussions"
+            header.headerLabel.text = "Forums"
             header.headerSwitch.notificationType = Section.Discussions.rawValue
             break
         default:

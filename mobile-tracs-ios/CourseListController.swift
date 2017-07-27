@@ -17,16 +17,6 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(UINib(nibName:"CourseCell", bundle: nil), forCellReuseIdentifier: "courselist")
-        NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        
-        let menubutton = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedMenu))
-        menubutton.accessibilityLabel = "Menu"
-        navigationItem.rightBarButtonItem = menubutton
-        
-        refresh.addTarget(self, action: #selector(load), for: .valueChanged)
-        tableView.addSubview(refresh)
         TRACSClient.loginIfNecessary { (loggedin) in
             if !loggedin {
                 let lvc = LoginViewController()
@@ -38,6 +28,17 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.activateIntroScreen()
             }
         }
+        
+        tableView.register(UINib(nibName:"CourseCell", bundle: nil), forCellReuseIdentifier: "courselist")
+        NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        
+        let menubutton = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedMenu))
+        menubutton.accessibilityLabel = "Menu"
+        navigationItem.rightBarButtonItem = menubutton
+        
+        refresh.addTarget(self, action: #selector(load), for: .valueChanged)
+        tableView.addSubview(refresh)
     }
     
     deinit {

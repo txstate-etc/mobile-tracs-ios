@@ -42,8 +42,8 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
         loginAdvisory.text = loginAdvisoryText
         
         //ScrollView Sizing
-        loginScrollView.sizeToFit()
-        loginScrollView.contentSize = CGSize(width: loginScrollView.frame.width, height: loginAdvisory.frame.height + loginScrollView.frame.height)
+//        loginScrollView.sizeToFit()
+//        loginScrollView.contentSize = CGSize(width: loginScrollView.frame.width, height: loginAdvisory.frame.height + loginScrollView.frame.height)
     }
     
     override func didReceiveMemoryWarning() {
@@ -104,7 +104,6 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
         let contentInsets = UIEdgeInsets.zero
         loginScrollView.contentInset = contentInsets
         loginScrollView.scrollIndicatorInsets = contentInsets
-        
         loginScrollView.setContentOffset(CGPoint.zero, animated: true)
     }
     
@@ -115,30 +114,24 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
     
     //MARK: Private Methods
     private func sendLoginRequest() {
-    //send info here
+        Utils.removeCredentials()
         Utils.store(netid: loginNetid.text!, pw: loginPassword.text!, longterm: true)
-        TRACSClient.loginIfNecessary(completion: { (loggedIn) in
-            if (loggedIn) {
-                IntegrationClient.saveRegistration(
-                    reg: IntegrationClient.getRegistration(),
-                    password: self.loginPassword.text!,
-                    completion: { (registered) in
-                        //If the device registered you wind up here and
-                        //you have a valid TRACS login.
-                        NSLog(registered ? "Registered" : "Not Registered")
-                        if registered {
-                            self.dismiss(animated: true, completion: nil)
-                        } else {
-                            // clear the login info and tell the user to try again
-                            let failureToast: UIAlertView = UIAlertView(title: "Login Failure", message: "Error logging in, please try again",
-                                                                         delegate: nil, cancelButtonTitle: "Cancel")
-                            failureToast.show()
-                        }
+        DispatchQueue.main.async {
+            Utils.showActivity(self.view)
+        }
+        IntegrationClient.saveRegistration(reg: IntegrationClient.getRegistration(), password: self.loginPassword.text!, completion: { (registered) in
+            NSLog("Registration was \(registered ? "successful" : "not successful")")
+            TRACSClient.loginIfNecessary(completion: { (loggedIn) in
+                if loggedIn {
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    DispatchQueue.main.async {
+                        UIAlertView(title: "Login Failure", message: "Could not login to TRACS", delegate: nil, cancelButtonTitle: "OK").show()
+                        Utils.hideActivity()
                     }
-                )
-            } else {
-                // clear the login info and tell the user to try again
-            }
+                }
+                
+            })
         })
     }
 }

@@ -14,13 +14,16 @@ class Discussion : TRACSObjectBase, TRACSObject {
     static let displayplural = "Forum Posts"
     static let icon = FontAwesome.comments
     
-    var title = ""
-    var body = ""
+    var title: String = ""
+    var subtitle: String = ""
     
     override init(dict:[String:Any]) {
         super.init(dict:dict)
         title = dict["title"] as? String ?? ""
-        body = dict["body"] as? String ?? ""
+        subtitle = "Posted by: \(dict["authoredBy"] as? String ?? "")"
+        let regex = try! NSRegularExpression(pattern: "\\s\\(([^)]+)\\)", options: NSRegularExpression.Options.caseInsensitive)
+        let range = NSMakeRange(0, subtitle.characters.count)
+        subtitle = regex.stringByReplacingMatches(in: subtitle, options: [], range: range, withTemplate: "")
     }
     
     func tableTitle()->String {

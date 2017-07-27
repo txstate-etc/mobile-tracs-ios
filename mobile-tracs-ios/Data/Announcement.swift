@@ -14,12 +14,12 @@ class Announcement : TRACSObjectBase, TRACSObject {
     static let displayplural = "Announcements"
     
     var title = ""
-    var body = ""
+    var subtitle = ""
     
     override init(dict:[String:Any]) {
         super.init(dict:dict)
         title = dict["title"] as? String ?? ""
-        body = dict["body"] as? String ?? ""
+        subtitle = "Created by: \(dict["createdByDisplayName"] as? String ?? "")"
     }
     
     func tableTitle()->String {

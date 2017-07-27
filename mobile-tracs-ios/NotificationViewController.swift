@@ -142,7 +142,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             cell.iView.image = UIImage.fontAwesomeIcon(name: tracsobj.getIcon(), textColor: Utils.nearblack, size:CGSize(width: 200, height: 200))
             cell.titleLabel.text = tracsobj.tableTitle()
             cell.titleLabel.font = (notify?.isRead())! ? UIFont.preferredFont(forTextStyle: .body) : Utils.boldPreferredFont(style: .body)
-            cell.subtitleLabel.text = tracsobj.tableSubtitle()
+            cell.subtitleLabel.text = getSubtitleFromNotification(notif: notify!)
             cell.subtitleLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
             if !tracsobj.getUrl().isEmpty {
                 cell.accessoryType = .disclosureIndicator
@@ -156,6 +156,22 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             cell.isUserInteractionEnabled = false
         }
         return cell
+    }
+    
+    func getSubtitleFromNotification(notif: Notification) -> String {
+        if let type = notif.object_type {
+            switch (type) {
+            case "announcement":
+                let ann = notif.object as! Announcement
+                return ann.subtitle
+            case "discussion":
+                let disc = notif.object as! Discussion
+                return disc.subtitle
+            default:
+                break
+            }
+        }
+        return ""
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

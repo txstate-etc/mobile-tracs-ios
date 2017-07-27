@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="mobile_tracs_ios" customModuleProvider="target">
             <connections>
+                <outlet property="advisoryScroll" destination="aEt-TH-U0a" id="ynN-I7-h5M"/>
                 <outlet property="keyboardDismissTouch" destination="m9e-Sw-x4P" id="q3a-xH-kMm"/>
                 <outlet property="loginAdvisory" destination="gLO-dC-l4y" id="kHa-eR-wBa"/>
                 <outlet property="loginLogoImage" destination="QuH-07-S9U" id="6us-jd-jhP"/>
@@ -93,35 +94,24 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </button>
-                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEt-TH-U0a">
+                        <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEt-TH-U0a">
                             <rect key="frame" x="8" y="419" width="359" height="240"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5mc-79-syP">
+                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLO-dC-l4y" customClass="AdvisoryLabel" customModule="mobile_tracs_ios" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="359" height="0.0"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLO-dC-l4y" customClass="AdvisoryLabel" customModule="mobile_tracs_ios" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="359" height="0.0"/>
-                                            <color key="backgroundColor" white="0.11713324652777778" alpha="1" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                            <size key="shadowOffset" width="0.0" height="0.0"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="gLO-dC-l4y" secondAttribute="bottom" id="Du9-6x-ARX"/>
-                                        <constraint firstAttribute="trailing" secondItem="gLO-dC-l4y" secondAttribute="trailing" id="JQC-XU-m5z"/>
-                                        <constraint firstItem="gLO-dC-l4y" firstAttribute="leading" secondItem="5mc-79-syP" secondAttribute="leading" id="Z5k-R4-JjU"/>
-                                        <constraint firstItem="gLO-dC-l4y" firstAttribute="top" secondItem="5mc-79-syP" secondAttribute="top" id="rWY-3u-HUc"/>
-                                    </constraints>
-                                </view>
+                                    <color key="backgroundColor" white="0.11713324652777778" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                    <size key="shadowOffset" width="0.0" height="0.0"/>
+                                </label>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="gLO-dC-l4y" firstAttribute="width" secondItem="aEt-TH-U0a" secondAttribute="width" id="3xq-MA-GGZ"/>
-                                <constraint firstItem="5mc-79-syP" firstAttribute="top" secondItem="aEt-TH-U0a" secondAttribute="top" id="86o-Nq-tsy"/>
-                                <constraint firstAttribute="bottom" secondItem="5mc-79-syP" secondAttribute="bottom" id="BZw-S6-BI7"/>
-                                <constraint firstAttribute="trailing" secondItem="5mc-79-syP" secondAttribute="trailing" id="Kmt-8o-hQn"/>
-                                <constraint firstItem="5mc-79-syP" firstAttribute="leading" secondItem="aEt-TH-U0a" secondAttribute="leading" id="uvX-aD-4IG"/>
+                                <constraint firstItem="gLO-dC-l4y" firstAttribute="width" secondItem="aEt-TH-U0a" secondAttribute="width" id="2Q2-4Q-rDJ"/>
+                                <constraint firstItem="gLO-dC-l4y" firstAttribute="top" secondItem="aEt-TH-U0a" secondAttribute="top" id="7vd-zG-CBt"/>
+                                <constraint firstAttribute="bottom" secondItem="gLO-dC-l4y" secondAttribute="bottom" id="csL-hd-MS7"/>
+                                <constraint firstItem="gLO-dC-l4y" firstAttribute="leading" secondItem="aEt-TH-U0a" secondAttribute="leading" id="pk7-nY-72e"/>
+                                <constraint firstAttribute="trailing" secondItem="gLO-dC-l4y" secondAttribute="trailing" id="wKo-cO-A5q"/>
                             </constraints>
                         </scrollView>
                     </subviews>

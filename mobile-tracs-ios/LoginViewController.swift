@@ -49,7 +49,7 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
+        
     func onLoginPress(sender: UIButton!) {
         sendLoginRequest()
     }

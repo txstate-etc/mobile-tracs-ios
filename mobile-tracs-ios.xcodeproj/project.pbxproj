@@ -56,7 +56,6 @@
 		2D88E2841ECB9197000DB020 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D88E2821ECB9197000DB020 /* IntroViewController.swift */; };
 		2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */; };
 		2D9161AA1E81E7F90090A5C6 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9161A91E81E7F90090A5C6 /* Site.swift */; };
-		2DB0CF041EF1B78100B19252 /* tracsb.logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0CF021EF1B78100B19252 /* tracsb.logo.png */; };
 		2DB0CF051EF1B78100B19252 /* welcome_page.html in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0CF031EF1B78100B19252 /* welcome_page.html */; };
 		2DB0CF071EF1E1EB00B19252 /* bootstrap.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0CF061EF1E1EB00B19252 /* bootstrap.min.css */; };
 		2DB0CF091EF1E21200B19252 /* font-awesome.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0CF081EF1E21200B19252 /* font-awesome.min.css */; };
@@ -65,6 +64,7 @@
 		2DD215C71EA036B900A6C30F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C61EA036B900A6C30F /* libz.tbd */; };
 		2DD215C91EA036C500A6C30F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215C81EA036C500A6C30F /* libsqlite3.tbd */; };
 		2DD215EE1EA037E000A6C30F /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215ED1EA037E000A6C30F /* libGoogleAnalyticsServices.a */; };
+		823F68F61F2A535B002C9B57 /* tracsb.logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 823F68F51F2A535B002C9B57 /* tracsb.logo.png */; };
 		82500CAB1EF97F80004AB219 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82500CAA1EF97F80004AB219 /* Config.plist */; };
 		826501991F166848007DE87C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826501981F166848007DE87C /* LoginViewController.swift */; };
 		8265019B1F16685A007DE87C /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8265019A1F16685A007DE87C /* LoginView.xib */; };
@@ -131,7 +131,6 @@
 		2D88E2821ECB9197000DB020 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 		2D9161A91E81E7F90090A5C6 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Site.swift; path = Data/Site.swift; sourceTree = "<group>"; };
-		2DB0CF021EF1B78100B19252 /* tracsb.logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tracsb.logo.png; sourceTree = "<group>"; };
 		2DB0CF031EF1B78100B19252 /* welcome_page.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = welcome_page.html; sourceTree = "<group>"; };
 		2DB0CF061EF1E1EB00B19252 /* bootstrap.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bootstrap.min.css; sourceTree = "<group>"; };
 		2DB0CF081EF1E21200B19252 /* font-awesome.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "font-awesome.min.css"; sourceTree = "<group>"; };
@@ -150,6 +149,7 @@
 		2DD215EB1EA037CD00A6C30F /* GAITrackedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = GoogleAnalytics/GAITrackedViewController.h; sourceTree = "<group>"; };
 		2DD215EC1EA037CD00A6C30F /* GAITracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = GoogleAnalytics/GAITracker.h; sourceTree = "<group>"; };
 		2DD215ED1EA037E000A6C30F /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = "mobile-tracs-ios/GoogleAnalytics/libGoogleAnalyticsServices.a"; sourceTree = "<group>"; };
+		823F68F51F2A535B002C9B57 /* tracsb.logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tracsb.logo.png; sourceTree = "<group>"; };
 		82500CAA1EF97F80004AB219 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		826501981F166848007DE87C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8265019A1F16685A007DE87C /* LoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
@@ -311,7 +311,7 @@
 			children = (
 				2DB0CF081EF1E21200B19252 /* font-awesome.min.css */,
 				2DB0CF061EF1E1EB00B19252 /* bootstrap.min.css */,
-				2DB0CF021EF1B78100B19252 /* tracsb.logo.png */,
+				823F68F51F2A535B002C9B57 /* tracsb.logo.png */,
 				2DB0CF031EF1B78100B19252 /* welcome_page.html */,
 			);
 			path = about_the_app;
@@ -432,6 +432,7 @@
 				2D7ABAA21F1FF018009C86D4 /* CourseListController.xib in Resources */,
 				8267E2CD1F279E0F0066AFCC /* NotificationViewHeader.xib in Resources */,
 				82500CAB1EF97F80004AB219 /* Config.plist in Resources */,
+				823F68F61F2A535B002C9B57 /* tracsb.logo.png in Resources */,
 				2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */,
 				2D7ABAA61F2000C2009C86D4 /* CourseCell.xib in Resources */,
 				099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */,
@@ -441,7 +442,6 @@
 				098FCFD11E9D23DF00D4C66D /* FontAwesome.otf in Resources */,
 				2DB0CF051EF1B78100B19252 /* welcome_page.html in Resources */,
 				099BC2441E882AED009EEF0D /* SettingsViewController.xib in Resources */,
-				2DB0CF041EF1B78100B19252 /* tracsb.logo.png in Resources */,
 				2DB0CF091EF1E21200B19252 /* font-awesome.min.css in Resources */,
 				09071A271EC948F2008560B5 /* FeedbackViewController.xib in Resources */,
 			);

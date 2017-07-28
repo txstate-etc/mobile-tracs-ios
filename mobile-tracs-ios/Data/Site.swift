@@ -32,11 +32,11 @@ class Site : NSObject, Cacheable {
             for tool in page["tools"] as? [[String:Any]] ?? [] {
                 if tool["toolId"] as? String == "sakai.announcements" {
                     hasannouncements = true
-                    announcementurl = tool["url"] as? String ?? ""
+                    announcementurl = (tool["url"] as? String)?.replacingOccurrences(of: "site", with: "pda") ?? ""
                 }
                 if tool["toolId"] as? String == "sakai.forums" {
                     hasdiscussions = true
-                    discussionurl = tool["url"] as? String ?? ""
+                    discussionurl = (tool["url"] as? String)?.replacingOccurrences(of: "site", with: "pda") ?? ""
                 }
             }
         }

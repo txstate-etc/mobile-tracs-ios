@@ -113,6 +113,7 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
     private func sendLoginRequest() {
         Utils.removeCredentials()
         Utils.store(netid: loginNetid.text!, pw: loginPassword.text!, longterm: true)
+        TRACSClient.userid = loginNetid.text!
         DispatchQueue.main.async {
             Utils.showActivity(self.view)
         }

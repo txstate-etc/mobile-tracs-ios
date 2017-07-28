@@ -219,7 +219,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     }
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let urlstring = navigationAction.request.url?.absoluteString {
+        if var urlstring = navigationAction.request.url?.absoluteString {
             if navigationAction.request.url?.scheme == "mailto" {
                 Analytics.event(category: "E-mail", action: "compose", label: urlstring, value: nil)
                 let mvc = MFMailComposeViewController()
@@ -249,6 +249,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                 self.present(mvc, animated: true, completion: nil)
                 return decisionHandler(.cancel)
             }
+            
             Analytics.linkClick(urlstring)
             if urlstring == "about:blank" {
                 return decisionHandler(.cancel)
@@ -260,6 +261,15 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                 UIApplication.shared.applicationIconBadgeNumber = 0
                 wasLogout = true
             }
+            
+//            if urlstring.contains("site") {
+//                urlstring = urlstring.replacingOccurrences(of: "site", with: "pda")
+//                let request = URLRequest(url: URL(string: urlstring)!)
+//                webView.load(request)
+//                decisionHandler(.cancel)
+//            }
+//            NSLog("Url: \(urlstring)")
+            
         }
         decisionHandler(.allow)
     }

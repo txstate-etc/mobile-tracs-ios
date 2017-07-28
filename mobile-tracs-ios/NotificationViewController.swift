@@ -54,12 +54,14 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
+        return 45
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionlabel") as! NotificationViewHeader
+        NSLog("Header \(section) Position: \(header.headerSwitch.isOn ? "on" : "off")")
         header.headerSwitch.site = site
+    
         header.headerSwitch.addTarget(self, action: #selector(toggleSetting(sender:)), for: UIControlEvents.touchUpInside)
         switch section {
         case 0:
@@ -75,11 +77,10 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         let setting = makeSettingForSwitch(toggleSwitch: header.headerSwitch)
-
         let settings = IntegrationClient.getRegistration().settings
         let settingIsDisabled = settings!.entryIsDisabled(SettingsEntry(dict: setting))
-        header.headerSwitch.setOn(!settingIsDisabled, animated: false)
-        
+        header.headerSwitch.isOn = !settingIsDisabled
+
         return header
     }
 
@@ -93,12 +94,12 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         } else {
             settings?.enableEntry(SettingsEntry(dict: newSetting))
         }
-        
         IntegrationClient.saveSettings(settings!, completion: { (success) in
             Analytics.event(category: "Filter", action: sender.isOn ? "allow" : "block", label: "\(sender.site?.id ?? "") - \(sender.notificationType ?? "")", value: nil)
+            NSLog("\(sender.notificationType ?? "") \(sender.isOn ? "enabled" : "disabled") for \(sender.site?.title ?? "")")
+            self.loadNotifications(false)
         })
-        NSLog("\(sender.notificationType ?? "") \(sender.isOn ? "enabled" : "disabled") for \(sender.site?.title ?? "")")
-        loadNotifications(false)
+        
     }
     
     func makeSettingForSwitch(toggleSwitch: HeaderSwitch) -> [String: [String: String]] {
@@ -149,9 +150,18 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             }
             cell.isUserInteractionEnabled = true
         } else {
+            var titleLabel: String
+            switch indexPath.section {
+            case 0:
+                titleLabel = "No new announcements"
+            case 1:
+                titleLabel = "No new forum posts"
+            default:
+                titleLabel = ""
+            }
             cell.isRead = true
             cell.iView.image = nil
-            cell.titleLabel.text = "No new notifications found"
+            cell.titleLabel.text = titleLabel
             cell.subtitleLabel.text = ""
             cell.isUserInteractionEnabled = false
         }
@@ -194,22 +204,24 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
         
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var notify: Notification?
         switch indexPath.section {
         case 0:
             if announcementCount == 0 {
                 return
             }
+            notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
         case 1:
             if discussionCount == 0 {
                 return
             }
+            notify = getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
         default:
             break
         }
-        let notify = notifications[indexPath.row]
-        if let tracsobj = notify.object {
+        if let tracsobj = notify?.object {
             if let url = URL(string: tracsobj.getUrl()) {
-                IntegrationClient.markNotificationRead(notify, completion: { (success) in
+                IntegrationClient.markNotificationRead(notify!, completion: { (success) in
                 })
                 Analytics.event(category: "Notification", action: "click", label: notifications[indexPath.row].object_type ?? "", value: nil)
                 let wvc = WebViewController(urlToLoad: url.absoluteString)

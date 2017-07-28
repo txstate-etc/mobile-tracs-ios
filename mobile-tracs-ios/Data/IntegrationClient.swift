@@ -118,6 +118,19 @@ class IntegrationClient {
         }
     }
     
+    static func getDispatchNotifications(completion: @escaping([Any]?) -> Void) {
+        TRACSClient.waitForLogin { (loggedIn) in
+            if !loggedIn { completion(nil) }
+            Utils.fetchJSONArray(url: "\(notificationsurl)?token=\(deviceToken)") { (data) in
+                if data != nil {
+                    completion(data)
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+    }
+    
     // this func interacts with the TRACSClient to fetch all the LMS data for current notifications
     // it runs the API requests in parallel and calls the completion handler when all of them
     // are done

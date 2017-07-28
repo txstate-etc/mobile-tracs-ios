@@ -93,7 +93,9 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
             loginScrollView.contentInset = contentInsets
             loginScrollView.scrollIndicatorInsets = contentInsets
             
-            self.loginScrollView.scrollRectToVisible((activeField?.frame)!, animated: true)
+            if let activeField = activeField {
+                self.loginScrollView.scrollRectToVisible(activeField.frame, animated: true)
+            }
         }
     }
     
@@ -128,7 +130,6 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
                         Utils.hideActivity()
                     }
                 }
-                
             })
         })
     }

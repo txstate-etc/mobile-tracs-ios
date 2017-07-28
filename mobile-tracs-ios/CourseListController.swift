@@ -12,6 +12,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet var tableView:UITableView!
     var coursesites:[Site] = []
     var projectsites:[Site] = []
+    var unseenBySite: [String: Int] = [:]
     var refresh = UIRefreshControl()
 
     override func viewDidLoad() {
@@ -23,6 +24,12 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.present(lvc, animated: true, completion: nil)
             } else {
                 IntegrationClient.registerIfNecessary()
+                IntegrationClient.getDispatchNotifications {
+                    (notifications) in
+                    if (notifications != nil) {
+                        self.unseenBySite = self.countUnseenBySite(notifications: notifications!)
+                    }
+                }
             }
             if !Utils.flag("introScreen", val: true) {
                 self.activateIntroScreen()
@@ -36,7 +43,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         let menubutton = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedMenu))
         menubutton.accessibilityLabel = "Menu"
         navigationItem.rightBarButtonItem = menubutton
-        
+        navigationController?.navigationBar.topItem?.title = "Sites List"
         refresh.addTarget(self, action: #selector(load), for: .valueChanged)
         tableView.addSubview(refresh)
     }
@@ -61,41 +68,65 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         load()
     }
     
+    func countUnseenBySite(notifications: [Any]) -> [String: Int] {
+        var unseen: [String: Int] = [:]
+        for notif in notifications {
+            let notif = notif as! [String: Any]
+            let seen = notif["seen"] as? Bool ?? true
+            if !seen {
+                if let otherkeys = notif["other_keys"] as? [String: Any] {
+                    if let site_id = otherkeys["site_id"] as? String {
+                        var count = unseen[site_id] ?? 0
+                        count += 1
+                        unseen[site_id] = count
+                    }
+                }
+            }
+        }
+        return unseen
+    }
+    
     func load() {
         if !TRACSClient.userid.isEmpty {
-            TRACSClient.fetchSitesByMembership { (sitehash) in
-                var courses:[Site] = []
-                var projects:[Site] = []
-                if let sitehash = sitehash {
-                    for site in sitehash.values {
-                        if site.coursesite {
-                            courses.append(site)
-                        } else {
-                            projects.append(site)
+            IntegrationClient.getDispatchNotifications(completion: { (dispatchnotifs) in
+                if dispatchnotifs != nil {
+                self.unseenBySite = self.countUnseenBySite(notifications: dispatchnotifs!)
+                }
+                TRACSClient.fetchSitesByMembership { (sitehash) in
+                    var courses:[Site] = []
+                    var projects:[Site] = []
+                    if let sitehash = sitehash {
+                        for site in sitehash.values {
+                            site.unseenCount = self.unseenBySite[site.id] ?? 0
+                            if site.coursesite {
+                                courses.append(site)
+                            } else {
+                                projects.append(site)
+                            }
                         }
+                        let comparator: (Site,Site)->Bool = { (a, b) in
+                            (!a.coursesite && b.coursesite) ||
+                                a.title.trimmingCharacters(in:CharacterSet.whitespacesAndNewlines).lowercased() < b.title.trimmingCharacters(in:CharacterSet.whitespacesAndNewlines).lowercased()
+                        }
+                        courses.sort(by: comparator)
+                        projects.sort(by: comparator)
+                        
+                        DispatchQueue.main.async {
+                            Utils.hideActivity()
+                            self.coursesites = courses
+                            self.projectsites = projects
+                            self.tableView.reloadData()
+                        }
+                    } else {
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5, execute: {
+                            self.load()
+                        })
                     }
-                    let comparator: (Site,Site)->Bool = { (a, b) in
-                        (!a.coursesite && b.coursesite) ||
-                            a.title.trimmingCharacters(in:CharacterSet.whitespacesAndNewlines).lowercased() < b.title.trimmingCharacters(in:CharacterSet.whitespacesAndNewlines).lowercased()
-                    }
-                    courses.sort(by: comparator)
-                    projects.sort(by: comparator)
-
-                    DispatchQueue.main.async {
-                        Utils.hideActivity()
-                        self.coursesites = courses
-                        self.projectsites = projects
-                        self.tableView.reloadData()
-                    }
-                } else {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5, execute: {
-                        self.load()
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.4, execute: {
+                        self.refresh.endRefreshing()
                     })
                 }
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.4, execute: {
-                    self.refresh.endRefreshing()
-                })
-            }
+            })
         }
     }
     

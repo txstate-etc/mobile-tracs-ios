@@ -150,12 +150,16 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             }
             cell.isUserInteractionEnabled = true
         } else {
-            var titleLabel: String
+            var titleLabel: String = ""
             switch indexPath.section {
             case 0:
-                titleLabel = "No new announcements"
+                if announcementCount == 0 {
+                    titleLabel = "No new announcements"
+                }
             case 1:
-                titleLabel = "No new forum posts"
+                if discussionCount == 0 {
+                    titleLabel = "No new forum posts"
+                }
             default:
                 titleLabel = ""
             }
@@ -194,15 +198,22 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             IntegrationClient.markNotificationCleared(n) { (success) in
                 DispatchQueue.main.async {
                     if success {
-                        self.notifications.remove(at: indexPath.row)
+                        tableView.beginUpdates()
+                        let index = self.convertIndex(indexPath: indexPath)
+                        self.notifications.remove(at: index)
                         self.tableView.deleteRows(at: [indexPath], with: .fade)
+                        self.tableView.reloadSections([indexPath.section], with: UITableViewRowAnimation.automatic)
+                        tableView.endUpdates()
+                        //TODO: Fix this right here to delete and not add a phantom row
+                        self.loadNotifications(true)
                         Analytics.event(category: "Notification", action: "cleared", label: n.object_type ?? "", value: nil)
                     }
                 }
             }
         })]
     }
-        
+
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var notify: Notification?
         switch indexPath.section {
@@ -286,6 +297,31 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                 (UIApplication.shared.delegate as! AppDelegate).reloadEverything()
             }
         }
+    }
+    
+    func convertIndex(indexPath: IndexPath) -> Int {
+        var notificationType: String = ""
+        var returnIndex = -1
+        switch indexPath.section {
+        case 0:
+            notificationType = Section.Announcements.rawValue
+        case 1:
+            notificationType = Section.Discussions.rawValue
+        default:
+            break
+        }
+        
+        var totalFound = 0
+        for notif in notifications {
+            if notif.object_type == notificationType {
+                if totalFound == indexPath.row {
+                    returnIndex = notifications.index(of: notif)!
+                    break
+                }
+                totalFound += 1
+            }
+        }
+        return returnIndex
     }
     
     func getNotification(notificationType: String, position: Int) -> Notification? {

@@ -59,7 +59,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
 
         back = Utils.fontAwesomeBarButtonItem(icon: .chevronLeft, target: self, action: #selector(pressedBack(sender:)))
         forward = Utils.fontAwesomeBarButtonItem(icon: .chevronRight, target: self, action: #selector(pressedForward(sender:)))
-        
+
         var tb = toolBar.items!
         tb[1] = back;
         tb[3] = forward;
@@ -70,7 +70,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
 
         back.accessibilityLabel = "back"
         forward.accessibilityLabel = "forward"
-        
         self.load()
     }
     
@@ -261,15 +260,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
                 UIApplication.shared.applicationIconBadgeNumber = 0
                 wasLogout = true
             }
-            
-//            if urlstring.contains("site") {
-//                urlstring = urlstring.replacingOccurrences(of: "site", with: "pda")
-//                let request = URLRequest(url: URL(string: urlstring)!)
-//                webView.load(request)
-//                decisionHandler(.cancel)
-//            }
-//            NSLog("Url: \(urlstring)")
-            
         }
         decisionHandler(.allow)
     }

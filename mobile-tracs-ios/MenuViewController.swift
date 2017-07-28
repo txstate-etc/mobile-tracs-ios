@@ -123,6 +123,8 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         } else if indexPath.section == 3 && indexPath.row == 0 {
             TRACSClient.userid = ""
             Utils.removeCredentials()
+            IntegrationClient.unregister()
+            UIApplication.shared.applicationIconBadgeNumber = 0
             let cookies = HTTPCookieStorage.shared.cookies
             for cookie in cookies! {
                 if cookie.name == "JSESSIONID" {

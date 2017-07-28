@@ -13,6 +13,7 @@ class Site : NSObject, Cacheable {
     var coursesite = false
     var title = ""
     var hasannouncements = false
+    var unseenCount = 0
     var hasdiscussions = false
     var announcementurl = ""
     var discussionurl = ""

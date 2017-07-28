@@ -310,7 +310,8 @@ class Utils {
             let s = (String(badgecount) as NSString).size(attributes: [
                 NSFontAttributeName: font
                 ])
-            let badge = BadgeSwift(frame:CGRect(x: 0, y: 0, width: s.width+10, height: s.height))
+            let x_offset = button.frame.width / 1.5
+            let badge = BadgeSwift(frame:CGRect(x: x_offset, y: 5, width: s.width+10, height: s.height))
             badge.font = font
             badge.textColor = UIColor.white
             badge.text = String(badgecount)

@@ -42,7 +42,7 @@ class CourseCell: UITableViewCell {
             toolbar.items?[1] = Utils.fontAwesomeBadgedBarButtonItem(color: UIColor(white: 1, alpha: 0), badgecount: 0, icon: Discussion.icon, target: self, action: #selector(discussionPressed))
             (toolbar.items?[1].customView as! UIButton).isUserInteractionEnabled = false
         }
-        toolbar.items?[3] = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.darkgray, badgecount: 0, icon: .dashboard, target: self, action: #selector(dashboardPressed))
+        toolbar.items?[3] = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.darkgray, badgecount: (site?.unseenCount)!, icon: .dashboard, target: self, action: #selector(dashboardPressed))
     }
     
     func discussionPressed() {

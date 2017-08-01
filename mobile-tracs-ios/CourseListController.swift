@@ -8,8 +8,9 @@
 
 import UIKit
 
-class CourseListController: UIViewController, UITableViewDelegate, UITableViewDataSource, CourseCellDelegate {
-    @IBOutlet var tableView:UITableView!
+class CourseListController: UIViewController, UITableViewDelegate, UITableViewDataSource, CourseCellDelegate  {
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var rightMenuButton: UIBarButtonItem!
     var coursesites:[Site] = []
     var projectsites:[Site] = []
     var unseenBySite: [String: Int] = [:]
@@ -18,9 +19,13 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Utils.showActivity(view)
         TRACSClient.loginIfNecessary { (loggedin) in
             if !loggedin {
                 let lvc = LoginViewController()
+                DispatchQueue.main.async {
+                    Utils.hideActivity()
+                }
                 self.present(lvc, animated: true, completion: nil)
             } else {
                 IntegrationClient.registerIfNecessary()
@@ -29,23 +34,24 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                     if (notifications != nil) {
                         self.unseenBySite = self.countUnseenBySite(notifications: notifications!)
                     }
+                    DispatchQueue.main.async {
+                        Utils.hideActivity()
+                    }
                 }
             }
             if !Utils.flag("introScreen", val: true) {
                 self.activateIntroScreen()
             }
         }
-        
-        tableView.register(UINib(nibName:"CourseCell", bundle: nil), forCellReuseIdentifier: "courselist")
+        tableView?.delegate = self
+        tableView?.dataSource = self
+
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         
-        let menubutton = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedMenu))
-        menubutton.accessibilityLabel = "Menu"
-        navigationItem.rightBarButtonItem = menubutton
-        navigationController?.navigationBar.topItem?.title = "Sites List"
+        Utils.configMenuButton(icon: FontAwesome.gear, size: 28, button: rightMenuButton)
         refresh.addTarget(self, action: #selector(load), for: .valueChanged)
-        tableView.addSubview(refresh)
+        tableView?.addSubview(refresh)
     }
     
     deinit {
@@ -156,30 +162,38 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UIFont.preferredFont(forTextStyle: .body).pointSize * 2.8 + 50.0
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:CourseCell = tableView.dequeueReusableCell(withIdentifier: "courselist", for: indexPath) as! CourseCell
         cell.site = (indexPath.section == 0 ? coursesites : projectsites)[indexPath.row]
         cell.delegate = self
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! CourseCell
+        
         let siteUrl = "\(TRACSClient.tracsurl)/portal/pda/\(cell.site?.id ?? "")"
-        let wvc = WebViewController(urlToLoad: siteUrl)
-        navigationController?.pushViewController(wvc!, animated: true)
+        loadWebViewWithUrl(url: siteUrl)
+        
     }
-
+    
     // MARK: - CourseCellDelegate
     
-    func discussionPressed(site:Site) {
-        let wvc = WebViewController(urlToLoad: site.discussionurl)
-        navigationController?.pushViewController(wvc!, animated: true)
+    func discussionPressed(site: Site) {
+        loadWebViewWithUrl(url: site.discussionurl)
     }
     func dashboardPressed(site: Site) {
-        let nvc = NotificationViewController(nibName: "NotificationViewController", bundle: nil)
-        nvc.site = site
-        navigationController?.pushViewController(nvc, animated: true)
+        let dbStoryBoard = UIStoryboard(name: "MainStory", bundle: nil)
+        let dbController = dbStoryBoard.instantiateViewController(withIdentifier: "Dashboard")
+        (dbController as! NotificationViewController).site = site
+        navigationController?.pushViewController(dbController, animated: true)
+    }
+    
+    func loadWebViewWithUrl(url: String) {
+        let wvStoryBoard = UIStoryboard(name: "MainStory", bundle: nil)
+        let wvController = wvStoryBoard.instantiateViewController(withIdentifier: "TracsWebView")
+        (wvController as! WebViewController).urlToLoad = url
+        navigationController?.pushViewController(wvController, animated: true)
     }
 }

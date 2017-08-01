@@ -15,7 +15,6 @@
 		09071A271EC948F2008560B5 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09071A251EC948F2008560B5 /* FeedbackViewController.xib */; };
 		09071A291ECDEB6A008560B5 /* NotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A281ECDEB6A008560B5 /* NotificationObserver.swift */; };
 		09071A301EDCBD8A008560B5 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09071A2E1EDCBD8A008560B5 /* MenuViewController.swift */; };
-		09071A311EDCBD8A008560B5 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09071A2F1EDCBD8A008560B5 /* MenuViewController.xib */; };
 		0918543E1E98A03300DAF3B6 /* Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0918543D1E98A03300DAF3B6 /* Registration.swift */; };
 		092700CE1E884D720089821D /* JSONSerialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700CD1E884D720089821D /* JSONSerialize.swift */; };
 		092700D11E884DB00089821D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092700CF1E884DB00089821D /* Settings.swift */; };
@@ -28,13 +27,9 @@
 		098FCFD21E9D23DF00D4C66D /* FontAwesome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FCFCE1E9D23DF00D4C66D /* FontAwesome.swift */; };
 		098FCFD31E9D23DF00D4C66D /* FontAwesomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FCFCF1E9D23DF00D4C66D /* FontAwesomeView.swift */; };
 		099BC2431E882AED009EEF0D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099BC2411E882AED009EEF0D /* SettingsViewController.swift */; };
-		099BC2441E882AED009EEF0D /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099BC2421E882AED009EEF0D /* SettingsViewController.xib */; };
 		099BC24B1E882CFF009EEF0D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099BC2491E882CFF009EEF0D /* SettingsCell.swift */; };
-		099BC24C1E882CFF009EEF0D /* SettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099BC24A1E882CFF009EEF0D /* SettingsCell.xib */; };
 		099C81711E7CBFDD00529530 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C81701E7CBFDD00529530 /* WebViewController.swift */; };
-		099C81731E7CC94500529530 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099C81721E7CC94500529530 /* WebViewController.xib */; };
 		099C81781E7DEEB600529530 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C81761E7DEEB600529530 /* NotificationViewController.swift */; };
-		099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 099C81771E7DEEB600529530 /* NotificationViewController.xib */; };
 		09B527FD1E7CBD6500BACF81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */; };
 		09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09B528031E7CBD6500BACF81 /* Assets.xcassets */; };
 		09DDA8AC1E9D3143004220CF /* BadgeSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DDA8AB1E9D3143004220CF /* BadgeSwift.swift */; };
@@ -47,14 +42,11 @@
 		09F10E0C1E7F3C3400303A96 /* TRACSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E0B1E7F3C3400303A96 /* TRACSObject.swift */; };
 		09F10E0F1E7F629A00303A96 /* IntegrationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F10E0E1E7F629A00303A96 /* IntegrationClient.swift */; };
 		2D7ABAA11F1FF018009C86D4 /* CourseListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7ABA9F1F1FF018009C86D4 /* CourseListController.swift */; };
-		2D7ABAA21F1FF018009C86D4 /* CourseListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D7ABAA01F1FF018009C86D4 /* CourseListController.xib */; };
 		2D7ABAA51F2000C2009C86D4 /* CourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7ABAA31F2000C2009C86D4 /* CourseCell.swift */; };
-		2D7ABAA61F2000C2009C86D4 /* CourseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D7ABAA41F2000C2009C86D4 /* CourseCell.xib */; };
 		2D7ABAA81F267FAF009C86D4 /* CookieMonster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7ABAA71F267FAF009C86D4 /* CookieMonster.swift */; };
 		2D88E27D1EB9433A000DB020 /* Discussion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D88E27C1EB9433A000DB020 /* Discussion.swift */; };
 		2D88E27F1ECA6AFD000DB020 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D88E27E1ECA6AFD000DB020 /* LaunchScreen.storyboard */; };
 		2D88E2841ECB9197000DB020 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D88E2821ECB9197000DB020 /* IntroViewController.swift */; };
-		2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */; };
 		2D9161AA1E81E7F90090A5C6 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9161A91E81E7F90090A5C6 /* Site.swift */; };
 		2DB0CF051EF1B78100B19252 /* welcome_page.html in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0CF031EF1B78100B19252 /* welcome_page.html */; };
 		2DB0CF071EF1E1EB00B19252 /* bootstrap.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0CF061EF1E1EB00B19252 /* bootstrap.min.css */; };
@@ -74,6 +66,7 @@
 		826501A51F1FFB6F007DE87C /* AdvisoryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826501A41F1FFB6F007DE87C /* AdvisoryLabel.swift */; };
 		8267E2CB1F279DF00066AFCC /* NotificationViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8267E2CA1F279DF00066AFCC /* NotificationViewHeader.swift */; };
 		8267E2CD1F279E0F0066AFCC /* NotificationViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8267E2CC1F279E0F0066AFCC /* NotificationViewHeader.xib */; };
+		826887241F30CE95002D66CB /* MainStory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 826887231F30CE95002D66CB /* MainStory.storyboard */; };
 		82B314801F2918E000075569 /* HeaderSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B3147F1F2918E000075569 /* HeaderSwitch.swift */; };
 /* End PBXBuildFile section */
 
@@ -86,7 +79,6 @@
 		09071A251EC948F2008560B5 /* FeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackViewController.xib; sourceTree = "<group>"; };
 		09071A281ECDEB6A008560B5 /* NotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationObserver.swift; path = UIWidgets/NotificationObserver.swift; sourceTree = "<group>"; };
 		09071A2E1EDCBD8A008560B5 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
-		09071A2F1EDCBD8A008560B5 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 		0918543D1E98A03300DAF3B6 /* Registration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Registration.swift; path = Data/Registration.swift; sourceTree = "<group>"; };
 		092700CD1E884D720089821D /* JSONSerialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONSerialize.swift; path = Data/JSONSerialize.swift; sourceTree = "<group>"; };
 		092700CF1E884DB00089821D /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = Data/Settings.swift; sourceTree = "<group>"; };
@@ -99,14 +91,10 @@
 		098FCFCE1E9D23DF00D4C66D /* FontAwesome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesome.swift; sourceTree = "<group>"; };
 		098FCFCF1E9D23DF00D4C66D /* FontAwesomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAwesomeView.swift; sourceTree = "<group>"; };
 		099BC2411E882AED009EEF0D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		099BC2421E882AED009EEF0D /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		099BC2491E882CFF009EEF0D /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
-		099BC24A1E882CFF009EEF0D /* SettingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsCell.xib; sourceTree = "<group>"; };
 		099C816F1E7CBE4100529530 /* mobile-tracs-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "mobile-tracs-ios.entitlements"; sourceTree = "<group>"; };
 		099C81701E7CBFDD00529530 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
-		099C81721E7CC94500529530 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
 		099C81761E7DEEB600529530 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
-		099C81771E7DEEB600529530 /* NotificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationViewController.xib; sourceTree = "<group>"; };
 		09B527F91E7CBD6500BACF81 /* mobile-tracs-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mobile-tracs-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09B527FC1E7CBD6500BACF81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09B528031E7CBD6500BACF81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -122,14 +110,11 @@
 		09F10E0B1E7F3C3400303A96 /* TRACSObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRACSObject.swift; path = Data/TRACSObject.swift; sourceTree = "<group>"; };
 		09F10E0E1E7F629A00303A96 /* IntegrationClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntegrationClient.swift; path = Data/IntegrationClient.swift; sourceTree = "<group>"; };
 		2D7ABA9F1F1FF018009C86D4 /* CourseListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseListController.swift; sourceTree = "<group>"; };
-		2D7ABAA01F1FF018009C86D4 /* CourseListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseListController.xib; sourceTree = "<group>"; };
 		2D7ABAA31F2000C2009C86D4 /* CourseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCell.swift; sourceTree = "<group>"; };
-		2D7ABAA41F2000C2009C86D4 /* CourseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseCell.xib; sourceTree = "<group>"; };
 		2D7ABAA71F267FAF009C86D4 /* CookieMonster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CookieMonster.swift; path = Utils/CookieMonster.swift; sourceTree = "<group>"; };
 		2D88E27C1EB9433A000DB020 /* Discussion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Discussion.swift; path = Data/Discussion.swift; sourceTree = "<group>"; };
 		2D88E27E1ECA6AFD000DB020 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D88E2821ECB9197000DB020 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
-		2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 		2D9161A91E81E7F90090A5C6 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Site.swift; path = Data/Site.swift; sourceTree = "<group>"; };
 		2DB0CF031EF1B78100B19252 /* welcome_page.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = welcome_page.html; sourceTree = "<group>"; };
 		2DB0CF061EF1E1EB00B19252 /* bootstrap.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bootstrap.min.css; sourceTree = "<group>"; };
@@ -159,6 +144,7 @@
 		826501A41F1FFB6F007DE87C /* AdvisoryLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvisoryLabel.swift; sourceTree = "<group>"; };
 		8267E2CA1F279DF00066AFCC /* NotificationViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewHeader.swift; sourceTree = "<group>"; };
 		8267E2CC1F279E0F0066AFCC /* NotificationViewHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationViewHeader.xib; sourceTree = "<group>"; };
+		826887231F30CE95002D66CB /* MainStory.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStory.storyboard; sourceTree = "<group>"; };
 		82B3147F1F2918E000075569 /* HeaderSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderSwitch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -261,28 +247,21 @@
 				09B528081E7CBD6500BACF81 /* Info.plist */,
 				2D88E2821ECB9197000DB020 /* IntroViewController.swift */,
 				099C81701E7CBFDD00529530 /* WebViewController.swift */,
-				099C81721E7CC94500529530 /* WebViewController.xib */,
 				8267E2CA1F279DF00066AFCC /* NotificationViewHeader.swift */,
 				8267E2CC1F279E0F0066AFCC /* NotificationViewHeader.xib */,
 				099C81761E7DEEB600529530 /* NotificationViewController.swift */,
-				099C81771E7DEEB600529530 /* NotificationViewController.xib */,
 				09071A1C1EADB127008560B5 /* NotificationCell.swift */,
-				2D9161A71E809F1F0090A5C6 /* NotificationCell.xib */,
 				099BC2411E882AED009EEF0D /* SettingsViewController.swift */,
-				099BC2421E882AED009EEF0D /* SettingsViewController.xib */,
 				099BC2491E882CFF009EEF0D /* SettingsCell.swift */,
-				099BC24A1E882CFF009EEF0D /* SettingsCell.xib */,
 				09071A241EC948F2008560B5 /* FeedbackViewController.swift */,
 				09071A251EC948F2008560B5 /* FeedbackViewController.xib */,
 				2D88E27E1ECA6AFD000DB020 /* LaunchScreen.storyboard */,
 				09071A2E1EDCBD8A008560B5 /* MenuViewController.swift */,
-				09071A2F1EDCBD8A008560B5 /* MenuViewController.xib */,
 				826501981F166848007DE87C /* LoginViewController.swift */,
 				8265019A1F16685A007DE87C /* LoginView.xib */,
 				2D7ABA9F1F1FF018009C86D4 /* CourseListController.swift */,
-				2D7ABAA01F1FF018009C86D4 /* CourseListController.xib */,
 				2D7ABAA31F2000C2009C86D4 /* CourseCell.swift */,
-				2D7ABAA41F2000C2009C86D4 /* CourseCell.xib */,
+				826887231F30CE95002D66CB /* MainStory.storyboard */,
 			);
 			path = "mobile-tracs-ios";
 			sourceTree = "<group>";
@@ -424,24 +403,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				099BC24C1E882CFF009EEF0D /* SettingsCell.xib in Resources */,
-				09071A311EDCBD8A008560B5 /* MenuViewController.xib in Resources */,
 				8265019B1F16685A007DE87C /* LoginView.xib in Resources */,
+				826887241F30CE95002D66CB /* MainStory.storyboard in Resources */,
 				09DDA8AE1EA077FB004220CF /* GoogleService-Info.plist in Resources */,
 				2D88E27F1ECA6AFD000DB020 /* LaunchScreen.storyboard in Resources */,
-				2D7ABAA21F1FF018009C86D4 /* CourseListController.xib in Resources */,
 				8267E2CD1F279E0F0066AFCC /* NotificationViewHeader.xib in Resources */,
 				82500CAB1EF97F80004AB219 /* Config.plist in Resources */,
 				823F68F61F2A535B002C9B57 /* tracsb.logo.png in Resources */,
-				2D9161A81E809F1F0090A5C6 /* NotificationCell.xib in Resources */,
-				2D7ABAA61F2000C2009C86D4 /* CourseCell.xib in Resources */,
-				099C81791E7DEEB600529530 /* NotificationViewController.xib in Resources */,
 				09B528041E7CBD6500BACF81 /* Assets.xcassets in Resources */,
 				2DB0CF071EF1E1EB00B19252 /* bootstrap.min.css in Resources */,
-				099C81731E7CC94500529530 /* WebViewController.xib in Resources */,
 				098FCFD11E9D23DF00D4C66D /* FontAwesome.otf in Resources */,
 				2DB0CF051EF1B78100B19252 /* welcome_page.html in Resources */,
-				099BC2441E882AED009EEF0D /* SettingsViewController.xib in Resources */,
 				2DB0CF091EF1E21200B19252 /* font-awesome.min.css in Resources */,
 				09071A271EC948F2008560B5 /* FeedbackViewController.xib in Resources */,
 			);

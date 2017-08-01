@@ -296,6 +296,12 @@ class Utils {
         return ret
     }
     
+    static func configMenuButton(icon: FontAwesome, size: CGFloat, button: UIBarButtonItem) -> Void {
+        button.title = " \(String.fontAwesomeIcon(name: icon)) "
+        button.style = UIBarButtonItemStyle.plain
+        button.setTitleTextAttributes([NSFontAttributeName: UIFont.fontAwesome(ofSize: size)], for: .normal)
+    }
+    
     static func fontAwesomeBadgedBarButtonItem(color: UIColor, badgecount: Int, icon: FontAwesome, target: AnyObject, action: Selector) -> UIBarButtonItem {
         let button = UIButton(type: .custom)
         button.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -498,3 +504,4 @@ class Utils {
         return randomString
     }
 }
+

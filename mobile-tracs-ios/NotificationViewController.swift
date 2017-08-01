@@ -21,7 +21,8 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName:"NotificationCell", bundle: nil), forCellReuseIdentifier: "notification")
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.register(UINib(nibName:"NotificationViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "sectionlabel")
         //navigationItem.rightBarButtonItem = Utils.fontAwesomeTitledBarButtonItem(color: (navigationController?.navigationBar.tintColor)!, icon: .timesCircle, title: "Clear All", textStyle: .body, target: self, action: #selector(clearAllPressed))
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
@@ -235,8 +236,10 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                 IntegrationClient.markNotificationRead(notify!, completion: { (success) in
                 })
                 Analytics.event(category: "Notification", action: "click", label: notifications[indexPath.row].object_type ?? "", value: nil)
-                let wvc = WebViewController(urlToLoad: url.absoluteString)
-                navigationController?.pushViewController(wvc!, animated: true)
+                let wvStoryBoard = UIStoryboard(name: "MainStory", bundle: nil)
+                let wvController = wvStoryBoard.instantiateViewController(withIdentifier: "TracsWebView")
+                (wvController as! WebViewController).urlToLoad = url.absoluteString
+                navigationController?.pushViewController(wvController, animated: true)
             }
         }
     }

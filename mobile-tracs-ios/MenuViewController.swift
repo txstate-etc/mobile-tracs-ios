@@ -10,11 +10,13 @@ import UIKit
 import StoreKit
 
 class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SKStoreProductViewControllerDelegate {
-    @IBOutlet var tableView:UITableView!
+    @IBOutlet weak var tableView: UITableView!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "menuitem")
+        tableView.delegate = self
+        tableView.dataSource = self
         NotificationCenter.default.addObserver(self, selector: #selector(deselectRow), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(deselectRow), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
@@ -89,8 +91,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
-            let vc = SettingsViewController()
-            navigationController?.pushViewController(vc, animated: true)
+            let settingsStoryBoard = UIStoryboard(name: "MainStory", bundle: nil)
+            let settingsVC = settingsStoryBoard.instantiateViewController(withIdentifier: "NotificationSettings")
+            navigationController?.pushViewController(settingsVC, animated: true)
         } else if indexPath.section == 1 {
             if indexPath.row == 0 {
                 let vc = IntroViewController()
@@ -134,7 +137,8 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             for cookie in HTTPCookieStorage.shared.cookies! {
                 print("\(cookie.name): \(cookie.value)")
             }
-            let clc = CourseListController()
+            let clStoryBoard = UIStoryboard(name: "MainStory", bundle: nil)
+            let clc = clStoryBoard.instantiateViewController(withIdentifier: "SiteList")
             navigationController?.pushViewController(clc, animated: true)
         }
     }

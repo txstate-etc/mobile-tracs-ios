@@ -15,8 +15,7 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
     @IBOutlet weak var loginLogoImage: LoginLogoImage!
     @IBOutlet weak var loginScrollView: UIScrollView!
     @IBOutlet weak var loginSubmitButton: LoginButton!
-    @IBOutlet weak var loginAdvisory: AdvisoryLabel!
-    @IBOutlet weak var advisoryScroll: UIScrollView!
+    @IBOutlet weak var loginAdvisory: UITextView!
     @IBOutlet var viewTap: UIView!
     
     let loginAdvisoryText = "Use of computer and network facilities owned or operated by Texas State University requires prior authorization. Unauthorized access is prohibited. Usage may be subject to security testing and monitoring, and affords no privacy guarantees or expectations except as otherwise provided by applicable privacy laws. Abuse is subject to criminal prosecution. Use of these facilities implies agreement to comply with the policies of Texas State University."
@@ -29,8 +28,6 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
         loginNetid.delegate = self
         loginPassword.delegate = self
         loginSubmitButton.addTarget(self, action: #selector(onLoginPress), for: .touchUpInside)
-        loginAdvisory.text = loginAdvisoryText
-        advisoryScroll.sizeToFit()
         
         //Keyboard dismissal setup when tapping outside text boxes
         keyboardDismissTouch = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -40,9 +37,8 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
         //Keyboard show and hide notification registrations
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
-    
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -51,7 +47,9 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
         sendLoginRequest()
     }
     
-
+    override func viewDidLayoutSubviews() {
+        loginAdvisory.text = loginAdvisoryText
+    }
     
     //MARK: UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -11,9 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="mobile_tracs_ios" customModuleProvider="target">
             <connections>
-                <outlet property="advisoryScroll" destination="aEt-TH-U0a" id="ynN-I7-h5M"/>
                 <outlet property="keyboardDismissTouch" destination="m9e-Sw-x4P" id="q3a-xH-kMm"/>
-                <outlet property="loginAdvisory" destination="gLO-dC-l4y" id="kHa-eR-wBa"/>
+                <outlet property="loginAdvisory" destination="G9D-jh-1Gf" id="Lgt-Fi-d6R"/>
                 <outlet property="loginLogoImage" destination="QuH-07-S9U" id="6us-jd-jhP"/>
                 <outlet property="loginNetid" destination="6WJ-dA-Hge" id="esO-Ar-zkH"/>
                 <outlet property="loginPassword" destination="zPk-ru-pz6" id="hVw-RD-Kgd"/>
@@ -39,7 +38,7 @@
                             </connections>
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="netid" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6WJ-dA-Hge" userLabel="NETID" customClass="LoginTextField" customModule="mobile_tracs_ios" customModuleProvider="target">
-                            <rect key="frame" x="60" y="241" width="254" height="40"/>
+                            <rect key="frame" x="60" y="241" width="256" height="40"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="aiR-ir-sgH"/>
@@ -54,7 +53,7 @@
                             </userDefinedRuntimeAttributes>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zPk-ru-pz6" userLabel="PASSWORD" customClass="LoginTextField" customModule="mobile_tracs_ios" customModuleProvider="target">
-                            <rect key="frame" x="60" y="289" width="254" height="40"/>
+                            <rect key="frame" x="60" y="289" width="256" height="40"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="0Zn-ji-RXn"/>
@@ -69,7 +68,7 @@
                             </userDefinedRuntimeAttributes>
                         </textField>
                         <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TRACSLogo" translatesAutoresizingMaskIntoConstraints="NO" id="QuH-07-S9U" customClass="LoginLogoImage" customModule="mobile_tracs_ios" customModuleProvider="target">
-                            <rect key="frame" x="114.5" y="50" width="146" height="146"/>
+                            <rect key="frame" x="115" y="50" width="146" height="146"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="146" id="hOw-zm-JiZ"/>
@@ -82,7 +81,7 @@
                             </userDefinedRuntimeAttributes>
                         </imageView>
                         <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gc8-o3-kbM" customClass="LoginButton" customModule="mobile_tracs_ios" customModuleProvider="target">
-                            <rect key="frame" x="60" y="353" width="254" height="50"/>
+                            <rect key="frame" x="60" y="353" width="256" height="50"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="8uu-5F-iBe"/>
@@ -94,46 +93,35 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </button>
-                        <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEt-TH-U0a">
-                            <rect key="frame" x="8" y="419" width="359" height="240"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLO-dC-l4y" customClass="AdvisoryLabel" customModule="mobile_tracs_ios" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="359" height="0.0"/>
-                                    <color key="backgroundColor" white="0.11713324652777778" alpha="1" colorSpace="calibratedWhite"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                    <size key="shadowOffset" width="0.0" height="0.0"/>
-                                </label>
-                            </subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="G9D-jh-1Gf">
+                            <rect key="frame" x="8" y="411" width="359" height="100"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="gLO-dC-l4y" firstAttribute="width" secondItem="aEt-TH-U0a" secondAttribute="width" id="2Q2-4Q-rDJ"/>
-                                <constraint firstItem="gLO-dC-l4y" firstAttribute="top" secondItem="aEt-TH-U0a" secondAttribute="top" id="7vd-zG-CBt"/>
-                                <constraint firstAttribute="bottom" secondItem="gLO-dC-l4y" secondAttribute="bottom" id="csL-hd-MS7"/>
-                                <constraint firstItem="gLO-dC-l4y" firstAttribute="leading" secondItem="aEt-TH-U0a" secondAttribute="leading" id="pk7-nY-72e"/>
-                                <constraint firstAttribute="trailing" secondItem="gLO-dC-l4y" secondAttribute="trailing" id="wKo-cO-A5q"/>
+                                <constraint firstAttribute="height" constant="100" id="9YR-9q-86Q"/>
                             </constraints>
-                        </scrollView>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
                     </subviews>
                     <constraints>
                         <constraint firstItem="zPk-ru-pz6" firstAttribute="top" secondItem="6WJ-dA-Hge" secondAttribute="bottom" constant="8" id="0N0-ze-LQ2"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="centerX" secondItem="QuH-07-S9U" secondAttribute="centerX" id="3S5-JK-GTh"/>
                         <constraint firstItem="zPk-ru-pz6" firstAttribute="trailing" secondItem="Gc8-o3-kbM" secondAttribute="trailing" id="42i-6k-nQv"/>
                         <constraint firstItem="QuH-07-S9U" firstAttribute="top" secondItem="nTb-Lg-mqb" secondAttribute="top" constant="50" id="4rz-k1-wPG"/>
-                        <constraint firstAttribute="trailing" secondItem="aEt-TH-U0a" secondAttribute="trailing" constant="8" id="93s-ig-neK"/>
+                        <constraint firstAttribute="trailing" secondItem="G9D-jh-1Gf" secondAttribute="trailing" constant="8" id="H1O-Jy-E3B"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="trailing" secondItem="zPk-ru-pz6" secondAttribute="trailing" id="Ik2-73-IfF"/>
+                        <constraint firstItem="G9D-jh-1Gf" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" constant="8" id="Jf6-JL-xdp"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="centerX" secondItem="nTb-Lg-mqb" secondAttribute="centerX" id="L2B-V5-wiX"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" constant="60" id="Opm-Vx-kI7"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="centerY" secondItem="nTb-Lg-mqb" secondAttribute="centerY" id="Scu-o3-1NW"/>
-                        <constraint firstAttribute="bottom" secondItem="aEt-TH-U0a" secondAttribute="bottom" constant="8" id="bRC-vx-3Sn"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="top" secondItem="nTb-Lg-mqb" secondAttribute="top" id="dMo-b7-Rc1"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="leading" secondItem="zPk-ru-pz6" secondAttribute="leading" id="eC0-CI-aSD"/>
                         <constraint firstItem="QuH-07-S9U" firstAttribute="centerX" secondItem="6WJ-dA-Hge" secondAttribute="centerX" id="g9i-VJ-cwS"/>
                         <constraint firstItem="6WJ-dA-Hge" firstAttribute="top" secondItem="QuH-07-S9U" secondAttribute="bottom" constant="45" id="goU-0Q-WQd"/>
                         <constraint firstItem="Gc8-o3-kbM" firstAttribute="top" secondItem="zPk-ru-pz6" secondAttribute="bottom" constant="24" id="jFF-ed-cjZ"/>
-                        <constraint firstItem="aEt-TH-U0a" firstAttribute="top" secondItem="Gc8-o3-kbM" secondAttribute="bottom" constant="16" id="nNh-j7-UgK"/>
+                        <constraint firstItem="G9D-jh-1Gf" firstAttribute="top" secondItem="Gc8-o3-kbM" secondAttribute="bottom" constant="8" id="oLo-11-wt9"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="bottom" secondItem="nTb-Lg-mqb" secondAttribute="bottom" id="q6p-ea-MBd"/>
-                        <constraint firstItem="aEt-TH-U0a" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" constant="8" id="qhT-vL-lVi"/>
                         <constraint firstAttribute="trailing" secondItem="anX-5x-isN" secondAttribute="trailing" id="tIe-MB-H5v"/>
                         <constraint firstItem="anX-5x-isN" firstAttribute="leading" secondItem="nTb-Lg-mqb" secondAttribute="leading" id="yoV-XI-YuY"/>
                         <constraint firstItem="zPk-ru-pz6" firstAttribute="leading" secondItem="Gc8-o3-kbM" secondAttribute="leading" id="zrp-n4-r3c"/>

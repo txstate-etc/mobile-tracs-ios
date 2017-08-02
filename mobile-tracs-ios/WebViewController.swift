@@ -10,8 +10,8 @@ import UIKit
 import MessageUI
 import WebKit
 
-class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate, NotificationObserver {
-    @IBOutlet var wvContainer: UIView!
+class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate {
+    @IBOutlet weak var wvContainer: UIView!
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var back: UIBarButtonItem!
     @IBOutlet var forward: UIBarButtonItem!
@@ -27,24 +27,9 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     var bellnumber: Int?
     var wasLogout = false
     var urltoload:String?
-        
-    init? (urlToLoad: String, _ coder: NSCoder? = nil) {
-        self.urlToLoad = urlToLoad
-        
-        if let coder = coder {
-            super.init(coder: coder)
-        } else {
-            super.init(nibName: nil, bundle: nil)
-        }
-    }
-    
-    required convenience init(coder: NSCoder) {
-        self.init(coder: coder)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         Utils.showActivity(view)
         
         webview = Utils.getWebView()
@@ -53,13 +38,9 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         webview.navigationDelegate = self
         webview.uiDelegate = self
         
-        updateBell()
-        NotificationCenter.default.addObserver(self, selector: #selector(updateBell), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateBell), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-
         back = Utils.fontAwesomeBarButtonItem(icon: .chevronLeft, target: self, action: #selector(pressedBack(sender:)))
         forward = Utils.fontAwesomeBarButtonItem(icon: .chevronRight, target: self, action: #selector(pressedForward(sender:)))
-
+        
         var tb = toolBar.items!
         tb[1] = back;
         tb[3] = forward;
@@ -67,22 +48,20 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         
         refresh.action = #selector(pressedRefresh(sender:))
         interaction.action = #selector(pressedInteraction(sender:))
-
+        
         back.accessibilityLabel = "back"
         forward.accessibilityLabel = "forward"
         self.load()
+        Analytics.viewWillAppear("WebView")
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Analytics.viewWillAppear("WebView")
-        TRACSClient.waitForLogin { (loggedin) in
-            self.updateBell()
-        }
+
     }
     
     // MARK: - Helper functions
@@ -101,7 +80,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     func loginIfNecessary(completion:@escaping(Bool)->Void) {
         TRACSClient.loginIfNecessary { (loggedin) in
             DispatchQueue.main.async {
-                self.updateBell()
                 completion(loggedin)
             }
         }
@@ -151,12 +129,14 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         }.resume()
     }
     func pressedBell() {
-        let nvc = NotificationViewController(nibName: "NotificationViewController", bundle: nil)
-        navigationController?.pushViewController(nvc, animated: true)
+        let nvStoryBoard = UIStoryboard(name: "MainStory", bundle: nil)
+        let nvController = nvStoryBoard.instantiateViewController(withIdentifier: "Dashboard")
+        navigationController?.pushViewController(nvController, animated: true)
     }
     func pressedMenu() {
-        let mvc = MenuViewController()
-        navigationController?.pushViewController(mvc, animated: true)
+        let mvStoryBoard = UIStoryboard(name: "MainStory", bundle: nil)
+        let mvController = mvStoryBoard.instantiateViewController(withIdentifier: "MenuView")
+        navigationController?.pushViewController(mvController, animated: true)
     }    
 
     func updateButtons() {
@@ -174,26 +154,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
             }
         }
     }
-    
-    func updateBell() {
-        let newnumber = UIApplication.shared.applicationIconBadgeNumber
-        if bellnumber != newnumber {
-            let menubutton = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedMenu))
-            menubutton.accessibilityLabel = "Menu"
-            bellnumber = newnumber
-            let bellbutton = Utils.fontAwesomeBadgedBarButtonItem(color: (navigationController?.navigationBar.tintColor)!, badgecount:newnumber, icon: .bellO, target: self, action: #selector(pressedBell))
-            bellbutton.accessibilityLabel = String(bellnumber!)+" Notification"+(bellnumber != 1 ? "s" : "")
-            bellbutton.accessibilityHint = "open notifications screen"
-            navigationItem.rightBarButtonItems = [
-                menubutton,
-                bellbutton
-            ]
-        }
-        if let btn = self.navigationItem.rightBarButtonItems?[1].customView as? UIButton {
-            btn.isEnabled = !TRACSClient.userid.isEmpty
-        }
-    }
-    
+
     // MARK: - UIWebViewDelegate
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         updateButtons()
@@ -286,10 +247,5 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     // MARK: - MFMailComposeViewControllerDelegate
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    // MARK: - NotificationObserver
-    func incomingNotification(badgeCount: Int?, message: String?) {
-        updateBell()
     }
 }

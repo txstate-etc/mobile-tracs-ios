@@ -9,7 +9,7 @@
 import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SettingsCellDelegate {
-    @IBOutlet var tableView:UITableView!
+    @IBOutlet weak var tableView: UITableView!
     var sites:[Site] = []
     var settings: Settings?
     let objecttypes: [String] = [
@@ -21,8 +21,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         Utils.showActivity(view)
-        tableView.register(UINib(nibName:"SettingsCell", bundle: nil), forCellReuseIdentifier: "settings")
+        tableView.delegate = self
+        tableView.dataSource = self
         
         let dispatch_group = DispatchGroup()
         var tmpsites:[Site] = []
@@ -34,7 +39,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             }
             tmpsites.sort(by: { (a, b) -> Bool in
                 (!a.coursesite && b.coursesite) ||
-                a.title.trimmingCharacters(in:CharacterSet.whitespacesAndNewlines).lowercased() < b.title.trimmingCharacters(in:CharacterSet.whitespacesAndNewlines).lowercased()
+                    a.title.trimmingCharacters(in:CharacterSet.whitespacesAndNewlines).lowercased() < b.title.trimmingCharacters(in:CharacterSet.whitespacesAndNewlines).lowercased()
             })
             dispatch_group.leave()
         }
@@ -47,10 +52,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             self.tableView.reloadData()
             Utils.hideActivity()
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         Analytics.viewWillAppear("Settings")
     }
 

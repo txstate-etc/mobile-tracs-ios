@@ -10,7 +10,6 @@ import UIKit
 
 class CourseListController: UIViewController, UITableViewDelegate, UITableViewDataSource, CourseCellDelegate  {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var rightMenuButton: UIBarButtonItem!
     var coursesites:[Site] = []
     var projectsites:[Site] = []
     var unseenBySite: [String: Int] = [:]
@@ -49,7 +48,6 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         
-        Utils.configMenuButton(icon: FontAwesome.gear, size: 28, button: rightMenuButton)
         refresh.addTarget(self, action: #selector(load), for: .valueChanged)
         tableView?.addSubview(refresh)
     }

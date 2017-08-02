@@ -10,7 +10,7 @@ import UIKit
 import MessageUI
 import WebKit
 
-class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate, NotificationObserver {
+class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, MFMailComposeViewControllerDelegate, UIDocumentInteractionControllerDelegate {
     @IBOutlet weak var wvContainer: UIView!
     @IBOutlet var toolBar: UIToolbar!
     @IBOutlet var back: UIBarButtonItem!
@@ -30,15 +30,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         Utils.showActivity(view)
         
         webview = Utils.getWebView()
@@ -46,10 +37,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         Utils.constrainToContainer(view: webview, container: wvContainer)
         webview.navigationDelegate = self
         webview.uiDelegate = self
-        
-        updateBell()
-        NotificationCenter.default.addObserver(self, selector: #selector(updateBell), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateBell), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         
         back = Utils.fontAwesomeBarButtonItem(icon: .chevronLeft, target: self, action: #selector(pressedBack(sender:)))
         forward = Utils.fontAwesomeBarButtonItem(icon: .chevronRight, target: self, action: #selector(pressedForward(sender:)))
@@ -66,9 +53,15 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         forward.accessibilityLabel = "forward"
         self.load()
         Analytics.viewWillAppear("WebView")
-        TRACSClient.waitForLogin { (loggedin) in
-            self.updateBell()
-        }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
     }
     
     // MARK: - Helper functions
@@ -87,7 +80,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     func loginIfNecessary(completion:@escaping(Bool)->Void) {
         TRACSClient.loginIfNecessary { (loggedin) in
             DispatchQueue.main.async {
-                self.updateBell()
                 completion(loggedin)
             }
         }
@@ -162,26 +154,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
             }
         }
     }
-    
-    func updateBell() {
-        let newnumber = UIApplication.shared.applicationIconBadgeNumber
-        if bellnumber != newnumber {
-            let menubutton = Utils.fontAwesomeBarButtonItem(icon: .gear, target: self, action: #selector(pressedMenu))
-            menubutton.accessibilityLabel = "Menu"
-            bellnumber = newnumber
-            let bellbutton = Utils.fontAwesomeBadgedBarButtonItem(color: (navigationController?.navigationBar.tintColor)!, badgecount:newnumber, icon: .bellO, target: self, action: #selector(pressedBell))
-            bellbutton.accessibilityLabel = String(bellnumber!)+" Notification"+(bellnumber != 1 ? "s" : "")
-            bellbutton.accessibilityHint = "open notifications screen"
-            navigationItem.rightBarButtonItems = [
-                menubutton,
-                bellbutton
-            ]
-        }
-        if let btn = self.navigationItem.rightBarButtonItems?[1].customView as? UIButton {
-            btn.isEnabled = !TRACSClient.userid.isEmpty
-        }
-    }
-    
+
     // MARK: - UIWebViewDelegate
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         updateButtons()
@@ -274,10 +247,5 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
     // MARK: - MFMailComposeViewControllerDelegate
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    // MARK: - NotificationObserver
-    func incomingNotification(badgeCount: Int?, message: String?) {
-        updateBell()
     }
 }

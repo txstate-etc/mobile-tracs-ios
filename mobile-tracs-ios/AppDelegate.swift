@@ -53,6 +53,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //Set a custom user agent so that UIWebView and URLSession dataTasks will match
         UserDefaults.standard.register(defaults: ["UserAgent": Utils.userAgent])
 
+        
+        
+        
         return true
     }
 

@@ -24,7 +24,6 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName:"NotificationViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "sectionlabel")
-        //navigationItem.rightBarButtonItem = Utils.fontAwesomeTitledBarButtonItem(color: (navigationController?.navigationBar.tintColor)!, icon: .timesCircle, title: "Clear All", textStyle: .body, target: self, action: #selector(clearAllPressed))
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
@@ -32,7 +31,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadOnAppear()
@@ -40,7 +39,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return site == nil ? 1 : 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -275,6 +274,8 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                                     var shouldBeDisplayed = true
                                     if let site = self.site {
                                         shouldBeDisplayed = n.site_id == site.id
+                                    } else {
+                                        shouldBeDisplayed = n.object_type == Section.Announcements.rawValue
                                     }
                                     if (shouldBeDisplayed) {
                                         if let type = n.object_type {

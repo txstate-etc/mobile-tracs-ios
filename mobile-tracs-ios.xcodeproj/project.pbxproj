@@ -58,6 +58,7 @@
 		2DD215EE1EA037E000A6C30F /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DD215ED1EA037E000A6C30F /* libGoogleAnalyticsServices.a */; };
 		823F68F61F2A535B002C9B57 /* tracsb.logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 823F68F51F2A535B002C9B57 /* tracsb.logo.png */; };
 		82500CAB1EF97F80004AB219 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82500CAA1EF97F80004AB219 /* Config.plist */; };
+		8252EFAD1F32554B002050F7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8252EFAC1F32554B002050F7 /* CardView.swift */; };
 		825A8F871F321AC300B39F4F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825A8F861F321AC300B39F4F /* TabBarController.swift */; };
 		826501991F166848007DE87C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826501981F166848007DE87C /* LoginViewController.swift */; };
 		8265019B1F16685A007DE87C /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8265019A1F16685A007DE87C /* LoginView.xib */; };
@@ -137,6 +138,7 @@
 		2DD215ED1EA037E000A6C30F /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = "mobile-tracs-ios/GoogleAnalytics/libGoogleAnalyticsServices.a"; sourceTree = "<group>"; };
 		823F68F51F2A535B002C9B57 /* tracsb.logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tracsb.logo.png; sourceTree = "<group>"; };
 		82500CAA1EF97F80004AB219 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
+		8252EFAC1F32554B002050F7 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		825A8F861F321AC300B39F4F /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		826501981F166848007DE87C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8265019A1F16685A007DE87C /* LoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				098FCFCB1E9D23DF00D4C66D /* FontAwesome */,
 				09DDA8AB1E9D3143004220CF /* BadgeSwift.swift */,
 				09071A281ECDEB6A008560B5 /* NotificationObserver.swift */,
+				8252EFAC1F32554B002050F7 /* CardView.swift */,
 			);
 			name = UIWidgets;
 			sourceTree = "<group>";
@@ -263,8 +266,8 @@
 				8265019A1F16685A007DE87C /* LoginView.xib */,
 				2D7ABA9F1F1FF018009C86D4 /* CourseListController.swift */,
 				2D7ABAA31F2000C2009C86D4 /* CourseCell.swift */,
-				826887231F30CE95002D66CB /* MainStory.storyboard */,
 				825A8F861F321AC300B39F4F /* TabBarController.swift */,
+				826887231F30CE95002D66CB /* MainStory.storyboard */,
 			);
 			path = "mobile-tracs-ios";
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				826501991F166848007DE87C /* LoginViewController.swift in Sources */,
 				09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */,
 				82B314801F2918E000075569 /* HeaderSwitch.swift in Sources */,
+				8252EFAD1F32554B002050F7 /* CardView.swift in Sources */,
 				09071A291ECDEB6A008560B5 /* NotificationObserver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

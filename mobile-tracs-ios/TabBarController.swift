@@ -14,7 +14,7 @@ class TabBarController : UITabBarController {
             let title = barItem.title!
             switch title {
             case "Sites":
-                barItem.image = UIImage.fontAwesomeIcon(name: .university, textColor: Utils.darkred, size: CGSize(width:28, height: 28))
+                barItem.image = UIImage.fontAwesomeIcon(name: .university, textColor: Utils.darkred, size: CGSize(width: 28, height: 28))
                 break
             case "Announcements":
                 barItem.image = UIImage.fontAwesomeIcon(name: .bullhorn, textColor: Utils.darkred, size: CGSize(width:28, height: 28))

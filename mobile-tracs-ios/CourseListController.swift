@@ -44,6 +44,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         tableView?.delegate = self
         tableView?.dataSource = self
+        tableView.tableFooterView = UIView()
 
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
@@ -163,6 +164,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:CourseCell = tableView.dequeueReusableCell(withIdentifier: "courselist", for: indexPath) as! CourseCell
+        cell.contentView.backgroundColor = UIColor.clear
         cell.site = (indexPath.section == 0 ? coursesites : projectsites)[indexPath.row]
         cell.delegate = self
         return cell

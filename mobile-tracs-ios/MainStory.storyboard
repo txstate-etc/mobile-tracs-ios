@@ -72,11 +72,13 @@
                                                 </toolbar>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="DlZ-8g-tTa" firstAttribute="width" secondItem="UYZ-dp-gek" secondAttribute="width" id="4vA-qF-0hP"/>
                                                 <constraint firstAttribute="topMargin" secondItem="Wfa-Hd-ucg" secondAttribute="top" id="GiR-RZ-mSn"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Wfa-Hd-ucg" secondAttribute="trailing" id="Jkq-cX-EBB"/>
                                                 <constraint firstItem="DlZ-8g-tTa" firstAttribute="height" secondItem="UYZ-dp-gek" secondAttribute="height" multiplier="0.5" id="QJL-2s-CP8"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="DlZ-8g-tTa" secondAttribute="trailing" constant="-8" id="Wuz-EV-lXF"/>
                                                 <constraint firstItem="Wfa-Hd-ucg" firstAttribute="bottom" secondItem="DlZ-8g-tTa" secondAttribute="top" id="gIm-tQ-dB8"/>
+                                                <constraint firstItem="DlZ-8g-tTa" firstAttribute="leading" secondItem="UYZ-dp-gek" secondAttribute="leadingMargin" constant="-8" id="gc6-Uu-d5o"/>
                                                 <constraint firstItem="DlZ-8g-tTa" firstAttribute="leading" secondItem="UYZ-dp-gek" secondAttribute="leadingMargin" constant="-8" id="i2A-qA-AD3"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="DlZ-8g-tTa" secondAttribute="bottom" constant="-7.5" id="vbk-uA-nAr"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="Wfa-Hd-ucg" secondAttribute="leading" id="zY3-iE-eL6"/>

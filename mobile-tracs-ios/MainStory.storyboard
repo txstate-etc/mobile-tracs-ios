@@ -405,7 +405,7 @@
                             <constraint firstItem="nOD-tB-9fi" firstAttribute="leading" secondItem="X8P-gF-0Zx" secondAttribute="leading" id="V6o-9O-zXS"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Announcements" id="3sD-a8-obo"/>
+                    <navigationItem key="navigationItem" id="3sD-a8-obo"/>
                     <connections>
                         <outlet property="tableView" destination="nOD-tB-9fi" id="cTq-Cd-lKF"/>
                     </connections>

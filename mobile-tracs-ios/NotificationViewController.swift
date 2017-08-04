@@ -39,7 +39,16 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
-        return site == nil ? 1 : 2
+        var sections: Int
+        if let site = site {
+            sections = 0
+            if site.hasannouncements { sections += 1 }
+            if site.hasdiscussions { sections += 1 }
+        } else {
+            sections = 1
+        }
+
+        return sections
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -54,34 +63,40 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 45
+        var headerSize: CGFloat = 45
+        if site == nil {
+            headerSize = CGFloat.leastNonzeroMagnitude
+        }
+        return headerSize
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionlabel") as! NotificationViewHeader
-        NSLog("Header \(section) Position: \(header.headerSwitch.isOn ? "on" : "off")")
-        header.headerSwitch.site = site
     
-        header.headerSwitch.addTarget(self, action: #selector(toggleSetting(sender:)), for: UIControlEvents.touchUpInside)
-        switch section {
-        case 0:
-            header.headerLabel.text = "Announcements"
-            header.headerSwitch.notificationType = Section.Announcements.rawValue
-            break
-        case 1:
-            header.headerLabel.text = "Forums"
-            header.headerSwitch.notificationType = Section.Discussions.rawValue
-            break
-        default:
-            break
+        if let site = site {
+            let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionlabel") as! NotificationViewHeader
+            header.headerSwitch.site = site
+            
+            header.headerSwitch.addTarget(self, action: #selector(toggleSetting(sender:)), for: UIControlEvents.touchUpInside)
+            switch section {
+            case 0:
+                header.headerLabel.text = "Announcements"
+                header.headerSwitch.notificationType = Section.Announcements.rawValue
+                break
+            case 1:
+                header.headerLabel.text = "Forums"
+                header.headerSwitch.notificationType = Section.Discussions.rawValue
+                break
+            default:
+                break
+            }
+            
+            let setting = makeSettingForSwitch(toggleSwitch: header.headerSwitch)
+            let settings = IntegrationClient.getRegistration().settings
+            let settingIsDisabled = settings!.entryIsDisabled(SettingsEntry(dict: setting))
+            header.headerSwitch.isOn = !settingIsDisabled
+            return header
         }
-        
-        let setting = makeSettingForSwitch(toggleSwitch: header.headerSwitch)
-        let settings = IntegrationClient.getRegistration().settings
-        let settingIsDisabled = settings!.entryIsDisabled(SettingsEntry(dict: setting))
-        header.headerSwitch.isOn = !settingIsDisabled
-
-        return header
+        return nil
     }
 
     func toggleSetting(sender: HeaderSwitch) {

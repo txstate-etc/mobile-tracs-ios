@@ -12,8 +12,13 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     var coursesites:[Site] = []
     var projectsites:[Site] = []
+    var workspace: Site = Site(dict: [:])
     var unseenBySite: [String: Int] = [:]
     var refresh = UIRefreshControl()
+    
+    enum Sections: Int {
+        case workspace, courses, projects
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +32,12 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
                 self.present(lvc, animated: true, completion: nil)
             } else {
+                TRACSClient.fetchSite(id: "~\(TRACSClient.useruuid)") {
+                    (workspaceSite) in
+                    if let workspaceSite = workspaceSite {
+                        self.workspace = workspaceSite
+                    }
+                }
                 IntegrationClient.registerIfNecessary()
                 IntegrationClient.getDispatchNotifications {
                     (notifications) in
@@ -147,15 +158,47 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        var sections: Int = 1
+        if coursesites.count > 0 { sections += 1 }
+        if projectsites.count > 0 { sections += 1 }
+        return sections
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? coursesites.count : projectsites.count
+        let sectionName: Sections? = Sections(rawValue: section)
+        var rowCount: Int = 0
+        if let sectionName = sectionName {
+            switch sectionName {
+            case .workspace:
+                rowCount = 1
+                break
+            case .courses:
+                rowCount = coursesites.count
+                break
+            case .projects:
+                rowCount = projectsites.count
+                break
+            }
+        }
+        return rowCount
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Course Sites" : "Project Sites"
+        let sectionName: Sections? = Sections(rawValue: section)
+        var name: String = ""
+        if let sectionName = sectionName {
+            switch sectionName {
+            case .courses:
+                name = "Course Sites"
+                break
+            case .projects:
+                name = "Project Sites"
+                break
+            default:
+                break
+            }
+        }
+        return name
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -165,7 +208,20 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:CourseCell = tableView.dequeueReusableCell(withIdentifier: "courselist", for: indexPath) as! CourseCell
         cell.contentView.backgroundColor = UIColor.clear
-        cell.site = (indexPath.section == 0 ? coursesites : projectsites)[indexPath.row]
+        let sectionName: Sections? = Sections(rawValue: indexPath.section)
+        if let sectionName = sectionName {
+            switch sectionName {
+            case .workspace:
+                cell.site = workspace
+                break
+            case .courses:
+                cell.site = coursesites[indexPath.row]
+                break
+            case .projects:
+                cell.site = projectsites[indexPath.row]
+                break
+            }
+        }
         cell.delegate = self
         return cell
     }
@@ -183,6 +239,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     func discussionPressed(site: Site) {
         loadWebViewWithUrl(url: site.discussionurl)
     }
+    
     func dashboardPressed(site: Site) {
         let dbStoryBoard = UIStoryboard(name: "MainStory", bundle: nil)
         let dbController = dbStoryBoard.instantiateViewController(withIdentifier: "Dashboard")

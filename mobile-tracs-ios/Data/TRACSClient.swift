@@ -27,6 +27,7 @@ class TRACSClient {
     private static var tracslockqueue = DispatchQueue(label: "tracslock")
     static var sitecache = Cache(cacheName: "sitecache")
     static var userid = ""
+    static var useruuid = ""
     
     // MARK: - Fetch data from TRACS
     static func waitForLogin(completion:@escaping(Bool)->Void) {
@@ -170,7 +171,7 @@ class TRACSClient {
                             }
                         } else {
                             if loginerror {
-                                userid = ""
+                                clearUser()
                                 Utils.removeCredentials()
                             }
                             tracslock.leave()
@@ -186,22 +187,25 @@ class TRACSClient {
         }
     }
     
-    private static func fetchCurrentUserId(completion:@escaping (String?)->Void) {
+    private static func fetchCurrentUserId(completion:@escaping (String?, String?)->Void) {
         let sessionurl = baseurl+"/session/current.json"
         Utils.fetchJSONObject(url: sessionurl) { (parsed) in
-            if parsed == nil { return completion(nil) }
-            return completion(parsed!["userEid"] as? String ?? "")
+            if parsed == nil { return completion(nil, nil) }
+            let userEid = parsed!["userEid"] as? String
+            let userId = parsed!["userId"] as? String
+            return completion(userEid ?? "", userId ?? "")
         }
     }
     
     private static func checkForNewUser(completion:@escaping()->Void) {
-        TRACSClient.fetchCurrentUserId { (uid) in
-            if let uid = uid {
+        TRACSClient.fetchCurrentUserId { (uid, uuid) in
+            if let uid = uid, let uuid = uuid {
                 if uid.isEmpty {
                     // we got a good response but an empty userid, we are clearly logged out
-                    userid = ""
+                    clearUser()
                 } else if uid != userid {
                     userid = uid
+                    useruuid = uuid
                 }
             }
             completion()
@@ -229,5 +233,10 @@ class TRACSClient {
             }
         }
         dp.wait()
+    }
+    
+    private static func clearUser() {
+        userid = ""
+        useruuid = ""
     }
 }

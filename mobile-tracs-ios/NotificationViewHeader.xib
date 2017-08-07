@@ -16,13 +16,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="izG-I6-eI5">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                     <subviews>
                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vWX-tJ-FEt" customClass="HeaderSwitch" customModule="mobile_tracs_ios" customModuleProvider="target">
-                            <rect key="frame" x="318" y="318" width="51" height="31"/>
+                            <rect key="frame" x="318" y="7" width="51" height="31"/>
                         </switch>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Announcements" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4uh-Yc-f6J">
-                            <rect key="frame" x="8" y="323" width="125" height="21"/>
+                            <rect key="frame" x="8" y="12" width="125" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -32,6 +32,7 @@
                     <constraints>
                         <constraint firstItem="4uh-Yc-f6J" firstAttribute="leading" secondItem="izG-I6-eI5" secondAttribute="leading" constant="8" id="M4a-lu-3XU"/>
                         <constraint firstItem="4uh-Yc-f6J" firstAttribute="centerY" secondItem="vWX-tJ-FEt" secondAttribute="centerY" id="eNx-sq-kDh"/>
+                        <constraint firstAttribute="height" constant="45" id="iuE-ag-f2G"/>
                         <constraint firstAttribute="trailing" secondItem="vWX-tJ-FEt" secondAttribute="trailing" constant="8" id="mw0-wy-FU4"/>
                         <constraint firstItem="4uh-Yc-f6J" firstAttribute="centerY" secondItem="izG-I6-eI5" secondAttribute="centerY" id="sVu-wp-T33"/>
                     </constraints>
@@ -40,7 +41,6 @@
             <constraints>
                 <constraint firstItem="izG-I6-eI5" firstAttribute="leading" secondItem="uN5-av-jEi" secondAttribute="leading" id="0mE-94-28B"/>
                 <constraint firstAttribute="trailing" secondItem="izG-I6-eI5" secondAttribute="trailing" id="8RZ-cv-xRh"/>
-                <constraint firstAttribute="bottom" secondItem="izG-I6-eI5" secondAttribute="bottom" id="F83-df-kgb"/>
                 <constraint firstItem="izG-I6-eI5" firstAttribute="top" secondItem="uN5-av-jEi" secondAttribute="top" id="o3y-Dp-L1L"/>
             </constraints>
             <connections>
@@ -48,7 +48,7 @@
                 <outlet property="headerSwitch" destination="vWX-tJ-FEt" id="HOh-Dm-f2z"/>
                 <outlet property="viewContainer" destination="izG-I6-eI5" id="zhx-Ud-BQA"/>
             </connections>
-            <point key="canvasLocation" x="-781.5" y="-91.5"/>
+            <point key="canvasLocation" x="-778" y="-34"/>
         </view>
     </objects>
 </document>

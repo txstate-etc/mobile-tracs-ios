@@ -12,4 +12,15 @@ class NotificationViewHeader: UITableViewHeaderFooterView {
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var headerSwitch: HeaderSwitch!
     @IBOutlet weak var viewContainer: UIView!
+
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        headerLabel = UILabel()
+        viewContainer = UIView()
+        headerSwitch = HeaderSwitch()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
 }

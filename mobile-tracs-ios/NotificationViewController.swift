@@ -16,6 +16,8 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     var site:Site?
     var announcementCount: Int = 0
     var discussionCount: Int = 0
+    var announcementHeader: NotificationViewHeader?
+    var discussionHeader: NotificationViewHeader?
     enum Section: String {
         case Announcements = "announcement"
         case Discussions = "discussion"
@@ -26,15 +28,16 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName:"NotificationViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "sectionlabel")
-        if site == nil {
+        if let site = site {
+            self.title = "Notifications"
+            headerLabel.text = site.title
+        } else {
             self.title = "Announcements"
             var rect = headerView.frame
             rect.size.height = 0
             headerView.frame = rect
             headerView.removeFromSuperview()
-        } else {
-            self.title = "Notifications"
-            headerLabel.text = site?.title
+
         }
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
@@ -84,31 +87,48 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     
-        if let site = site {
-            let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionlabel") as! NotificationViewHeader
-            header.headerSwitch.site = site
-            
-            header.headerSwitch.addTarget(self, action: #selector(toggleSetting(sender:)), for: UIControlEvents.touchUpInside)
+        if site != nil {
+            let settings = IntegrationClient.getRegistration().settings
             switch section {
             case 0:
-                header.headerLabel.text = "Announcements"
-                header.headerSwitch.notificationType = Section.Announcements.rawValue
-                break
+                if announcementHeader == nil {
+                    announcementHeader = initialHeaderSetup(type: Section.Announcements)
+                }
+                let setting = makeSettingForSwitch(toggleSwitch: (announcementHeader?.headerSwitch)!)
+                let settingIsDisabled = settings!.entryIsDisabled(SettingsEntry(dict: setting))
+                announcementHeader?.headerSwitch.isOn = !settingIsDisabled
+                return announcementHeader
             case 1:
-                header.headerLabel.text = "Forums"
-                header.headerSwitch.notificationType = Section.Discussions.rawValue
-                break
+                if discussionHeader == nil {
+                    discussionHeader = initialHeaderSetup(type: Section.Discussions)
+                }
+                let setting = makeSettingForSwitch(toggleSwitch: (discussionHeader?.headerSwitch)!)
+                let settingIsDisabled = settings!.entryIsDisabled(SettingsEntry(dict: setting))
+                discussionHeader?.headerSwitch.isOn = !settingIsDisabled
+                return discussionHeader
             default:
                 break
             }
-            
-            let setting = makeSettingForSwitch(toggleSwitch: header.headerSwitch)
-            let settings = IntegrationClient.getRegistration().settings
-            let settingIsDisabled = settings!.entryIsDisabled(SettingsEntry(dict: setting))
-            header.headerSwitch.isOn = !settingIsDisabled
-            return header
         }
         return nil
+    }
+    
+    func initialHeaderSetup(type: Section) -> NotificationViewHeader {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionlabel") as? NotificationViewHeader
+        header?.headerSwitch.site = site
+        header?.headerSwitch.addTarget(self, action: #selector(toggleSetting(sender:)), for: UIControlEvents.touchUpInside)
+        
+        switch type {
+        case .Announcements:
+            header?.headerLabel.text = "Announcements"
+            header?.headerSwitch.notificationType = Section.Announcements.rawValue
+            break
+        case .Discussions:
+            header?.headerLabel.text = "Forums"
+            header?.headerSwitch.notificationType = Section.Discussions.rawValue
+            break
+        }
+        return header!
     }
 
     func toggleSetting(sender: HeaderSwitch) {

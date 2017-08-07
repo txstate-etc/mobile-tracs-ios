@@ -17,7 +17,7 @@
             <objects>
                 <navigationController storyboardIdentifier="SitesNavigation" id="JTq-CF-JZy" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Sites" id="Jn3-s1-fvO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zfN-ly-dHh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="zfN-ly-dHh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.1764705882352941" green="0.035294117647058823" blue="0.054901960784313725" alpha="1" colorSpace="calibratedRGB"/>
@@ -269,11 +269,14 @@
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eFX-Nk-gcm">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="MGj-Ne-JQg"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="TNI-N2-mHq"/>
-                                    <barButtonItem systemItem="rewind" id="sgl-S0-ptr"/>
+                                    <barButtonItem title="Back" id="sgl-S0-ptr"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="RB0-N4-eeC"/>
-                                    <barButtonItem systemItem="fastForward" id="MM9-yo-7gn"/>
+                                    <barButtonItem title="Forward" id="MM9-yo-7gn"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="JMR-1n-q9o"/>
                                     <barButtonItem systemItem="refresh" id="nYQ-16-mLX"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="cIM-Fu-Ubk"/>
@@ -435,7 +438,7 @@
             <objects>
                 <navigationController storyboardIdentifier="SettingsNavigation" id="4mi-en-hYm" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" id="NMd-Wr-lJf"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="OS0-ee-cBN">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="OS0-ee-cBN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.1764705882" green="0.035294117649999998" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -454,7 +457,7 @@
             <objects>
                 <navigationController storyboardIdentifier="AnnouncementNavigation" id="Hg7-G4-QMp" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Announcements" id="lDB-Xc-eSr"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="M4m-ne-Laz">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="M4m-ne-Laz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.1764705882" green="0.035294117649999998" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>

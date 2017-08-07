@@ -37,9 +37,14 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         Utils.constrainToContainer(view: webview, container: wvContainer)
         webview.navigationDelegate = self
         webview.uiDelegate = self
-        
-        back = Utils.fontAwesomeBarButtonItem(icon: .chevronLeft, target: self, action: #selector(pressedBack(sender:)))
-        forward = Utils.fontAwesomeBarButtonItem(icon: .chevronRight, target: self, action: #selector(pressedForward(sender:)))
+        toolBar.isHidden = true
+        let iconSize: CGSize = CGSize(width: 28, height: 28)
+        let backImage = UIImage.fontAwesomeIcon(name: .chevronLeft, textColor: UIColor.blue, size: iconSize)
+        let forwardImage = UIImage.fontAwesomeIcon(name: .chevronRight, textColor: UIColor.blue, size: iconSize)
+
+        back = UIBarButtonItem(image: backImage, style: UIBarButtonItemStyle.plain, target: self, action: #selector(pressedBack(sender:)))
+
+        forward = UIBarButtonItem(image: forwardImage, style: UIBarButtonItemStyle.plain, target: self, action: #selector(pressedForward(sender:)))
         
         var tb = toolBar.items!
         tb[1] = back;
@@ -147,6 +152,12 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         toolBar.setItems(tb, animated: false)
 
         interaction.isEnabled = false
+        
+        let shouldDisplayNavigation = forward.isEnabled || back.isEnabled || interaction.isEnabled
+        
+        if shouldDisplayNavigation {
+            toolBar.isHidden = false
+        }
         
         if let ext = webview.url?.pathExtension.lowercased() {
             if !ext.isEmpty && ext != "html" {

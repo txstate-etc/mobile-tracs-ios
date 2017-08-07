@@ -10,6 +10,8 @@ import UIKit
 
 class NotificationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationObserver {
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var headerView: UIView!
+    @IBOutlet var headerLabel: UILabel!
     var notifications: [Notification] = []
     var site:Site?
     var announcementCount: Int = 0
@@ -26,8 +28,13 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         tableView.register(UINib(nibName:"NotificationViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "sectionlabel")
         if site == nil {
             self.title = "Announcements"
+            var rect = headerView.frame
+            rect.size.height = 0
+            headerView.frame = rect
+            headerView.removeFromSuperview()
         } else {
             self.title = "Notifications"
+            headerLabel.text = site?.title
         }
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)

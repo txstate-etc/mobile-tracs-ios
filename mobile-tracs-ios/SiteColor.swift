@@ -20,6 +20,4 @@ class SiteColor {
     
     static let workspacePrimary = UIColor(red: 232/d, green: 227/d, blue: 219/d, alpha: 1)
     static let workspaceText = UIColor(red: 80/d, green: 18/d, blue: 20/d, alpha: 1)
-    
-    
 }

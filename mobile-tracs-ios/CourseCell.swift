@@ -16,10 +16,11 @@ protocol CourseCellDelegate:class {
 class CourseCell: UITableViewCell {
     @IBOutlet var titleLabel:UILabel!
     @IBOutlet var toolbar:UIToolbar!
+    @IBOutlet var cellContent: UIView!
     weak var delegate:CourseCellDelegate?
     var site:Site? {
         didSet {
-            updateUI()
+            updateUI(site: site)
         }
     }
     
@@ -42,15 +43,48 @@ class CourseCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func updateUI() {
+    func updateUI(site: Site?) {
+        if site == nil {
+            return;
+        }
+        if site?.title == "My Workspace" {
+            //Set up workspace here
+        }
         titleLabel.text = site?.title
-        if site?.hasdiscussions ?? false {
-            toolbar.items?[1] = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.darkgray, badgecount: 0, icon: Discussion.icon, target: self, action: #selector(discussionPressed))
+        let isCourse = isCourseSite(site: site)
+        let primaryColor = isCourse ? SiteColor.coursePrimary : SiteColor.projectPrimary
+        let secondaryColor = isCourse ? SiteColor.courseSecondary : SiteColor.projectSecondary
+        let textColor = isCourse ? SiteColor.courseText : SiteColor.projectText
+        
+        setupCellContent(background: primaryColor, contentView: cellContent)
+        setupCellIcons(site: site!, iconColor: secondaryColor, toolbar: toolbar)
+        setupCellLabel(text: textColor, background: primaryColor, label: titleLabel)
+    }
+    
+    func setupCellContent(background: UIColor, contentView: UIView) {
+        contentView.backgroundColor = background
+    }
+    
+    func setupCellIcons(site: Site, iconColor: UIColor, toolbar: UIToolbar) {
+        if site.hasdiscussions {
+            toolbar.items?[1] = Utils.fontAwesomeBadgedBarButtonItem(color: iconColor, badgecount: 0, icon: Discussion.icon, target: self, action: #selector(discussionPressed))
         } else {
             toolbar.items?[1] = Utils.fontAwesomeBadgedBarButtonItem(color: UIColor(white: 1, alpha: 0), badgecount: 0, icon: Discussion.icon, target: self, action: #selector(discussionPressed))
             (toolbar.items?[1].customView as! UIButton).isUserInteractionEnabled = false
         }
-        toolbar.items?[3] = Utils.fontAwesomeBadgedBarButtonItem(color: Utils.darkgray, badgecount: (site?.unseenCount)!, icon: .dashboard, target: self, action: #selector(dashboardPressed))
+        toolbar.items?[3] = Utils.fontAwesomeBadgedBarButtonItem(color: iconColor, badgecount: (site.unseenCount), icon: .dashboard, target: self, action: #selector(dashboardPressed))
+    }
+    
+    func setupCellLabel(text: UIColor, background: UIColor, label: UILabel) {
+        label.backgroundColor = background
+        label.textColor = text
+    }
+    
+    func isCourseSite(site: Site?) -> Bool {
+        if let site = site {
+            return site.coursesite
+        }
+        return false
     }
     
     func discussionPressed() {

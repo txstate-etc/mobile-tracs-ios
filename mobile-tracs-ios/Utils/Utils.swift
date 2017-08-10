@@ -11,12 +11,13 @@ import LocalAuthentication
 import WebKit
 
 class Utils {
-    static let red = UIColor(red: 80/255.0, green: 18/255.0, blue: 20/255.0, alpha: 1)
-    static let darkred = UIColor(red: 45/255.0, green: 9/255.0, blue: 14/255.0, alpha: 1)
-    static let gold = UIColor(red: 140/255.0, green: 115/255.0, blue: 74/255.0, alpha: 1)
-    static let darkblue = UIColor(red: 40/255.0, green: 40/255.0, blue: 59/255.0, alpha: 1)
-    static let gray = UIColor(red: 238/255.0, green: 238/255.0, blue: 238/255.0, alpha: 1)
-    static let darkgray = UIColor(red: 158/255.0, green: 158/255.0, blue: 158/255.0, alpha: 1)
+    static let d: CGFloat = 255.0
+    static let red = UIColor(red: 80/d, green: 18/d, blue: 20/d, alpha: 1)
+    static let darkred = UIColor(red: 45/d, green: 9/d, blue: 14/d, alpha: 1)
+    static let gold = UIColor(red: 140/d, green: 115/d, blue: 74/d, alpha: 1)
+    static let darkblue = UIColor(red: 40/d, green: 40/d, blue: 59/d, alpha: 1)
+    static let gray = UIColor(red: 238/d, green: 238/d, blue: 238/d, alpha: 1)
+    static let darkgray = UIColor(red: 158/d, green: 158/d, blue: 158/d, alpha: 1)
     static let nearblack = UIColor(white: 0.15, alpha: 1)
     static let colordisabled = UIColor(white: 0.8, alpha: 0.2)
     static let urlsession = URLSession.shared

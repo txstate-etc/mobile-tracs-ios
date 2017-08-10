@@ -53,8 +53,6 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             case .Dashboard:
                 self.title = "Notifications"
                 break
-            default:
-                break
             }
         } else {
             self.title = "Announcements"

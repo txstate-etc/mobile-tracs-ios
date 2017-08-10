@@ -15,6 +15,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     var workspace: Site = Site(dict: [:])
     var unseenBySite: [String: Int] = [:]
     var refresh = UIRefreshControl()
+    var workspaceCell: CourseCell?
     
     enum Sections: Int {
         case workspace, courses, projects
@@ -70,6 +71,10 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
 
+    override func viewWillLayoutSubviews() {
+
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -198,36 +203,48 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIFont.preferredFont(forTextStyle: .body).pointSize * 2.8 + 50.0
+        var height: CGFloat = CGFloat(UIFont.preferredFont(forTextStyle: .body).pointSize * 5.0 + 50.0)
+        if indexPath.section == 0 {
+            height = CGFloat(UIFont.preferredFont(forTextStyle: .body).pointSize * 1.5 + 30.0)
+        }
+        return height
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:CourseCell = tableView.dequeueReusableCell(withIdentifier: "courselist", for: indexPath) as! CourseCell
-        cell.contentView.backgroundColor = UIColor.clear
+    
         let sectionName: Sections? = Sections(rawValue: indexPath.section)
+        var cell: UITableViewCell?
         if let sectionName = sectionName {
+            let cellType: String = sectionName == .workspace ? "workspace" : "courselist"
+            cell = tableView.dequeueReusableCell(withIdentifier: cellType)!
             switch sectionName {
             case .workspace:
-                cell.site = workspace
+                (cell as! WorkspaceCell).site = workspace
                 break
             case .courses:
-                cell.site = coursesites[indexPath.row]
+                (cell as! CourseCell).site = coursesites[indexPath.row]
+                (cell as! CourseCell).delegate = self
                 break
             case .projects:
-                cell.site = projectsites[indexPath.row]
+                (cell as! CourseCell).site = projectsites[indexPath.row]
+                (cell as! CourseCell).delegate = self
                 break
             }
         }
-        cell.delegate = self
-        return cell
+        return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! CourseCell
-        
-        let siteUrl = "\(TRACSClient.tracsurl)/portal/pda/\(cell.site?.id ?? "")"
+        var cell: UITableViewCell
+        var siteUrl: String
+        if indexPath.section == 0 {
+            cell = tableView.cellForRow(at: indexPath)!
+            siteUrl = "\(TRACSClient.tracsurl)/portal/pda/\((cell as! WorkspaceCell).site?.id ?? "")"
+        } else {
+            cell = tableView.cellForRow(at: indexPath)!
+            siteUrl = "\(TRACSClient.tracsurl)/portal/pda/\((cell as! CourseCell).site?.id ?? "")"
+        }
         loadWebViewWithUrl(url: siteUrl)
-        
     }
     
     // MARK: - CourseCellDelegate

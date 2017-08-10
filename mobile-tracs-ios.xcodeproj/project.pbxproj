@@ -60,6 +60,8 @@
 		82500CAB1EF97F80004AB219 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82500CAA1EF97F80004AB219 /* Config.plist */; };
 		8252EFAD1F32554B002050F7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8252EFAC1F32554B002050F7 /* CardView.swift */; };
 		825A8F871F321AC300B39F4F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825A8F861F321AC300B39F4F /* TabBarController.swift */; };
+		826241B21F3CCD5E00E51A69 /* SiteColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826241B11F3CCD5E00E51A69 /* SiteColor.swift */; };
+		826241B41F3D068000E51A69 /* WorkspaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826241B31F3D068000E51A69 /* WorkspaceCell.swift */; };
 		826501991F166848007DE87C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826501981F166848007DE87C /* LoginViewController.swift */; };
 		8265019B1F16685A007DE87C /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8265019A1F16685A007DE87C /* LoginView.xib */; };
 		8265019D1F167B7F007DE87C /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8265019C1F167B7F007DE87C /* LoginTextField.swift */; };
@@ -140,6 +142,8 @@
 		82500CAA1EF97F80004AB219 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		8252EFAC1F32554B002050F7 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		825A8F861F321AC300B39F4F /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		826241B11F3CCD5E00E51A69 /* SiteColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteColor.swift; sourceTree = "<group>"; };
+		826241B31F3D068000E51A69 /* WorkspaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceCell.swift; sourceTree = "<group>"; };
 		826501981F166848007DE87C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8265019A1F16685A007DE87C /* LoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
 		8265019C1F167B7F007DE87C /* LoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginTextField.swift; path = UIWidgets/LoginTextField.swift; sourceTree = "<group>"; };
@@ -178,6 +182,7 @@
 				09DDA8B21EA084F8004220CF /* Secrets.swift */,
 				09071A1E1EADB764008560B5 /* Extensions.swift */,
 				2D7ABAA71F267FAF009C86D4 /* CookieMonster.swift */,
+				826241B11F3CCD5E00E51A69 /* SiteColor.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -266,6 +271,7 @@
 				8265019A1F16685A007DE87C /* LoginView.xib */,
 				2D7ABA9F1F1FF018009C86D4 /* CourseListController.swift */,
 				2D7ABAA31F2000C2009C86D4 /* CourseCell.swift */,
+				826241B31F3D068000E51A69 /* WorkspaceCell.swift */,
 				825A8F861F321AC300B39F4F /* TabBarController.swift */,
 				826887231F30CE95002D66CB /* MainStory.storyboard */,
 			);
@@ -448,12 +454,14 @@
 				099BC2431E882AED009EEF0D /* SettingsViewController.swift in Sources */,
 				2D7ABAA51F2000C2009C86D4 /* CourseCell.swift in Sources */,
 				099C81711E7CBFDD00529530 /* WebViewController.swift in Sources */,
+				826241B21F3CCD5E00E51A69 /* SiteColor.swift in Sources */,
 				09F10E091E7F25FF00303A96 /* Notification.swift in Sources */,
 				092700D21E884DB00089821D /* SettingsEntry.swift in Sources */,
 				2D7ABAA11F1FF018009C86D4 /* CourseListController.swift in Sources */,
 				09B527FD1E7CBD6500BACF81 /* AppDelegate.swift in Sources */,
 				098FCFD31E9D23DF00D4C66D /* FontAwesomeView.swift in Sources */,
 				092700CE1E884D720089821D /* JSONSerialize.swift in Sources */,
+				826241B41F3D068000E51A69 /* WorkspaceCell.swift in Sources */,
 				09DDA8AC1E9D3143004220CF /* BadgeSwift.swift in Sources */,
 				2D88E2841ECB9197000DB020 /* IntroViewController.swift in Sources */,
 				2D7ABAA81F267FAF009C86D4 /* CookieMonster.swift in Sources */,
@@ -582,7 +590,7 @@
 				CODE_SIGN_ENTITLEMENTS = "mobile-tracs-ios/mobile-tracs-ios.entitlements";
 				DEVELOPMENT_TEAM = KV5755TZAS;
 				INFOPLIST_FILE = "mobile-tracs-ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -602,7 +610,7 @@
 				CODE_SIGN_ENTITLEMENTS = "mobile-tracs-ios/mobile-tracs-ios.entitlements";
 				DEVELOPMENT_TEAM = KV5755TZAS;
 				INFOPLIST_FILE = "mobile-tracs-ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

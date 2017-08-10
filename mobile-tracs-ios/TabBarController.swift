@@ -20,7 +20,7 @@ class TabBarController : UITabBarController {
                 barItem.image = UIImage.fontAwesomeIcon(name: .bullhorn, textColor: Utils.darkred, size: CGSize(width:28, height: 28))
                 break
             case "Settings":
-                barItem.image = UIImage.fontAwesomeIcon(name: .cogs, textColor: Utils.darkred, size: CGSize(width:28, height: 28))
+                barItem.image = UIImage.fontAwesomeIcon(name: .cog, textColor: Utils.darkred, size: CGSize(width:28, height: 28))
                 break
             default:
                 break

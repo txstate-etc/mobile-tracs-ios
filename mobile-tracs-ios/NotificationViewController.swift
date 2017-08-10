@@ -22,23 +22,18 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         case Announcements = "announcement"
         case Discussions = "discussion"
     }
-
+    enum Style: String {
+        case Dashboard = "dashboard"
+        case Discussions = "dicussions"
+    }
+    var viewStyle: Style?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName:"NotificationViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "sectionlabel")
-        if let site = site {
-            self.title = "Notifications"
-            headerLabel.text = site.title
-        } else {
-            self.title = "Announcements"
-            var rect = headerView.frame
-            rect.size.height = 0
-            headerView.frame = rect
-            headerView.removeFromSuperview()
 
-        }
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
@@ -49,14 +44,41 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if let viewStyle = viewStyle {
+            switch viewStyle {
+            case .Discussions:
+                self.title = "Forums"
+                removeHeaderView(headerView: headerView)
+                break
+            case .Dashboard:
+                self.title = "Notifications"
+                break
+            default:
+                break
+            }
+        } else {
+            self.title = "Announcements"
+            removeHeaderView(headerView: headerView)
+        }
+        headerLabel.text = site?.title
         loadOnAppear()
+    }
+    
+    func removeHeaderView(headerView: UIView) {
+        var rect = headerView.frame
+        rect.size.height = 0
+        headerView.frame = rect
+        headerView.removeFromSuperview()
     }
     
     // MARK: - UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         var sections: Int
-        if let site = site {
+        if let site = site, let viewStyle = viewStyle {
             sections = 0
+            if viewStyle == Style.Discussions {
+                return 1
+            }
             if site.hasannouncements { sections += 1 }
             if site.hasdiscussions { sections += 1 }
         } else {
@@ -69,7 +91,18 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return announcementCount > 0 ? announcementCount : 1
+            var sectionCount: Int
+            if let viewStyle = viewStyle {
+                switch viewStyle {
+                case .Discussions: //Section 0 is discussions
+                    sectionCount = discussionCount > 0 ? discussionCount : 1
+                case .Dashboard: //Section 0 is announcements
+                    sectionCount = announcementCount > 0 ? announcementCount : 1
+                }
+            } else {
+                sectionCount = announcementCount > 0 ? announcementCount : 1
+            }
+            return sectionCount
         case 1:
             return discussionCount > 0 ? discussionCount : 1
         default:
@@ -82,12 +115,16 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         if site == nil {
             headerSize = CGFloat.leastNonzeroMagnitude
         }
+        if let viewStyle = viewStyle, viewStyle == Style.Discussions {
+            headerSize = CGFloat.leastNonzeroMagnitude
+        }
         return headerSize
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     
-        if site != nil {
+        if site != nil, let viewStyle = viewStyle {
+            if viewStyle == Style.Discussions { return nil }
             let settings = IntegrationClient.getRegistration().settings
             switch section {
             case 0:
@@ -165,11 +202,30 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         var cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath) as! NotificationCell
         switch indexPath.section {
         case 0:
-            if announcementCount > 0 {
-                let notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
-                cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
+            if let viewStyle = viewStyle {
+                if viewStyle == Style.Discussions {
+                    if discussionCount > 0 {
+                        let notify = getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
+                        cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
+                    } else {
+                        cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
+                    }
+                }
+                if viewStyle == Style.Dashboard {
+                    if announcementCount > 0 {
+                        let notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
+                        cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
+                    } else {
+                        cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
+                    }
+                }
             } else {
-                cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
+                if announcementCount > 0 {
+                    let notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
+                    cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
+                } else {
+                    cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
+                }
             }
         case 1:
             if discussionCount > 0 {
@@ -200,8 +256,16 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             var titleLabel: String = ""
             switch indexPath.section {
             case 0:
-                if announcementCount == 0 {
-                    titleLabel = "No new announcements"
+                if let viewStyle = viewStyle {
+                    if viewStyle == Style.Discussions{
+                        if discussionCount == 0 {
+                            titleLabel = "No new forum posts"
+                        }
+                    } else {
+                        if announcementCount == 0 {
+                            titleLabel = "No new announcements"
+                        }
+                    }
                 }
             case 1:
                 if discussionCount == 0 {

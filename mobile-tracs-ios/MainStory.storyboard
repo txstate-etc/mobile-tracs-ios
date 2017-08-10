@@ -186,7 +186,7 @@
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pme-9k-Qcg" id="4bh-gb-etW">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kWS-lz-ANt">
@@ -246,9 +246,9 @@
                     <connections>
                         <outlet property="tabBar" destination="nWg-Bg-dez" id="ALG-cg-USm"/>
                         <outlet property="tracsTabBar" destination="nWg-Bg-dez" id="jiZ-s4-fhY"/>
+                        <segue destination="Hg7-G4-QMp" kind="relationship" relationship="viewControllers" id="xIz-oI-bLd"/>
                         <segue destination="JTq-CF-JZy" kind="relationship" relationship="viewControllers" id="ip9-Jn-5db"/>
                         <segue destination="4mi-en-hYm" kind="relationship" relationship="viewControllers" id="XqB-HW-6AM"/>
-                        <segue destination="Hg7-G4-QMp" kind="relationship" relationship="viewControllers" id="xIz-oI-bLd"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bBh-UW-4bH" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -26,5 +26,6 @@ class TabBarController : UITabBarController {
                 break
             }
         }
+        self.selectedIndex = 1
     }
 }

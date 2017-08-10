@@ -237,13 +237,18 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - CourseCellDelegate
     
     func discussionPressed(site: Site) {
-        loadWebViewWithUrl(url: site.discussionurl)
+        let discStoryBoard = UIStoryboard(name: "MainStory", bundle: nil)
+        let discController = discStoryBoard.instantiateViewController(withIdentifier: "Dashboard")
+        (discController as! NotificationViewController).site = site
+        (discController as! NotificationViewController).viewStyle = NotificationViewController.Style.Discussions
+        navigationController?.pushViewController(discController, animated: true)
     }
     
     func dashboardPressed(site: Site) {
         let dbStoryBoard = UIStoryboard(name: "MainStory", bundle: nil)
         let dbController = dbStoryBoard.instantiateViewController(withIdentifier: "Dashboard")
         (dbController as! NotificationViewController).site = site
+        (dbController as! NotificationViewController).viewStyle = NotificationViewController.Style.Dashboard
         navigationController?.pushViewController(dbController, animated: true)
     }
     

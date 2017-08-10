@@ -22,8 +22,20 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        Utils.showActivity(view)
+        tableView?.delegate = self
+        tableView?.dataSource = self
+        tableView.tableFooterView = UIView()
+        NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        refresh.addTarget(self, action: #selector(load), for: .valueChanged)
+        tableView?.addSubview(refresh)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {        Utils.showActivity(view)
         TRACSClient.loginIfNecessary { (loggedin) in
             if !loggedin {
                 let lvc = LoginViewController()
@@ -53,22 +65,6 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.activateIntroScreen()
             }
         }
-        tableView?.delegate = self
-        tableView?.dataSource = self
-        tableView.tableFooterView = UIView()
-
-        NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        
-        refresh.addTarget(self, action: #selector(load), for: .valueChanged)
-        tableView?.addSubview(refresh)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
         TRACSClient.waitForLogin { (loggedin) in
             self.loadWithActivity()
         }

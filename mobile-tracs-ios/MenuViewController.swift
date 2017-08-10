@@ -127,6 +127,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             TRACSClient.userid = ""
             Utils.removeCredentials()
             IntegrationClient.unregister()
+            let navCon = self.tabBarController!
+            navCon.selectedIndex = 1
+            
             UIApplication.shared.applicationIconBadgeNumber = 0
             let cookies = HTTPCookieStorage.shared.cookies
             for cookie in cookies! {
@@ -137,9 +140,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             for cookie in HTTPCookieStorage.shared.cookies! {
                 print("\(cookie.name): \(cookie.value)")
             }
-            let clStoryBoard = UIStoryboard(name: "MainStory", bundle: nil)
-            let clc = clStoryBoard.instantiateViewController(withIdentifier: "SiteList")
-            navigationController?.pushViewController(clc, animated: true)
+
         }
     }
 

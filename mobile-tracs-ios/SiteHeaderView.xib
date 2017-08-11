@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SiteViewHeader" customModule="mobile_tracs_ios" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="shT-Gz-m2B">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="804-5E-ng7">
+                            <rect key="frame" x="16" y="646" width="102" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="804-5E-ng7" firstAttribute="leading" secondItem="shT-Gz-m2B" secondAttribute="leading" constant="16" id="GSp-aS-haF"/>
+                        <constraint firstAttribute="bottom" secondItem="804-5E-ng7" secondAttribute="bottom" id="WTH-Sc-zpd"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="shT-Gz-m2B" secondAttribute="trailing" id="5jz-me-JyP"/>
+                <constraint firstAttribute="bottom" secondItem="shT-Gz-m2B" secondAttribute="bottom" id="7bc-Nx-eXi"/>
+                <constraint firstItem="shT-Gz-m2B" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="E6q-ta-qn5"/>
+                <constraint firstItem="shT-Gz-m2B" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Rn6-ib-SFn"/>
+            </constraints>
+            <connections>
+                <outlet property="content" destination="shT-Gz-m2B" id="Gxc-Dn-QWF"/>
+                <outlet property="title" destination="804-5E-ng7" id="JwS-Rt-8Qz"/>
+            </connections>
+        </view>
+    </objects>
+</document>

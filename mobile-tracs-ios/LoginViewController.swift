@@ -124,7 +124,15 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
                     self.dismiss(animated: true, completion: nil)
                 } else {
                     DispatchQueue.main.async {
-                        UIAlertView(title: "Login Failure", message: "Could not login to TRACS", delegate: nil, cancelButtonTitle: "OK").show()
+                        let alert = UIAlertController(title: "Login Failure", message: "Could not login to TRACS, try again", preferredStyle: .alert)
+                        let cancelAction = UIAlertAction(title: "OK", style: .cancel) {
+                            (action: UIAlertAction!) in
+                                NSLog("Login failed")
+                        }
+                        let okAction = cancelAction
+                        alert.addAction(okAction)
+                        self.present(alert, animated: true, completion: nil)
+//                        UIAlertView(title: "Login Failure", message: "Could not login to TRACS", delegate: nil, cancelButtonTitle: "OK").show()
                         Utils.hideActivity()
                     }
                 }

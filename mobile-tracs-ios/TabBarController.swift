@@ -13,19 +13,23 @@ class TabBarController : UITabBarController {
         for barItem in tracsTabBar.items! {
             let title = barItem.title!
             switch title {
-            case "Sites":
-                barItem.image = UIImage.fontAwesomeIcon(name: .university, textColor: Utils.darkred, size: CGSize(width: 28, height: 28))
+            case "All Sites":
+                barItem.image = UIImage.fontAwesomeIcon(name: .graduationCap, textColor: Utils.red, size: CGSize(width: 28, height: 28))
                 break
             case "Announcements":
-                barItem.image = UIImage.fontAwesomeIcon(name: .bullhorn, textColor: Utils.darkred, size: CGSize(width:28, height: 28))
+                barItem.image = UIImage.fontAwesomeIcon(name: .bullhorn, textColor: Utils.red, size: CGSize(width:28, height: 28))
                 break
             case "Settings":
-                barItem.image = UIImage.fontAwesomeIcon(name: .cog, textColor: Utils.darkred, size: CGSize(width:28, height: 28))
+                barItem.image = UIImage.fontAwesomeIcon(name: .cog, textColor: Utils.red, size: CGSize(width:28, height: 28))
                 break
             default:
                 break
             }
         }
         self.selectedIndex = 1
+    }
+    
+    open func updateAnnounceCount(count: Int) {
+        self.tabBar.items?[0].badgeValue = count > 0 ? String(count) : nil
     }
 }

@@ -329,22 +329,36 @@ class Utils {
         return ret;
     }
     
-    static func fontAwesomeTitledBarButtonItem(color: UIColor, icon: FontAwesome, title:String, textStyle:UIFontTextStyle, target:AnyObject, action:Selector) -> UIBarButtonItem {
+    static func fontAwesomeTitledBarButtonItem(color: UIColor, icon: FontAwesome, title: String, badgecount: Int, target: AnyObject, action: Selector) -> UIBarButtonItem {
         let icon = UIImageView(image: UIImage.fontAwesomeIcon(name: icon, textColor: color, size: CGSize(width: 34, height: 34)))
         icon.frame = CGRect(x: 0, y: 3, width: 34, height: 34)
         icon.contentMode = .center
         
         let titlelabel = UILabel()
         titlelabel.text = title
-        titlelabel.font = UIFont.boldSystemFont(ofSize: 20)
+        titlelabel.font = titlelabel.font.withSize(10)
         titlelabel.sizeToFit()
-        titlelabel.frame = CGRect(x: icon.bounds.width+2, y: (42-titlelabel.frame.height)/2.0, width: titlelabel.frame.width, height: titlelabel.frame.height)
+        titlelabel.frame = CGRect(x: (icon.frame.width - titlelabel.frame.width)/2.0, y: icon.frame.height + 2, width: titlelabel.frame.width, height: titlelabel.frame.height)
         titlelabel.textColor = color
         
         let titleview = UIButton(frame: CGRect(x: 0, y: 0, width: titlelabel.frame.origin.x+titlelabel.frame.width, height: 50))
         titleview.accessibilityLabel = title
         titleview.addSubview(icon)
         titleview.addSubview(titlelabel)
+        
+        if badgecount > 0 {
+            var font = UIFont.preferredFont(forTextStyle: .footnote)
+            font = UIFont.boldSystemFont(ofSize: 10)
+            let s = (String(badgecount) as NSString).size(attributes: [
+                NSFontAttributeName: font
+                ])
+            let x_offset = (titleview.frame.width - s.width) / 2 + 5
+            let badge = BadgeSwift(frame:CGRect(x: x_offset, y: 5, width: s.width+10, height: s.height))
+            badge.font = font
+            badge.textColor = UIColor.white
+            badge.text = String(badgecount)
+            titleview.addSubview(badge)
+        }
         
         titleview.addTarget(target, action: action, for: .touchUpInside)
         return UIBarButtonItem(customView: titleview)
@@ -459,24 +473,24 @@ class Utils {
     static func deviceIsLocked() -> Bool {
         if #available(iOS 9, *) {
             return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
-        } else if #available(iOS 8, *) {
-            let secret = "Device has passcode set?".data(using: String.Encoding.utf8, allowLossyConversion: false)
-            let attributes:[String:Any] = [
-                kSecClass as String: kSecClassGenericPassword as String,
-                kSecAttrService as String: "LocalDeviceServices",
-                kSecAttrAccount as String: "NoAccount",
-                kSecValueData as String: secret!,
-                kSecAttrAccessible as String: kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
-            ]
-            
-            let status = SecItemAdd(attributes as CFDictionary, nil)
-            if status == 0 {
-                SecItemDelete(attributes as CFDictionary)
-                return true
-            }
-            
-            return false
-        }
+        } //else if #available(iOS 8, *) {
+//            let secret = "Device has passcode set?".data(using: String.Encoding.utf8, allowLossyConversion: false)
+//            let attributes:[String:Any] = [
+//                kSecClass as String: kSecClassGenericPassword as String,
+//                kSecAttrService as String: "LocalDeviceServices",
+//                kSecAttrAccount as String: "NoAccount",
+//                kSecValueData as String: secret!,
+//                kSecAttrAccessible as String: kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+//            ]
+//            
+//            let status = SecItemAdd(attributes as CFDictionary, nil)
+//            if status == 0 {
+//                SecItemDelete(attributes as CFDictionary)
+//                return true
+//            }
+//            
+//            return false
+//        }
         return false
     }
     

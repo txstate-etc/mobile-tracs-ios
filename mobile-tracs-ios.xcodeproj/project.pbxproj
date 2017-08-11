@@ -71,6 +71,9 @@
 		8267E2CB1F279DF00066AFCC /* NotificationViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8267E2CA1F279DF00066AFCC /* NotificationViewHeader.swift */; };
 		8267E2CD1F279E0F0066AFCC /* NotificationViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8267E2CC1F279E0F0066AFCC /* NotificationViewHeader.xib */; };
 		826887241F30CE95002D66CB /* MainStory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 826887231F30CE95002D66CB /* MainStory.storyboard */; };
+		8298F1131F3DE81600CCBBEB /* SiteHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8298F1121F3DE81600CCBBEB /* SiteHeaderView.xib */; };
+		8298F1151F3DE99700CCBBEB /* SiteViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F1141F3DE99700CCBBEB /* SiteViewHeader.swift */; };
+		8298F1181F3DFB6800CCBBEB /* WorkspaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F1171F3DFB6800CCBBEB /* WorkspaceButton.swift */; };
 		82B314801F2918E000075569 /* HeaderSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B3147F1F2918E000075569 /* HeaderSwitch.swift */; };
 /* End PBXBuildFile section */
 
@@ -153,6 +156,9 @@
 		8267E2CA1F279DF00066AFCC /* NotificationViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewHeader.swift; sourceTree = "<group>"; };
 		8267E2CC1F279E0F0066AFCC /* NotificationViewHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationViewHeader.xib; sourceTree = "<group>"; };
 		826887231F30CE95002D66CB /* MainStory.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStory.storyboard; sourceTree = "<group>"; };
+		8298F1121F3DE81600CCBBEB /* SiteHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SiteHeaderView.xib; sourceTree = "<group>"; };
+		8298F1141F3DE99700CCBBEB /* SiteViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteViewHeader.swift; sourceTree = "<group>"; };
+		8298F1171F3DFB6800CCBBEB /* WorkspaceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceButton.swift; sourceTree = "<group>"; };
 		82B3147F1F2918E000075569 /* HeaderSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderSwitch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,6 +209,7 @@
 		098FCFCA1E9D239900D4C66D /* UIWidgets */ = {
 			isa = PBXGroup;
 			children = (
+				8298F1161F3DFB5000CCBBEB /* SiteCellButtons */,
 				82B3147E1F2918CA00075569 /* HeaderCell */,
 				826501A31F16A314007DE87C /* LoginView */,
 				098FCFCB1E9D23DF00D4C66D /* FontAwesome */,
@@ -269,6 +276,7 @@
 				09071A2E1EDCBD8A008560B5 /* MenuViewController.swift */,
 				826501981F166848007DE87C /* LoginViewController.swift */,
 				8265019A1F16685A007DE87C /* LoginView.xib */,
+				8298F1121F3DE81600CCBBEB /* SiteHeaderView.xib */,
 				2D7ABA9F1F1FF018009C86D4 /* CourseListController.swift */,
 				2D7ABAA31F2000C2009C86D4 /* CourseCell.swift */,
 				826241B31F3D068000E51A69 /* WorkspaceCell.swift */,
@@ -339,10 +347,19 @@
 			name = LoginView;
 			sourceTree = "<group>";
 		};
+		8298F1161F3DFB5000CCBBEB /* SiteCellButtons */ = {
+			isa = PBXGroup;
+			children = (
+				8298F1171F3DFB6800CCBBEB /* WorkspaceButton.swift */,
+			);
+			name = SiteCellButtons;
+			sourceTree = "<group>";
+		};
 		82B3147E1F2918CA00075569 /* HeaderCell */ = {
 			isa = PBXGroup;
 			children = (
 				82B3147F1F2918E000075569 /* HeaderSwitch.swift */,
+				8298F1141F3DE99700CCBBEB /* SiteViewHeader.swift */,
 			);
 			name = HeaderCell;
 			sourceTree = "<group>";
@@ -427,6 +444,7 @@
 				098FCFD11E9D23DF00D4C66D /* FontAwesome.otf in Resources */,
 				2DB0CF051EF1B78100B19252 /* welcome_page.html in Resources */,
 				2DB0CF091EF1E21200B19252 /* font-awesome.min.css in Resources */,
+				8298F1131F3DE81600CCBBEB /* SiteHeaderView.xib in Resources */,
 				09071A271EC948F2008560B5 /* FeedbackViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,9 +499,11 @@
 				098FCFC21E9AA3FF00D4C66D /* Utils.swift in Sources */,
 				826501991F166848007DE87C /* LoginViewController.swift in Sources */,
 				09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */,
+				8298F1181F3DFB6800CCBBEB /* WorkspaceButton.swift in Sources */,
 				82B314801F2918E000075569 /* HeaderSwitch.swift in Sources */,
 				8252EFAD1F32554B002050F7 /* CardView.swift in Sources */,
 				09071A291ECDEB6A008560B5 /* NotificationObserver.swift in Sources */,
+				8298F1151F3DE99700CCBBEB /* SiteViewHeader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

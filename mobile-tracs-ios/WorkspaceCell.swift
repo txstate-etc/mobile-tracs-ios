@@ -11,6 +11,7 @@ import UIKit
 class WorkspaceCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var cellContent: UIView!
+    @IBOutlet var moreButton: UIButton!
     var site:Site? {
         didSet {
             updateUI(site: site)

@@ -13,7 +13,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     var coursesites:[Site] = []
     var projectsites:[Site] = []
     var workspace: Site = Site(dict: [:])
-    var unseenBySite: [String: Int] = [:]
+    var unseenBySite: [String: [String: Int]] = [:]
     var refresh = UIRefreshControl()
     var workspaceCell: CourseCell?
     
@@ -26,6 +26,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView?.delegate = self
         tableView?.dataSource = self
         tableView.tableFooterView = UIView()
+        tableView.register(UINib(nibName: "SiteHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "siteheader")
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         refresh.addTarget(self, action: #selector(load), for: .valueChanged)
@@ -62,12 +63,10 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                 }
             }
+            self.loadWithActivity()
             if !Utils.flag("introScreen", val: true) {
                 self.activateIntroScreen()
             }
-        }
-        TRACSClient.waitForLogin { (loggedin) in
-            self.loadWithActivity()
         }
     }
 
@@ -85,17 +84,22 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         load()
     }
     
-    func countUnseenBySite(notifications: [Any]) -> [String: Int] {
-        var unseen: [String: Int] = [:]
+    func countUnseenBySite(notifications: [Any]) -> [String: [String: Int]] {
+        var unseen: [String: [String: Int]] = [:]
         for notif in notifications {
             let notif = notif as! [String: Any]
             let seen = notif["seen"] as? Bool ?? true
             if !seen {
                 if let otherkeys = notif["other_keys"] as? [String: Any] {
                     if let site_id = otherkeys["site_id"] as? String {
-                        var count = unseen[site_id] ?? 0
-                        count += 1
-                        unseen[site_id] = count
+                        let type = (notif["keys"] as? [String: Any])?["object_type"] as? String
+                        if let type = type {
+                            var count = unseen[site_id]?[type] ?? 0
+                            count += 1
+                            var site_counts = unseen[site_id] ?? [:]
+                            site_counts[type] = count
+                            unseen[site_id] = site_counts
+                        }
                     }
                 }
             }
@@ -114,7 +118,10 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                     var projects:[Site] = []
                     if let sitehash = sitehash {
                         for site in sitehash.values {
-                            site.unseenCount = self.unseenBySite[site.id] ?? 0
+                            site.unseenCount = 0
+                            for (_, value) in self.unseenBySite[site.id] ?? [:] {
+                                site.unseenCount += value
+                            }
                             if site.coursesite {
                                 courses.append(site)
                             } else {
@@ -184,22 +191,49 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         return rowCount
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionName: Sections? = Sections(rawValue: section)
-        var name: String = ""
+        var headerTitle: String = ""
+        var header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "siteheader") as? SiteViewHeader
         if let sectionName = sectionName {
             switch sectionName {
             case .courses:
-                name = "Course Sites"
+                headerTitle = "COURSES"
                 break
             case .projects:
-                name = "Project Sites"
+                headerTitle = "PROJECTS"
                 break
             default:
+                header = nil
                 break
             }
         }
-        return name
+        let headerFontSize = UIFont.preferredFont(forTextStyle: .body).pointSize * 0.75
+        header?.content.backgroundColor = SiteColor.headerBackground
+        header?.title.backgroundColor = SiteColor.headerBackground
+        header?.title.textColor = SiteColor.headerText
+        header?.title.font = UIFont.boldSystemFont(ofSize: headerFontSize)
+        
+        header?.title.text = headerTitle
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let sectionName: Sections? = Sections(rawValue: section)
+        var headerHeight = CGFloat(UIFont.preferredFont(forTextStyle: .body).pointSize * 1.0 + 15.0)
+        if let sectionName = sectionName {
+            switch sectionName {
+            case .courses:
+                break
+            case .projects:
+                break
+            default:
+                headerHeight = CGFloat(0)
+                break
+            }
+        }
+        
+        return headerHeight
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -211,7 +245,10 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
+        let chevX: CGFloat = 15
+        let chevY: CGFloat = chevX
+        let chevronSize = CGSize(width: chevX, height: chevY)
+        
         let sectionName: Sections? = Sections(rawValue: indexPath.section)
         var cell: UITableViewCell?
         if let sectionName = sectionName {
@@ -219,15 +256,32 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
             cell = tableView.dequeueReusableCell(withIdentifier: cellType)!
             switch sectionName {
             case .workspace:
-                (cell as! WorkspaceCell).site = workspace
+                let buttonImage = UIImage.fontAwesomeIcon(name: .ellipsisH, textColor: SiteColor.workspaceText, size: CGSize(width: 20, height: 20))
+                let wscell = (cell as! WorkspaceCell)
+                wscell.moreButton.tintColor = SiteColor.workspaceText
+                wscell.site = workspace
+                wscell.moreButton.setImage(buttonImage, for: .normal)
+                wscell.moreButton.isUserInteractionEnabled = false
+                wscell.moreButton.setTitleColor(SiteColor.workspaceText, for: .normal)
+                wscell.contentView.backgroundColor = SiteColor.workspaceBackground
                 break
             case .courses:
-                (cell as! CourseCell).site = coursesites[indexPath.row]
-                (cell as! CourseCell).delegate = self
+                let courseCell = cell as! CourseCell
+                courseCell.rightChevron.image = UIImage.fontAwesomeIcon(name: .chevronRight, textColor: SiteColor.courseText, size: chevronSize)
+                courseCell.badgeCounts = unseenBySite[(coursesites[indexPath.row]).id] ?? [:]
+                courseCell.site = coursesites[indexPath.row]
+                courseCell.siteWord.textColor = SiteColor.courseText
+                courseCell.contentView.backgroundColor = SiteColor.courseBackground
+                courseCell.delegate = self
                 break
             case .projects:
-                (cell as! CourseCell).site = projectsites[indexPath.row]
-                (cell as! CourseCell).delegate = self
+                let projectCell = cell as! CourseCell
+                projectCell.rightChevron.image = UIImage.fontAwesomeIcon(name: .chevronRight, textColor: SiteColor.projectText, size: chevronSize)
+                projectCell.badgeCounts = unseenBySite[(projectsites[indexPath.row]).id] ?? [:]
+                projectCell.site = projectsites[indexPath.row]
+                projectCell.siteWord.textColor = SiteColor.projectText
+                projectCell.contentView.backgroundColor = SiteColor.projectBackground
+                projectCell.delegate = self
                 break
             }
         }

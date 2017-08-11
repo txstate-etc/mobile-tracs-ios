@@ -26,18 +26,29 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView?.delegate = self
         tableView?.dataSource = self
         tableView.tableFooterView = UIView()
+        applyNavBarShadow()
         tableView.register(UINib(nibName: "SiteHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "siteheader")
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         refresh.addTarget(self, action: #selector(load), for: .valueChanged)
         tableView?.addSubview(refresh)
+        Utils.showActivity(view)
+    }
+    
+    func applyNavBarShadow() {
+        self.navigationController?.navigationBar.layer.masksToBounds = false
+        self.navigationController?.navigationBar.layer.shadowColor = UIColor.lightGray.cgColor
+        self.navigationController?.navigationBar.layer.shadowOpacity = 0.8
+        self.navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        self.navigationController?.navigationBar.layer.shadowRadius = 2
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
-    override func viewDidAppear(_ animated: Bool) {        Utils.showActivity(view)
+    override func viewDidAppear(_ animated: Bool) {
+        Utils.showActivity(view)
         TRACSClient.loginIfNecessary { (loggedin) in
             if !loggedin {
                 let lvc = LoginViewController()
@@ -58,7 +69,12 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                     if (notifications != nil) {
                         self.unseenBySite = self.countUnseenBySite(notifications: notifications!)
                     }
+                    var announceCount = 0
+                    for (_, value) in self.unseenBySite {
+                        announceCount += value["announcement"] ?? 0
+                    }
                     DispatchQueue.main.async {
+                        (self.tabBarController as? TabBarController)?.updateAnnounceCount(count: announceCount)
                         Utils.hideActivity()
                     }
                 }

@@ -14,13 +14,13 @@ class TabBarController : UITabBarController {
             let title = barItem.title!
             switch title {
             case "All Sites":
-                barItem.image = UIImage.fontAwesomeIcon(name: .graduationCap, textColor: Utils.red, size: CGSize(width: 28, height: 28))
+                barItem.image = UIImage.fontAwesomeIcon(name: .graduationCap, textColor: Utils.red, size: CGSize(width: 36, height: 36))
                 break
             case "Announcements":
-                barItem.image = UIImage.fontAwesomeIcon(name: .bullhorn, textColor: Utils.red, size: CGSize(width:28, height: 28))
+                barItem.image = UIImage.fontAwesomeIcon(name: .bullhorn, textColor: Utils.red, size: CGSize(width: 36, height: 36))
                 break
             case "Settings":
-                barItem.image = UIImage.fontAwesomeIcon(name: .cog, textColor: Utils.red, size: CGSize(width:28, height: 28))
+                barItem.image = UIImage.fontAwesomeIcon(name: .cog, textColor: Utils.red, size: CGSize(width: 36, height: 36))
                 break
             default:
                 break

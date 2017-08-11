@@ -12,6 +12,7 @@ import WebKit
 
 class Utils {
     static let d: CGFloat = 255.0
+    static let badgeRed = UIColor(red: 255/d, green: 68/d, blue: 60/d, alpha: 1)
     static let red = UIColor(red: 80/d, green: 18/d, blue: 20/d, alpha: 1)
     static let darkred = UIColor(red: 45/d, green: 9/d, blue: 14/d, alpha: 1)
     static let gold = UIColor(red: 140/d, green: 115/d, blue: 74/d, alpha: 1)
@@ -352,8 +353,14 @@ class Utils {
             let s = (String(badgecount) as NSString).size(attributes: [
                 NSFontAttributeName: font
                 ])
+            let fixedHeight: NSString = "1"
             let x_offset = (titleview.frame.width - s.width) / 2 + 5
-            let badge = BadgeSwift(frame:CGRect(x: x_offset, y: 5, width: s.width+10, height: s.height))
+            let hSize: CGFloat = s.width + 10
+            var vSize: CGFloat = fixedHeight.size(attributes: [NSFontAttributeName: font]).height
+            vSize = vSize < hSize * 0.75 ? vSize : hSize
+            
+            let badge = BadgeSwift(frame:CGRect(x: x_offset, y: 5, width: hSize, height: vSize))
+            badge.badgeColor = Utils.badgeRed
             badge.font = font
             badge.textColor = UIColor.white
             badge.text = String(badgecount)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotificationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationObserver {
+class NotificationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var headerView: UIView!
     @IBOutlet var headerLabel: UILabel!
@@ -35,6 +35,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName:"NotificationViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "sectionlabel")
+        NotificationCenter.default.addObserver(self, selector: #selector(notificationReceived), name: NSNotification.Name(rawValue: ObservableEvent.PUSH_NOTIFICATION), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
@@ -366,6 +367,10 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         loadNotifications(true)
     }
     
+    func notificationReceived() {
+        loadNotifications(false)
+    }
+    
     func loadNotifications(_ showactivity:Bool) {
         if showactivity { Utils.showActivity(view) }
         TRACSClient.loginIfNecessary { (loggedin) in
@@ -429,8 +434,6 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                         }
                     }
                 }
-            } else { //not logged in, how'd you even get here
-                (UIApplication.shared.delegate as! AppDelegate).reloadEverything()
             }
         }
     }
@@ -497,9 +500,5 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                 }
             }
         }
-    }
-    
-    func incomingNotification(badgeCount: Int?, message: String?) {
-        loadNotifications(false)
     }
 }

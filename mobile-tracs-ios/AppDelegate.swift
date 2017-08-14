@@ -100,59 +100,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
-    func reloadEverything() {
-        let current = getCurrentViewController()
-        if current?.presentedViewController != nil {
-            current?.dismiss(animated: true, completion: nil)
-        }
-        
-        let top = getNavController()
-        top?.popToRootViewController(animated: true)
-        
-        let wvc = getWebViewController()
-        wvc?.load()
-    }
-    
-    func getNavController() -> UINavigationController? {
-        return UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
-    }
-    
-    func getWebViewController() -> WebViewController? {
-        let top = getNavController()
-        return top?.viewControllers.first as? WebViewController
-    }
-    
-    func getActiveNotificationObserver() -> NotificationObserver? {
-        let top = getNavController()
-        return top?.viewControllers.last as? NotificationObserver
-    }
-    
-    func getCurrentViewController() -> UIViewController? {
-        let top = getNavController()
-        return top?.viewControllers.last
-    }
-    
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-        if application.applicationState == .active {
-            if let observer = getActiveNotificationObserver() {
-                var badge:Int?
-                var msg:String?
-                if let aps = userInfo["aps"] as? [String:Any] {
-                    badge = aps["badge"] as? Int
-                    msg = aps["alert"] as? String
-                }
-                UIApplication.shared.applicationIconBadgeNumber = badge ?? 0
-                observer.incomingNotification(badgeCount: badge, message: msg)
-            }
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: ObservableEvent.PUSH_NOTIFICATION), object: self)
+        var badge:Int?
+        if let aps = userInfo["aps"] as? [String:Any] {
+            badge = aps["badge"] as? Int
         }
+        UIApplication.shared.applicationIconBadgeNumber = badge ?? 0
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        let tabController = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController
+        tabController?.selectedIndex = 1
+        let navController = tabController?.selectedViewController as? UINavigationController
+        navController?.popToRootViewController(animated: true)
     }
     
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: ObservableEvent.PUSH_NOTIFICATION), object: self)
         UIApplication.shared.applicationIconBadgeNumber = notification.request.content.badge?.intValue ?? 0
-        if let observer = getActiveNotificationObserver() {
-            observer.incomingNotification(badgeCount: notification.request.content.badge?.intValue, message: notification.request.content.body)
-        }
         completionHandler([.alert, .badge])
     }
 }

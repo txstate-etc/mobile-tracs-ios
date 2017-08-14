@@ -75,6 +75,7 @@
 		8298F1151F3DE99700CCBBEB /* SiteViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F1141F3DE99700CCBBEB /* SiteViewHeader.swift */; };
 		8298F1181F3DFB6800CCBBEB /* WorkspaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F1171F3DFB6800CCBBEB /* WorkspaceButton.swift */; };
 		8298F11A1F41DB6D00CCBBEB /* LoginColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F1191F41DB6D00CCBBEB /* LoginColor.swift */; };
+		8298F11C1F423D8300CCBBEB /* ObservableEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F11B1F423D8300CCBBEB /* ObservableEvent.swift */; };
 		82B314801F2918E000075569 /* HeaderSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B3147F1F2918E000075569 /* HeaderSwitch.swift */; };
 /* End PBXBuildFile section */
 
@@ -161,6 +162,7 @@
 		8298F1141F3DE99700CCBBEB /* SiteViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteViewHeader.swift; sourceTree = "<group>"; };
 		8298F1171F3DFB6800CCBBEB /* WorkspaceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceButton.swift; sourceTree = "<group>"; };
 		8298F1191F41DB6D00CCBBEB /* LoginColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginColor.swift; sourceTree = "<group>"; };
+		8298F11B1F423D8300CCBBEB /* ObservableEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableEvent.swift; sourceTree = "<group>"; };
 		82B3147F1F2918E000075569 /* HeaderSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderSwitch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,6 +194,7 @@
 				2D7ABAA71F267FAF009C86D4 /* CookieMonster.swift */,
 				826241B11F3CCD5E00E51A69 /* SiteColor.swift */,
 				8298F1191F41DB6D00CCBBEB /* LoginColor.swift */,
+				8298F11B1F423D8300CCBBEB /* ObservableEvent.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -468,6 +471,7 @@
 				099BC24B1E882CFF009EEF0D /* SettingsCell.swift in Sources */,
 				09071A1D1EADB127008560B5 /* NotificationCell.swift in Sources */,
 				09071A301EDCBD8A008560B5 /* MenuViewController.swift in Sources */,
+				8298F11C1F423D8300CCBBEB /* ObservableEvent.swift in Sources */,
 				092700D11E884DB00089821D /* Settings.swift in Sources */,
 				09DDA8B01EA07850004220CF /* Analytics.swift in Sources */,
 				098FCFD01E9D23DF00D4C66D /* Enum.swift in Sources */,

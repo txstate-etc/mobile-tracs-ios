@@ -28,6 +28,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.tableFooterView = UIView()
         applyNavBarShadow()
         tableView.register(UINib(nibName: "SiteHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "siteheader")
+        NotificationCenter.default.addObserver(self, selector: #selector(loadWithoutActivity), name: NSNotification.Name(rawValue: ObservableEvent.PUSH_NOTIFICATION), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         refresh.addTarget(self, action: #selector(load), for: .valueChanged)
@@ -51,10 +52,10 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         DispatchQueue.main.async {
             Utils.showActivity(self.view)
         }
-        clearTableView()
         TRACSClient.loginIfNecessary { (loggedin) in
             if !loggedin {
                 let lvc = LoginViewController()
+                self.clearTableView()
                 DispatchQueue.main.async {
                     Utils.hideActivity()
                     self.present(lvc, animated: true, completion: nil)
@@ -67,20 +68,6 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                 }
                 IntegrationClient.registerIfNecessary()
-                IntegrationClient.getDispatchNotifications {
-                    (notifications) in
-                    if (notifications != nil) {
-                        self.unseenBySite = self.countUnseenBySite(notifications: notifications!)
-                    }
-                    var announceCount = 0
-                    for (_, value) in self.unseenBySite {
-                        announceCount += value["announcement"] ?? 0
-                    }
-                    DispatchQueue.main.async {
-                        (self.tabBarController as? TabBarController)?.updateAnnounceCount(count: announceCount)
-                        Utils.hideActivity()
-                    }
-                }
             }
             self.loadWithActivity()
             if !Utils.flag("introScreen", val: true) {
@@ -106,6 +93,10 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         DispatchQueue.main.async {
             Utils.showActivity(self.view)
         }
+        load()
+    }
+    
+    func loadWithoutActivity() {
         load()
     }
     
@@ -137,6 +128,13 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
             IntegrationClient.getDispatchNotifications(completion: { (dispatchnotifs) in
                 if dispatchnotifs != nil {
                 self.unseenBySite = self.countUnseenBySite(notifications: dispatchnotifs!)
+                }
+                var announceCount = 0
+                for (_, value) in self.unseenBySite {
+                    announceCount += value["announcement"] ?? 0
+                }
+                DispatchQueue.main.async {
+                    (self.tabBarController as? TabBarController)?.updateAnnounceCount(count: announceCount)
                 }
                 TRACSClient.fetchSitesByMembership { (sitehash) in
                     var courses:[Site] = []
@@ -235,7 +233,6 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         let headerFontSize = UIFont.preferredFont(forTextStyle: .body).pointSize * 0.75
         header?.content.backgroundColor = SiteColor.headerBackground
-        header?.title.backgroundColor = SiteColor.headerBackground
         header?.title.textColor = SiteColor.headerText
         header?.title.font = UIFont.boldSystemFont(ofSize: headerFontSize)
         

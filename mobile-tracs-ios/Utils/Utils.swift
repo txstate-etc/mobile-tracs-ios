@@ -353,10 +353,10 @@ class Utils {
             let s = (String(badgecount) as NSString).size(attributes: [
                 NSFontAttributeName: font
                 ])
-            let fixedHeight: NSString = "1"
+            let fixedHeight: NSString = "5"
             let x_offset = (titleview.frame.width - s.width) / 2 + 5
             let hSize: CGFloat = s.width + 10
-            var vSize: CGFloat = fixedHeight.size(attributes: [NSFontAttributeName: font]).height
+            var vSize: CGFloat = fixedHeight.size(attributes: [NSFontAttributeName: font]).height + 2
             vSize = vSize < hSize * 0.75 ? vSize : hSize
             
             let badge = BadgeSwift(frame:CGRect(x: x_offset, y: 5, width: hSize, height: vSize))

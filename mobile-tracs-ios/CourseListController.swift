@@ -54,8 +54,8 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                 let lvc = LoginViewController()
                 DispatchQueue.main.async {
                     Utils.hideActivity()
+                    self.present(lvc, animated: true, completion: nil)
                 }
-                self.present(lvc, animated: true, completion: nil)
             } else {
                 TRACSClient.fetchSite(id: "~\(TRACSClient.useruuid)") {
                     (workspaceSite) in
@@ -96,7 +96,9 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func loadWithActivity() {
-        Utils.showActivity(view)
+        DispatchQueue.main.async {
+            Utils.showActivity(self.view)
+        }
         load()
     }
     

@@ -12,15 +12,15 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
     //MARK: Properties
     @IBOutlet weak var loginNetid: LoginTextField!
     @IBOutlet weak var loginPassword: LoginTextField!
-    @IBOutlet weak var loginLogoImage: LoginLogoImage!
     @IBOutlet weak var loginScrollView: UIScrollView!
     @IBOutlet weak var loginSubmitButton: LoginButton!
     @IBOutlet weak var loginAdvisory: UITextView!
-    @IBOutlet var viewTap: UIView!
+    @IBOutlet weak var formContainer: UIView!
     
     let loginAdvisoryText = "Use of computer and network facilities owned or operated by Texas State University requires prior authorization. Unauthorized access is prohibited. Usage may be subject to security testing and monitoring, and affords no privacy guarantees or expectations except as otherwise provided by applicable privacy laws. Abuse is subject to criminal prosecution. Use of these facilities implies agreement to comply with the policies of Texas State University."
     
     var activeField: UITextField?
+    var savedPlaceholder: String?
     var keyboardDismissTouch = UITapGestureRecognizer()
     
     override func viewDidLoad() {
@@ -76,10 +76,14 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeField = textField
         textField.becomeFirstResponder()
+        savedPlaceholder = textField.placeholder
+        textField.placeholder = nil
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         activeField = nil
+        textField.placeholder = savedPlaceholder ?? ""
+        savedPlaceholder = nil
         textField.resignFirstResponder()
     }
     

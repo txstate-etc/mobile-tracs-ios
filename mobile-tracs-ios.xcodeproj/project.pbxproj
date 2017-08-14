@@ -74,6 +74,7 @@
 		8298F1131F3DE81600CCBBEB /* SiteHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8298F1121F3DE81600CCBBEB /* SiteHeaderView.xib */; };
 		8298F1151F3DE99700CCBBEB /* SiteViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F1141F3DE99700CCBBEB /* SiteViewHeader.swift */; };
 		8298F1181F3DFB6800CCBBEB /* WorkspaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F1171F3DFB6800CCBBEB /* WorkspaceButton.swift */; };
+		8298F11A1F41DB6D00CCBBEB /* LoginColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8298F1191F41DB6D00CCBBEB /* LoginColor.swift */; };
 		82B314801F2918E000075569 /* HeaderSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B3147F1F2918E000075569 /* HeaderSwitch.swift */; };
 /* End PBXBuildFile section */
 
@@ -159,6 +160,7 @@
 		8298F1121F3DE81600CCBBEB /* SiteHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SiteHeaderView.xib; sourceTree = "<group>"; };
 		8298F1141F3DE99700CCBBEB /* SiteViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteViewHeader.swift; sourceTree = "<group>"; };
 		8298F1171F3DFB6800CCBBEB /* WorkspaceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceButton.swift; sourceTree = "<group>"; };
+		8298F1191F41DB6D00CCBBEB /* LoginColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginColor.swift; sourceTree = "<group>"; };
 		82B3147F1F2918E000075569 /* HeaderSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderSwitch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -189,6 +191,7 @@
 				09071A1E1EADB764008560B5 /* Extensions.swift */,
 				2D7ABAA71F267FAF009C86D4 /* CookieMonster.swift */,
 				826241B11F3CCD5E00E51A69 /* SiteColor.swift */,
+				8298F1191F41DB6D00CCBBEB /* LoginColor.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 				09DDA8B31EA084F8004220CF /* Secrets.swift in Sources */,
 				826501A51F1FFB6F007DE87C /* AdvisoryLabel.swift in Sources */,
 				098FCFC21E9AA3FF00D4C66D /* Utils.swift in Sources */,
+				8298F11A1F41DB6D00CCBBEB /* LoginColor.swift in Sources */,
 				826501991F166848007DE87C /* LoginViewController.swift in Sources */,
 				09F10E0A1E7F25FF00303A96 /* TRACSClient.swift in Sources */,
 				8298F1181F3DFB6800CCBBEB /* WorkspaceButton.swift in Sources */,

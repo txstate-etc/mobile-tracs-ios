@@ -11,7 +11,7 @@ import UIKit
 @IBDesignable
 class LoginLogoImage: UIImageView {
     //MARK: Properties
-    @IBInspectable var cornerRadius: CGFloat = 10.0 {
+    @IBInspectable var cornerRadius: CGFloat = 0.0 {
         didSet {
             updateCornerRadius()
         }

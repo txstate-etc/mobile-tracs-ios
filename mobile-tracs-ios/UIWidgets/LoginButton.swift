@@ -17,6 +17,12 @@ class LoginButton: UIButton {
         }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.backgroundColor = LoginColor.loginButton
+        self.tintColor = UIColor.white
+    }
+    
     func updateCornerRadius() {
         self.layer.cornerRadius = cornerRadius
     }

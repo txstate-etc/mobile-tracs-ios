@@ -11,7 +11,7 @@ import UIKit
 @IBDesignable
 class LoginTextField: UITextField {
     //MARK: Properties
-    @IBInspectable var cornerRadius: CGFloat = 10.0 {
+    @IBInspectable var cornerRadius: CGFloat = 0.0 {
         didSet {
             updateCornerRadius()
         }
@@ -19,13 +19,16 @@ class LoginTextField: UITextField {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        let borderLine = UIView()
+        
+        borderLine.frame = CGRect(x: 0, y: self.frame.size.height - 1, width: self.frame.size.width, height: 1)
+        borderLine.backgroundColor = LoginColor.inputUnderline
+        self.addSubview(borderLine)
         self.layer.cornerRadius = cornerRadius
-        self.layer.borderColor = UIColor(white: 231 / 255, alpha: 1).cgColor
-        self.layer.borderWidth = 1
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: 8, dy: (self.layer.bounds.height / 4))
+        return bounds.insetBy(dx: 0, dy: 8)
     }
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {

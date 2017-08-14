@@ -419,24 +419,94 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="nOD-tB-9fi">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <view key="tableHeaderView" contentMode="scaleToFill" id="NwO-GU-Zst">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="AFM-o2-wdn" userLabel="Header View">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="135"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ltK-HF-Sf3">
-                                            <rect key="frame" x="8" y="12" width="359" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0yt-Rf-Yc2" userLabel="Contents">
+                                            <rect key="frame" x="8" y="8" width="359" height="111"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bi3-vQ-XtR" userLabel="Label View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="359" height="37"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CTG-fO-ioG">
+                                                            <rect key="frame" x="8" y="8" width="351" height="20.5"/>
+                                                            <color key="backgroundColor" red="0.0" green="0.3294117647" blue="0.50588235290000005" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="0.99992674589999997" green="1" blue="0.99987345930000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.0" green="0.3294117647" blue="0.50588235290000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstItem="CTG-fO-ioG" firstAttribute="leading" secondItem="Bi3-vQ-XtR" secondAttribute="leading" constant="8" id="2eq-Px-Y9n"/>
+                                                        <constraint firstAttribute="trailing" secondItem="CTG-fO-ioG" secondAttribute="trailing" id="qc2-wC-Ktf"/>
+                                                        <constraint firstItem="CTG-fO-ioG" firstAttribute="centerY" secondItem="Bi3-vQ-XtR" secondAttribute="centerY" id="v7H-kE-3Wu"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DyX-Uw-OBM" userLabel="Info View">
+                                                    <rect key="frame" x="0.0" y="37" width="359" height="74"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course Description - The course is described here and should wrap around." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qe-dZ-LiQ">
+                                                            <rect key="frame" x="8" y="8" width="343" height="21"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="21" id="VK2-gS-Qfl"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instructor Last Name, fake@txstate.edu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SIQ-ez-RSv">
+                                                            <rect key="frame" x="8" y="60" width="212" height="14"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Site contact and email:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZY-Hm-Mrp">
+                                                            <rect key="frame" x="8" y="45.5" width="131.5" height="14.5"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstItem="SIQ-ez-RSv" firstAttribute="top" secondItem="UZY-Hm-Mrp" secondAttribute="bottom" id="4sx-oN-Sbq"/>
+                                                        <constraint firstItem="8qe-dZ-LiQ" firstAttribute="top" secondItem="DyX-Uw-OBM" secondAttribute="top" constant="8" id="AYi-fi-z8y"/>
+                                                        <constraint firstItem="SIQ-ez-RSv" firstAttribute="leading" secondItem="DyX-Uw-OBM" secondAttribute="leading" constant="8" id="CfS-wh-7Mo"/>
+                                                        <constraint firstItem="UZY-Hm-Mrp" firstAttribute="leading" secondItem="DyX-Uw-OBM" secondAttribute="leading" constant="8" id="uFn-Z6-m0k"/>
+                                                        <constraint firstAttribute="trailing" secondItem="8qe-dZ-LiQ" secondAttribute="trailing" constant="8" id="uZ6-33-Tbf"/>
+                                                        <constraint firstItem="8qe-dZ-LiQ" firstAttribute="leading" secondItem="DyX-Uw-OBM" secondAttribute="leading" constant="8" id="xse-OC-p9u"/>
+                                                        <constraint firstAttribute="bottom" secondItem="SIQ-ez-RSv" secondAttribute="bottom" id="xu0-nC-y4C"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" red="1" green="0.93725490199999995" blue="0.83529411760000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="DyX-Uw-OBM" secondAttribute="trailing" id="Bgw-TK-pld"/>
+                                                <constraint firstAttribute="bottom" secondItem="DyX-Uw-OBM" secondAttribute="bottom" id="DFZ-xE-moF"/>
+                                                <constraint firstAttribute="bottom" secondItem="DyX-Uw-OBM" secondAttribute="bottom" id="FJ3-mr-8cs"/>
+                                                <constraint firstAttribute="trailing" secondItem="Bi3-vQ-XtR" secondAttribute="trailing" id="IGd-bO-6AJ"/>
+                                                <constraint firstItem="DyX-Uw-OBM" firstAttribute="height" secondItem="Bi3-vQ-XtR" secondAttribute="height" multiplier="2" id="Num-WB-ZO7"/>
+                                                <constraint firstItem="DyX-Uw-OBM" firstAttribute="leading" secondItem="0yt-Rf-Yc2" secondAttribute="leading" id="UDx-MR-U8b"/>
+                                                <constraint firstItem="Bi3-vQ-XtR" firstAttribute="leading" secondItem="0yt-Rf-Yc2" secondAttribute="leading" id="ZMg-4n-jYH"/>
+                                                <constraint firstItem="Bi3-vQ-XtR" firstAttribute="top" secondItem="0yt-Rf-Yc2" secondAttribute="top" id="mQ6-Ou-euL"/>
+                                                <constraint firstItem="DyX-Uw-OBM" firstAttribute="top" secondItem="Bi3-vQ-XtR" secondAttribute="bottom" id="ueW-r6-dIl"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
-                                    <color key="backgroundColor" red="1" green="0.93725490199999995" blue="0.83529411760000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="0yt-Rf-Yc2" secondAttribute="trailing" constant="8" id="4yS-wd-Fk2"/>
+                                        <constraint firstItem="0yt-Rf-Yc2" firstAttribute="leading" secondItem="AFM-o2-wdn" secondAttribute="leading" constant="8" id="fgg-gR-GmR"/>
+                                        <constraint firstItem="0yt-Rf-Yc2" firstAttribute="top" secondItem="AFM-o2-wdn" secondAttribute="top" constant="8" id="mBz-ac-5q6"/>
+                                        <constraint firstAttribute="bottom" secondItem="0yt-Rf-Yc2" secondAttribute="bottom" constant="16" id="tDG-bP-2Ru"/>
+                                    </constraints>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="notification" id="CMr-jx-1oJ" customClass="NotificationCell" customModule="mobile_tracs_ios" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="190.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CMr-jx-1oJ" id="P2s-oc-Klt">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -516,8 +586,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="3sD-a8-obo"/>
                     <connections>
-                        <outlet property="headerLabel" destination="ltK-HF-Sf3" id="DMF-a6-P6x"/>
-                        <outlet property="headerView" destination="NwO-GU-Zst" id="7Qs-Iy-EEb"/>
+                        <outlet property="courseDescription" destination="8qe-dZ-LiQ" id="GdA-c5-NFg"/>
+                        <outlet property="headerLabel" destination="CTG-fO-ioG" id="17l-zl-vD3"/>
+                        <outlet property="headerView" destination="AFM-o2-wdn" id="RCt-J9-LnJ"/>
                         <outlet property="tableView" destination="nOD-tB-9fi" id="cTq-Cd-lKF"/>
                     </connections>
                 </viewController>

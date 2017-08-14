@@ -12,6 +12,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet var tableView: UITableView!
     @IBOutlet var headerView: UIView!
     @IBOutlet var headerLabel: UILabel!
+    @IBOutlet var courseDescription: UILabel!
     var notifications: [Notification] = []
     var site:Site?
     var announcementCount: Int = 0
@@ -33,7 +34,6 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName:"NotificationViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "sectionlabel")
-
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
@@ -48,7 +48,6 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             switch viewStyle {
             case .Discussions:
                 self.title = "Forums"
-                removeHeaderView(headerView: headerView)
                 break
             case .Dashboard:
                 self.title = "Notifications"

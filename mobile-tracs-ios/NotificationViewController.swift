@@ -376,12 +376,24 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                     if let notis = notifications {
                         let unseen = notis.filter({ (n) -> Bool in
                             var desiredSite: Bool
+                            var willBeDisplayed: Bool = false
                             if let site = self.site {
                                 desiredSite = n.site_id == site.id
+                                if let viewStyle = self.viewStyle {
+                                    switch viewStyle {
+                                    case .Discussions:
+                                        willBeDisplayed = n.object_type == "discussion"
+                                        break
+                                    case .Dashboard:
+                                        willBeDisplayed = true
+                                        break
+                                    }
+                                }
                             } else {
+                                willBeDisplayed = n.object_type == "announcement"
                                 desiredSite = true
                             }
-                            return !n.seen && desiredSite
+                            return !n.seen && desiredSite && willBeDisplayed
                         })
                         IntegrationClient.markNotificationsSeen(unseen, completion: { (success) in
                             DispatchQueue.main.async {

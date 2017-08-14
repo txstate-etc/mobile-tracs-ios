@@ -310,6 +310,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                 break
             }
         }
+        cell?.selectionStyle = UITableViewCellSelectionStyle.none
         return cell!
     }
     

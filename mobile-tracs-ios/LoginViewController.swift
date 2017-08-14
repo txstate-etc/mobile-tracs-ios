@@ -136,8 +136,7 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
                         let okAction = cancelAction
                         alert.addAction(okAction)
                         self.present(alert, animated: true, completion: nil)
-//                        UIAlertView(title: "Login Failure", message: "Could not login to TRACS", delegate: nil, cancelButtonTitle: "OK").show()
-                        Utils.hideActivity()
+//                        Utils.hideActivity()
                     }
                 }
             })

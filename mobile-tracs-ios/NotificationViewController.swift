@@ -13,6 +13,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet var headerView: UIView!
     @IBOutlet var headerLabel: UILabel!
     @IBOutlet var courseDescription: UILabel!
+    @IBOutlet var nameAndEmail: UILabel!
     var notifications: [Notification] = []
     var site:Site?
     var announcementCount: Int = 0
@@ -51,6 +52,9 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                 break
             case .Dashboard:
                 self.title = "Notifications"
+                if let site = site {
+                    nameAndEmail.text = "\(site.contactLast), \(site.contactEmail)"
+                }
                 break
             }
         } else {
@@ -263,6 +267,10 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                             titleLabel = "No new announcements"
                         }
                     }
+                } else {
+                    if announcementCount == 0 {
+                        titleLabel = "No new announcements"
+                    }
                 }
             case 1:
                 if discussionCount == 0 {
@@ -403,9 +411,13 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                                 Utils.hideActivity()
                             }
                         })
+                    } else { //no notifications
+                        DispatchQueue.main.async {
+                            Utils.hideActivity()
+                        }
                     }
                 }
-            } else {
+            } else { //not logged in, how'd you even get here
                 (UIApplication.shared.delegate as! AppDelegate).reloadEverything()
             }
         }

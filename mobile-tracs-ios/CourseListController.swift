@@ -48,7 +48,10 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        Utils.showActivity(view)
+        DispatchQueue.main.async {
+            Utils.showActivity(self.view)
+        }
+        clearTableView()
         TRACSClient.loginIfNecessary { (loggedin) in
             if !loggedin {
                 let lvc = LoginViewController()
@@ -86,8 +89,12 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
 
-    override func viewWillLayoutSubviews() {
-
+    func clearTableView() {
+        coursesites = []
+        projectsites = []
+        workspace = Site(dict: [:])
+        unseenBySite = [:]
+        tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {

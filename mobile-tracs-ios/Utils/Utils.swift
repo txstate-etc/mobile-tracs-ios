@@ -117,7 +117,6 @@ class Utils {
         let encodedUrl = url.replacingOccurrences(of: " ", with: "%20")
         let targeturl = URL(string: String(encodedUrl))
         var req = standardRequest(targeturl!)
-        NSLog(encodedUrl)
         req.cachePolicy = .reloadIgnoringLocalCacheData
         urlsession.dataTask(with:req) { (data, response, error) in
             if error != nil {

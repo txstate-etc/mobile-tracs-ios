@@ -136,7 +136,7 @@ class LoginViewController : UIViewController, UITextFieldDelegate,UIGestureRecog
                         let okAction = cancelAction
                         alert.addAction(okAction)
                         self.present(alert, animated: true, completion: nil)
-//                        Utils.hideActivity()
+                        Utils.hideActivity()
                     }
                 }
             })

@@ -201,35 +201,44 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath) as! NotificationCell
+        var cell: NotificationCell
         switch indexPath.section {
         case 0:
-            if let viewStyle = viewStyle {
-                if viewStyle == Style.Discussions {
-                    if discussionCount > 0 {
+            if let viewStyle = viewStyle { //Not in Announcements screen
+                cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath) as! NotificationCell
+                if viewStyle == Style.Discussions { //In Discussion screen
+                    if discussionCount > 0 { //Discussions are available
                         let notify = getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
                         cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
-                    } else {
+                    } else { //Nothing to display
                         cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
                     }
                 }
-                if viewStyle == Style.Dashboard {
-                    if announcementCount > 0 {
+                if viewStyle == Style.Dashboard { //In Dashboard screen
+                    if announcementCount > 0 { //Announcements are available
                         let notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
                         cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
-                    } else {
+                    } else { //Nothing to display
                         cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
                     }
                 }
-            } else {
-                if announcementCount > 0 {
+            } else { //In All Announcements screen
+                cell = tableView.dequeueReusableCell(withIdentifier: "announcement", for: indexPath) as! NotificationCell
+                if announcementCount > 0 { //Announcements are available
                     let notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
                     cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
-                } else {
+                
+                    if let title = notify?.object?.site?.title {
+                        cell.siteLabel.isHidden = false
+                        cell.siteLabel.text = title
+                    }
+                    
+                } else { //Nothing to display
                     cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
                 }
             }
         case 1:
+            cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath) as! NotificationCell
             if discussionCount > 0 {
                 let notify = getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
                 cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
@@ -237,6 +246,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                 cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
             }
         default:
+            cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath) as! NotificationCell
             break
         }
         return cell
@@ -250,6 +260,9 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             cell.titleLabel.font = (notify?.isRead())! ? UIFont.preferredFont(forTextStyle: .body) : Utils.boldPreferredFont(style: .body)
             cell.subtitleLabel.text = getSubtitleFromNotification(notif: notify!)
             cell.subtitleLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
+            if notify?.object_type == "announcement" && site == nil { //on announcements page
+                
+            }
             if !tracsobj.getUrl().isEmpty {
                 cell.accessoryType = .disclosureIndicator
             }
@@ -259,7 +272,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             switch indexPath.section {
             case 0:
                 if let viewStyle = viewStyle {
-                    if viewStyle == Style.Discussions{
+                    if viewStyle == Style.Discussions {
                         if discussionCount == 0 {
                             titleLabel = "No new forum posts"
                         }
@@ -294,7 +307,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             switch (type) {
             case "announcement":
                 let ann = notif.object as! Announcement
-                return ann.subtitle
+                return ann.author
             case "discussion":
                 let disc = notif.object as! Discussion
                 return disc.subtitle
@@ -306,6 +319,15 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
+        case 0:
+            if viewStyle == nil {
+                return UIFont.preferredFont(forTextStyle: .body).pointSize * 4.0
+            }
+            break
+        default:
+            break
+        }
         return UIFont.preferredFont(forTextStyle: .body).pointSize * 2.8
     }
     
@@ -349,8 +371,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         }
         if let tracsobj = notify?.object {
             if let url = URL(string: tracsobj.getUrl()) {
-                IntegrationClient.markNotificationRead(notify!, completion: { (success) in
-                })
+                IntegrationClient.markNotificationRead(notify!, completion: { (success) in })
                 Analytics.event(category: "Notification", action: "click", label: notifications[indexPath.row].object_type ?? "", value: nil)
                 let wvStoryBoard = UIStoryboard(name: "MainStory", bundle: nil)
                 let wvController = wvStoryBoard.instantiateViewController(withIdentifier: "TracsWebView")

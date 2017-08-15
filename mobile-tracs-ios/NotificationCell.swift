@@ -14,6 +14,7 @@ class NotificationCell: UITableViewCell {
     @IBOutlet var iView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subtitleLabel: UILabel!
+    @IBOutlet var siteLabel: UILabel!
     var lastheight = CGFloat(0.0)
     var isRead:Bool {
         didSet {

@@ -13,10 +13,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     var sites:[Site] = []
     var settings: Settings?
     let objecttypes: [String] = [
-        Announcement.type
+        Announcement.type,
+        Discussion.type
     ]
     let objectnames: [String] = [
-        Announcement.displayplural
+        Announcement.displayplural,
+        Discussion.displayplural
     ]
         
     override func viewDidLoad() {

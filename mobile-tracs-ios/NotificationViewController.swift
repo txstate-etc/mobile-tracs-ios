@@ -343,6 +343,8 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             }
             cell.isRead = true
             cell.iView.image = nil
+            cell.siteLabel.isHidden = true
+            cell.titleLabel.font = UIFont.preferredFont(forTextStyle: .body)
             cell.titleLabel.text = titleLabel
             cell.subtitleLabel.text = ""
             cell.isUserInteractionEnabled = false
@@ -381,19 +383,37 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         return [UITableViewRowAction(style: .default, title: "Dismiss", handler: { (action, indexPath) in
-            let n = self.notifications[indexPath.row]
-            IntegrationClient.markNotificationCleared(n) { (success) in
-                DispatchQueue.main.async {
-                    if success {
-                        tableView.beginUpdates()
-                        let index = self.convertIndex(indexPath: indexPath)
-                        self.notifications.remove(at: index)
-                        self.tableView.deleteRows(at: [indexPath], with: .fade)
-                        self.tableView.reloadSections([indexPath.section], with: UITableViewRowAnimation.automatic)
-                        tableView.endUpdates()
-                        //TODO: Fix this right here to delete and not add a phantom row
-                        self.loadNotifications(true)
-                        Analytics.event(category: "Notification", action: "cleared", label: n.object_type ?? "", value: nil)
+            var n: Notification?
+            switch indexPath.section {
+            case 0:
+                if self.announcementSection == 0 {
+                    n = self.getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
+                } else if self.discussionSection == 0 {
+                    n = self.getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
+                } else {
+                    n = self.getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
+                }
+                break
+            case 1:
+                n = self.getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
+                break
+            default:
+                n = nil
+                break
+            }
+            if let n = n {
+                IntegrationClient.markNotificationCleared(n) { (success) in
+                    DispatchQueue.main.async {
+                        if success {
+                            tableView.beginUpdates()
+                            let index = self.convertIndex(indexPath: indexPath)
+                            self.notifications.remove(at: index)
+                            self.tableView.deleteRows(at: [indexPath], with: .fade)
+                            self.tableView.reloadSections([indexPath.section], with: UITableViewRowAnimation.automatic)
+                            tableView.endUpdates()
+                            self.loadNotifications(true)
+                            Analytics.event(category: "Notification", action: "cleared", label: n.object_type ?? "", value: nil)
+                        }
                     }
                 }
             }

@@ -267,7 +267,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let chevX: CGFloat = 15
+        let chevX: CGFloat = 17
         let chevY: CGFloat = chevX
         let chevronSize = CGSize(width: chevX, height: chevY)
         

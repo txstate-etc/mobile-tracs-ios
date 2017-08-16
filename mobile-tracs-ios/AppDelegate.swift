@@ -14,7 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {        
+
+        application.setStatusBarStyle(.lightContent, animated: true)
+        
         // Clear out cache data between versions in case we change the structure of the object being saved
         if let savedversion = Utils.grab("version") as? String {
             if let currentversion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {

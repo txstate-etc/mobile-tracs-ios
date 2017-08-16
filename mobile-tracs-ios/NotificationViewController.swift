@@ -14,6 +14,11 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet var headerLabel: UILabel!
     @IBOutlet var courseDescription: UILabel!
     @IBOutlet var nameAndEmail: UILabel!
+    
+    let NO_FORUM_POSTS = "No new forum posts"
+    let NO_ANNOUNCEMENTS = "No new announcements"
+    let NO_TOOLS_ENABLED = "No new notifications"
+    
     var notifications: [Notification] = []
     var site:Site?
     var announcementCount: Int = 0
@@ -28,6 +33,8 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         case Dashboard = "dashboard"
         case Discussions = "dicussions"
     }
+    var announcementSection: Int?
+    var discussionSection: Int?
     var viewStyle: Style?
     
     override func viewDidLoad() {
@@ -38,6 +45,18 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         NotificationCenter.default.addObserver(self, selector: #selector(notificationReceived), name: NSNotification.Name(rawValue: ObservableEvent.PUSH_NOTIFICATION), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadOnAppear), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        if let site = site {
+            if site.hasannouncements {
+                announcementSection = 0
+                if site.hasdiscussions {
+                    discussionSection = 1
+                }
+            } else {
+                if site.hasdiscussions {
+                    discussionSection = 0
+                }
+            }
+        }
     }
     
     deinit {
@@ -98,8 +117,14 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                 switch viewStyle {
                 case .Discussions: //Section 0 is discussions
                     sectionCount = discussionCount > 0 ? discussionCount : 1
-                case .Dashboard: //Section 0 is announcements
-                    sectionCount = announcementCount > 0 ? announcementCount : 1
+                case .Dashboard:
+                    if announcementSection == 0 {
+                        sectionCount = announcementCount > 0 ? announcementCount : 1
+                    } else if discussionSection == 0 {
+                        sectionCount = discussionCount > 0 ? discussionCount : 1
+                    } else {
+                        sectionCount = 1
+                    }
                 }
             } else {
                 sectionCount = announcementCount > 0 ? announcementCount : 1
@@ -130,13 +155,24 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             let settings = IntegrationClient.getRegistration().settings
             switch section {
             case 0:
-                if announcementHeader == nil {
-                    announcementHeader = initialHeaderSetup(type: Section.Announcements)
+                if announcementSection == 0 {
+                    if announcementHeader == nil {
+                        announcementHeader = initialHeaderSetup(type: Section.Announcements)
+                    }
+                    let setting = makeSettingForSwitch(toggleSwitch: (announcementHeader?.headerSwitch)!)
+                    let settingIsDisabled = settings!.entryIsDisabled(SettingsEntry(dict: setting))
+                    announcementHeader?.headerSwitch.isOn = !settingIsDisabled
+                    return announcementHeader
+                } else {
+                    if discussionHeader == nil {
+                        discussionHeader = initialHeaderSetup(type: Section.Discussions)
+                    }
+                    let setting = makeSettingForSwitch(toggleSwitch: (discussionHeader?.headerSwitch)!)
+                    let settingIsDisabled = settings!.entryIsDisabled(SettingsEntry(dict: setting))
+                    discussionHeader?.headerSwitch.isOn = !settingIsDisabled
+                    return discussionHeader
                 }
-                let setting = makeSettingForSwitch(toggleSwitch: (announcementHeader?.headerSwitch)!)
-                let settingIsDisabled = settings!.entryIsDisabled(SettingsEntry(dict: setting))
-                announcementHeader?.headerSwitch.isOn = !settingIsDisabled
-                return announcementHeader
+                
             case 1:
                 if discussionHeader == nil {
                     discussionHeader = initialHeaderSetup(type: Section.Discussions)
@@ -215,10 +251,21 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                     }
                 }
                 if viewStyle == Style.Dashboard { //In Dashboard screen
-                    if announcementCount > 0 { //Announcements are available
-                        let notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
-                        cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
-                    } else { //Nothing to display
+                    if announcementSection == 0 { //This section is for announcements
+                        if announcementCount > 0 { //Announcements are available
+                            let notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
+                            cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
+                        } else { //Nothing to display
+                            cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
+                        }
+                    } else if discussionSection == 0 { //This section must be for discussions
+                        if discussionCount > 0 { //Discussions are available
+                            let notify = getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
+                            cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
+                        } else {
+                            cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
+                        }
+                    } else { //The site has no notification tools
                         cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
                     }
                 }
@@ -260,9 +307,6 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             cell.titleLabel.font = (notify?.isRead())! ? UIFont.preferredFont(forTextStyle: .body) : Utils.boldPreferredFont(style: .body)
             cell.subtitleLabel.text = getSubtitleFromNotification(notif: notify!)
             cell.subtitleLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
-            if notify?.object_type == "announcement" && site == nil { //on announcements page
-                
-            }
             if !tracsobj.getUrl().isEmpty {
                 cell.accessoryType = .disclosureIndicator
             }
@@ -274,24 +318,28 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                 if let viewStyle = viewStyle {
                     if viewStyle == Style.Discussions {
                         if discussionCount == 0 {
-                            titleLabel = "No new forum posts"
+                            titleLabel = NO_FORUM_POSTS
                         }
                     } else {
-                        if announcementCount == 0 {
-                            titleLabel = "No new announcements"
+                        if announcementCount == 0 && announcementSection == 0 {
+                            titleLabel = NO_ANNOUNCEMENTS
+                        } else if discussionCount == 0 && discussionSection == 0 {
+                            titleLabel = NO_FORUM_POSTS
+                        } else {
+                            titleLabel = NO_TOOLS_ENABLED
                         }
                     }
                 } else {
                     if announcementCount == 0 {
-                        titleLabel = "No new announcements"
+                        titleLabel = NO_ANNOUNCEMENTS
                     }
                 }
             case 1:
                 if discussionCount == 0 {
-                    titleLabel = "No new forum posts"
+                    titleLabel = NO_FORUM_POSTS
                 }
             default:
-                titleLabel = ""
+                titleLabel = NO_TOOLS_ENABLED
             }
             cell.isRead = true
             cell.iView.image = nil
@@ -357,10 +405,36 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         var notify: Notification?
         switch indexPath.section {
         case 0:
-            if announcementCount == 0 {
-                return
+            if let style = viewStyle {
+                switch style {
+                case .Dashboard:
+                    if announcementSection == 0 {
+                        if announcementCount == 0 {
+                            return
+                        }
+                        notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
+                    } else if discussionSection == 0 {
+                        if discussionCount == 0 {
+                            return
+                        }
+                        notify = getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
+                    } else {
+                        return
+                    }
+                break
+                case .Discussions:
+                    if discussionCount == 0 {
+                        return
+                    }
+                    notify = getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
+                    break
+                }
+            } else {
+                if announcementCount == 0 {
+                    return
+                }
+                notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
             }
-            notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
         case 1:
             if discussionCount == 0 {
                 return
@@ -372,7 +446,8 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         if let tracsobj = notify?.object {
             if let url = URL(string: tracsobj.getUrl()) {
                 IntegrationClient.markNotificationRead(notify!, completion: { (success) in })
-                Analytics.event(category: "Notification", action: "click", label: notifications[indexPath.row].object_type ?? "", value: nil)
+                let label = notify?.object_type
+                Analytics.event(category: "Notification", action: "click", label: label ?? "", value: nil)
                 let wvStoryBoard = UIStoryboard(name: "MainStory", bundle: nil)
                 let wvController = wvStoryBoard.instantiateViewController(withIdentifier: "TracsWebView")
                 (wvController as! WebViewController).urlToLoad = url.absoluteString

@@ -35,6 +35,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView?.addSubview(refresh)
         Utils.showActivity(view)
     }
+
     
     func applyNavBarShadow() {
         self.navigationController?.navigationBar.layer.masksToBounds = false

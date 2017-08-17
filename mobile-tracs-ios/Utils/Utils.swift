@@ -304,6 +304,27 @@ class Utils {
         button.setTitleTextAttributes([NSFontAttributeName: UIFont.fontAwesome(ofSize: size)], for: .normal)
     }
     
+    static func createNavTitleView(_ title: String, _ image: UIImage?) -> UIView {
+        let navTitleView = UIView()
+        let navTitle = UILabel()
+        navTitle.text = title
+        navTitle.textColor = UIColor.init(white: 1, alpha: 1)
+        navTitle.sizeToFit()
+        navTitle.center = navTitleView.center
+        navTitle.textAlignment = .center
+        
+        let navTitleImage = UIImageView()
+        navTitleImage.image = image
+        let navTitleImageAspect = navTitleImage.image!.size.width/navTitleImage.image!.size.height
+        navTitleImage.frame = CGRect(x: navTitle.frame.origin.x-navTitle.frame.size.height*navTitleImageAspect-4, y: navTitle.frame.origin.y, width: navTitle.frame.size.height*navTitleImageAspect, height: navTitle.frame.size.height)
+        navTitleImage.contentMode = .scaleAspectFit
+        
+        navTitleView.addSubview(navTitle)
+        navTitleView.addSubview(navTitleImage)
+        navTitleView.sizeToFit()
+        return navTitleView
+    }
+    
     static func fontAwesomeBadgedBarButtonItem(color: UIColor, badgecount: Int, icon: FontAwesome, target: AnyObject, action: Selector) -> UIBarButtonItem {
         let button = UIButton(type: .custom)
         button.frame = CGRect(x: 0, y: 0, width: 50, height: 50)

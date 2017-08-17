@@ -13,7 +13,8 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet var headerView: UIView!
     @IBOutlet var headerLabel: UILabel!
     @IBOutlet var courseDescription: UILabel!
-    @IBOutlet var nameAndEmail: UILabel!
+    @IBOutlet var contactLastname: UILabel!
+    @IBOutlet weak var contactEmail: UILabel!
     
     let NO_FORUM_POSTS = "No new forum posts"
     let NO_ANNOUNCEMENTS = "No new announcements"
@@ -73,7 +74,17 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             case .Dashboard:
                 self.title = "Notifications"
                 if let site = site {
-                    nameAndEmail.text = "\(site.contactLast), \(site.contactEmail)"
+                    let lastName = site.contactLast.isEmpty ? "Contact info not found" : "\(site.contactLast),"
+                    if site.contactEmail.isEmpty {
+                        contactEmail.isHidden = true
+                    } else {
+                        contactEmail.text = site.contactEmail
+                        let emailTap = UITapGestureRecognizer(target: self, action: #selector(NotificationViewController.openEmailClient))
+                        contactEmail.addGestureRecognizer(emailTap)
+                        contactEmail.isUserInteractionEnabled = true
+                    }
+                    
+                    contactLastname.text = lastName
                 }
                 break
             }
@@ -83,6 +94,14 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         }
         headerLabel.text = site?.title
         loadOnAppear()
+    }
+    
+    func openEmailClient() {
+        let email = contactEmail.text ?? ""
+        if let url = URL(string: "mailto:\(email)") {
+            UIApplication.shared.openURL(url)
+        }
+        
     }
     
     func removeHeaderView(headerView: UIView) {

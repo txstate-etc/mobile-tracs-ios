@@ -134,7 +134,7 @@
                     </constraints>
                 </scrollView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G9D-jh-1Gf">
-                    <rect key="frame" x="24" y="540" width="272" height="28"/>
+                    <rect key="frame" x="24" y="530" width="272" height="28"/>
                     <color key="backgroundColor" red="0.99992674589999997" green="1" blue="0.99987345930000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <accessibility key="accessibilityConfiguration">
                         <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
@@ -153,7 +153,7 @@
                 <constraint firstItem="nTb-Lg-mqb" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ahQ-xB-sXI"/>
                 <constraint firstItem="nTb-Lg-mqb" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="ebN-tb-diu"/>
                 <constraint firstItem="G9D-jh-1Gf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="gt4-WT-RfP"/>
-                <constraint firstAttribute="bottom" secondItem="G9D-jh-1Gf" secondAttribute="bottom" id="mjm-Vh-rG7"/>
+                <constraint firstAttribute="bottom" secondItem="G9D-jh-1Gf" secondAttribute="bottom" constant="10" id="mjm-Vh-rG7"/>
             </constraints>
             <point key="canvasLocation" x="-1939" y="-658"/>
         </view>

@@ -289,15 +289,10 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                     }
                 }
             } else { //In All Announcements screen
-                cell = tableView.dequeueReusableCell(withIdentifier: "announcement", for: indexPath) as! NotificationCell
+                cell = tableView.dequeueReusableCell(withIdentifier: "notification", for: indexPath) as! NotificationCell
                 if announcementCount > 0 { //Announcements are available
                     let notify = getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
                     cell = buildCell(cell: cell, indexPath: indexPath, notify: notify)
-                
-                    if let title = notify?.object?.site?.title {
-                        cell.siteLabel.isHidden = false
-                        cell.siteLabel.text = title
-                    }
                     
                 } else { //Nothing to display
                     cell = buildCell(cell: cell, indexPath: indexPath, notify: nil)
@@ -362,7 +357,6 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             }
             cell.isRead = true
             cell.iView.image = nil
-            cell.siteLabel.isHidden = true
             cell.titleLabel.font = UIFont.preferredFont(forTextStyle: .body)
             cell.titleLabel.text = titleLabel
             cell.subtitleLabel.text = ""
@@ -375,8 +369,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         if let type = notif.object_type {
             switch (type) {
             case "announcement":
-                let ann = notif.object as! Announcement
-                return ann.author
+                return notif.object?.site?.title ?? ""
             case "discussion":
                 let disc = notif.object as! Discussion
                 return disc.subtitle

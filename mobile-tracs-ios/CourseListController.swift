@@ -16,7 +16,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     var unseenBySite: [String: [String: Int]] = [:]
     var refresh = UIRefreshControl()
     var workspaceCell: CourseCell?
-    
+
     enum Sections: Int {
         case workspace, courses, projects
     }

@@ -17,10 +17,10 @@ class CookieMonster : NSObject, WKNavigationDelegate {
     func load(completion:@escaping()->Void) {
         callback = completion
         DispatchQueue.main.async {
+            self.webView = Utils.getWebView()
+            self.webView.navigationDelegate = self
             if !self.addedtowindow {
-                self.webView = Utils.getWebView()
-                self.webView.navigationDelegate = self
-                (UIApplication.shared.delegate as? AppDelegate)?.window?.addSubview(self.webView)
+                UIApplication.shared.keyWindow?.rootViewController?.view.addSubview(self.webView)
                 self.addedtowindow = true
             }
             if let urltoload = URL(string: TRACSClient.portalurl) {
@@ -30,20 +30,13 @@ class CookieMonster : NSObject, WKNavigationDelegate {
                 }
             }
         }
+        
     }
     
     func wipecookies(completion:@escaping()->Void) {
-        if #available(iOS 9.0, *) {
-            let dataStore = WKWebsiteDataStore.default()
-            dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { (records) in
-                dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: records, completionHandler: completion)
-            }
-        } else {
-            // Fallback on earlier versions
-            let librarypath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
-            let cookiespath = librarypath + "/Cookies"
-            try? FileManager.default.removeItem(atPath: cookiespath)
-            completion()
+        let dataStore = WKWebsiteDataStore.default()
+        dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { (records) in
+            dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: records, completionHandler: completion)
         }
     }
     
@@ -64,6 +57,14 @@ class CookieMonster : NSObject, WKNavigationDelegate {
         }
         decisionHandler(.cancel)
         callback()
+    }
+    
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        NSLog("didCommit")
+    }
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        NSLog("didStartProvisionalNavigation")
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

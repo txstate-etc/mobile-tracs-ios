@@ -216,10 +216,7 @@ class TRACSClient {
         var loginerror = false
         var othererror = false
         if netid.isEmpty || password.isEmpty { return completion(true, false) }
-        let dp = DispatchGroup()
-        dp.enter()
         cookiemonster.load {
-            dp.leave()
             NSLog("cookie monster")
             Utils.post(url: portalurl+"/relogin", params: ["eid":netid, "pw":password]) { (data, success) in
                 if !success {
@@ -232,7 +229,6 @@ class TRACSClient {
                 completion(loginerror, othererror)
             }
         }
-        dp.wait()
     }
     
     private static func clearUser() {

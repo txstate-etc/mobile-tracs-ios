@@ -72,9 +72,6 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                 IntegrationClient.registerIfNecessary()
             }
             self.loadWithActivity()
-            if !Utils.flag("introScreen", val: true) {
-                self.activateIntroScreen()
-            }
         }
     }
 

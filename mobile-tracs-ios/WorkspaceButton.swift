@@ -21,7 +21,7 @@ class WorkspaceButton: UIButton {
         let titleRect = super.titleRect(forContentRect: contentRect)
         let imageRect = super.imageRect(forContentRect: contentRect)
         
-        return CGRect(x: 0, y: imageRect.maxY * 0.75, width: contentRect.width, height: titleRect.height)
+        return CGRect(x: 0, y: imageRect.maxY * 0.85, width: contentRect.width, height: titleRect.height)
     }
     
     override func imageRect(forContentRect contentRect: CGRect) -> CGRect {

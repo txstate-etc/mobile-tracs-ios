@@ -261,7 +261,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var height: CGFloat = CGFloat(UIFont.preferredFont(forTextStyle: .body).pointSize * 5.0 + 50.0)
         if indexPath.section == 0 {
-            height = CGFloat(UIFont.preferredFont(forTextStyle: .body).pointSize * 1.5 + 30.0)
+            height = CGFloat(UIFont.preferredFont(forTextStyle: .body).pointSize * 3.0 + 30.0)
         }
         return height
     }
@@ -286,6 +286,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                 wscell.moreButton.isUserInteractionEnabled = false
                 wscell.moreButton.setTitleColor(SiteColor.workspaceText, for: .normal)
                 wscell.contentView.backgroundColor = SiteColor.workspaceBackground
+                wscell.titleLabel.font = UIFont.boldSystemFont(ofSize: wscell.titleLabel.font.pointSize)
                 break
             case .courses:
                 let courseCell = cell as! CourseCell

@@ -316,7 +316,8 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     func buildCell(cell: NotificationCell, indexPath: IndexPath, notify: Notification?) -> NotificationCell {
         if let tracsobj = notify?.object {
             cell.isRead = (notify?.isRead())!
-            cell.iView.image = UIImage.fontAwesomeIcon(name: tracsobj.getIcon(), textColor: Utils.nearblack, size:CGSize(width: 200, height: 200))
+            let imageColor = cell.isRead ? Utils.readIcon : Utils.unreadIcon
+            cell.iView.image = UIImage.fontAwesomeIcon(name: tracsobj.getIcon(), textColor: imageColor, size:CGSize(width: 200, height: 200))
             cell.titleLabel.text = tracsobj.tableTitle()
             cell.titleLabel.font = (notify?.isRead())! ? UIFont.preferredFont(forTextStyle: .body) : Utils.boldPreferredFont(style: .body)
             cell.subtitleLabel.text = getSubtitleFromNotification(notif: notify!)
@@ -381,15 +382,6 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 0:
-            if viewStyle == nil {
-                return UIFont.preferredFont(forTextStyle: .body).pointSize * 4.0
-            }
-            break
-        default:
-            break
-        }
         return UIFont.preferredFont(forTextStyle: .body).pointSize * 2.8
     }
     

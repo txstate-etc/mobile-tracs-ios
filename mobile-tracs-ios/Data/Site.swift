@@ -55,7 +55,7 @@ class Site : NSObject, Cacheable {
     }
     
     func valid() -> Bool {
-        return !id.isEmpty && !invalid && (!announcementurl.isEmpty || !discussionurl.isEmpty)
+        return !id.isEmpty && !invalid
     }
     
     func encode(with aCoder: NSCoder) {

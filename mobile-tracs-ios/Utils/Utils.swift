@@ -19,6 +19,8 @@ class Utils {
     static let darkblue = UIColor(red: 40/d, green: 40/d, blue: 59/d, alpha: 1)
     static let gray = UIColor(red: 238/d, green: 238/d, blue: 238/d, alpha: 1)
     static let darkgray = UIColor(red: 158/d, green: 158/d, blue: 158/d, alpha: 1)
+    static let unreadIcon = UIColor(white: 0.15, alpha: 1)
+    static let readIcon = UIColor(red: 180/d, green: 180/d, blue: 180/d, alpha: 1)
     static let nearblack = UIColor(white: 0.15, alpha: 1)
     static let colordisabled = UIColor(white: 0.8, alpha: 0.2)
     static let urlsession = URLSession.shared

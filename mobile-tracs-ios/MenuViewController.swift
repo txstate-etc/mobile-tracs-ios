@@ -130,7 +130,6 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             TRACSClient.sitecache.reset()
             let navCon = self.tabBarController!
             navCon.selectedIndex = 1
-            navCon.navigationController?.popToRootViewController(animated: true)
             
             UIApplication.shared.applicationIconBadgeNumber = 0
             let cookies = HTTPCookieStorage.shared.cookies

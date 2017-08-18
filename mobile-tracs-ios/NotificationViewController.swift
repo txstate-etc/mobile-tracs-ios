@@ -96,6 +96,20 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
         loadOnAppear()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        TRACSClient.loginIfNecessary { (loggedin) in
+            if !loggedin {
+                let lvc = LoginViewController()
+                DispatchQueue.main.async {
+                    Utils.hideActivity()
+                    self.present(lvc, animated: true) {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
+                }
+            }
+        }
+    }
+    
     func openEmailClient() {
         let email = contactEmail.text ?? ""
         if let url = URL(string: "mailto:\(email)") {

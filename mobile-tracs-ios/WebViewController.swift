@@ -64,6 +64,24 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, M
         NotificationCenter.default.removeObserver(self)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        loginIfNecessary { (loggedin) in
+            if !loggedin {
+                let lvc = LoginViewController()
+                DispatchQueue.main.async {
+                    self.present(lvc, animated: true) {
+                        self.navigationController?.popToRootViewController(animated: true)
+                        Utils.hideActivity()
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    Utils.hideActivity()
+                }
+            }
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 

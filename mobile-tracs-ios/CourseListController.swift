@@ -60,7 +60,9 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.clearTableView()
                 DispatchQueue.main.async {
                     Utils.hideActivity()
-                    self.present(lvc, animated: true, completion: nil)
+                    self.present(lvc, animated: true) {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
                 }
             } else {
                 TRACSClient.fetchSite(id: "~\(TRACSClient.useruuid)") {

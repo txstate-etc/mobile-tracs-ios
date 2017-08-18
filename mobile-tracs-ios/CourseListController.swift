@@ -33,6 +33,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         NotificationCenter.default.addObserver(self, selector: #selector(loadWithActivity), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         refresh.addTarget(self, action: #selector(load), for: .valueChanged)
         tableView?.addSubview(refresh)
+        self.clearTableView()
         Utils.showActivity(view)
     }
 
@@ -82,6 +83,7 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         projectsites = []
         workspace = Site(dict: [:])
         unseenBySite = [:]
+        TRACSClient.sitecache.reset()
         tableView.reloadData()
     }
     

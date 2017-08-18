@@ -18,6 +18,7 @@ class Site : NSObject, Cacheable {
     var announcementurl = ""
     var discussionurl = ""
     var contactLast = ""
+    var contactFull = ""
     var contactEmail = ""
     var created_at:Date
     var invalid = false
@@ -30,9 +31,10 @@ class Site : NSObject, Cacheable {
         invalid = (dict["sitePages"] as? [Any] ?? []).count == 0
         
         let props = dict["props"] as? [String: Any]
-        let contactFull = (props?["contact-name"] as? String ?? "").characters.split(separator: " ").map(String.init)
-        if contactFull.count > 0 {
-            contactLast = contactFull[contactFull.count - 1]
+        contactFull = props?["contact-name"] as? String ?? ""
+        let contactFullArray = (props?["contact-name"] as? String ?? "").characters.split(separator: " ").map(String.init)
+        if contactFullArray.count > 0 {
+            contactLast = contactFullArray[contactFullArray.count - 1]
         }
         contactEmail = props?["contact-email"] as? String ?? ""
     }

@@ -74,7 +74,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             case .Dashboard:
                 self.title = "Notifications"
                 if let site = site {
-                    let lastName = site.contactLast.isEmpty ? "Contact info not found" : "\(site.contactLast),"
+                    let fullName = site.contactLast.isEmpty ? "Contact info not found" : "\(site.contactFull),"
                     if site.contactEmail.isEmpty {
                         contactEmail.isHidden = true
                     } else {
@@ -84,7 +84,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                         contactEmail.isUserInteractionEnabled = true
                     }
                     
-                    contactLastname.text = lastName
+                    contactLastname.text = fullName
                 }
                 break
             }
@@ -398,10 +398,21 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
             var n: Notification?
             switch indexPath.section {
             case 0:
-                if self.announcementSection == 0 {
-                    n = self.getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
-                } else if self.discussionSection == 0 {
-                    n = self.getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
+                if let viewStyle = self.viewStyle {
+                    switch viewStyle {
+                    case .Discussions:
+                        n = self.getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
+                        break
+                    case .Dashboard:
+                        if self.announcementSection == 0 {
+                            n = self.getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
+                        } else if self.discussionSection == 0 {
+                            n = self.getNotification(notificationType: Section.Discussions.rawValue, position: indexPath.row)
+                        } else {
+                            n = self.getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
+                        }
+                        break
+                    }
                 } else {
                     n = self.getNotification(notificationType: Section.Announcements.rawValue, position: indexPath.row)
                 }
@@ -569,14 +580,31 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     func convertIndex(indexPath: IndexPath) -> Int {
         var notificationType: String = ""
         var returnIndex = -1
-        switch indexPath.section {
-        case 0:
+        
+        if let viewStyle = viewStyle {
+            switch viewStyle {
+            case .Dashboard:
+                switch indexPath.section {
+                case 0:
+                    if announcementSection == 0 {
+                        notificationType = Section.Announcements.rawValue
+                    } else if discussionSection == 0 {
+                        notificationType = Section.Discussions.rawValue
+                    }
+                case 1:
+                    notificationType = Section.Discussions.rawValue
+                default:
+                    break
+                }
+                break
+            case .Discussions:
+                notificationType = Section.Discussions.rawValue
+                break
+            }
+        } else {
             notificationType = Section.Announcements.rawValue
-        case 1:
-            notificationType = Section.Discussions.rawValue
-        default:
-            break
         }
+        
         
         var totalFound = 0
         for notif in notifications {

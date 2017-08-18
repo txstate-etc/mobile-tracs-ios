@@ -127,8 +127,10 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             TRACSClient.userid = ""
             Utils.removeCredentials()
             IntegrationClient.unregister()
+            TRACSClient.sitecache.reset()
             let navCon = self.tabBarController!
             navCon.selectedIndex = 1
+            navCon.navigationController?.popToRootViewController(animated: true)
             
             UIApplication.shared.applicationIconBadgeNumber = 0
             let cookies = HTTPCookieStorage.shared.cookies

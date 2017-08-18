@@ -67,25 +67,25 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let viewStyle = viewStyle {
+            if let site = site {
+                let fullName = site.contactLast.isEmpty ? "Contact info not found" : "\(site.contactFull),"
+                if site.contactEmail.isEmpty {
+                    contactEmail.isHidden = true
+                } else {
+                    contactEmail.text = site.contactEmail
+                    let emailTap = UITapGestureRecognizer(target: self, action: #selector(NotificationViewController.openEmailClient))
+                    contactEmail.addGestureRecognizer(emailTap)
+                    contactEmail.isUserInteractionEnabled = true
+                }
+                
+                contactLastname.text = fullName
+            }
             switch viewStyle {
             case .Discussions:
                 self.title = "Forums"
                 break
             case .Dashboard:
                 self.title = "Notifications"
-                if let site = site {
-                    let fullName = site.contactLast.isEmpty ? "Contact info not found" : "\(site.contactFull),"
-                    if site.contactEmail.isEmpty {
-                        contactEmail.isHidden = true
-                    } else {
-                        contactEmail.text = site.contactEmail
-                        let emailTap = UITapGestureRecognizer(target: self, action: #selector(NotificationViewController.openEmailClient))
-                        contactEmail.addGestureRecognizer(emailTap)
-                        contactEmail.isUserInteractionEnabled = true
-                    }
-                    
-                    contactLastname.text = fullName
-                }
                 break
             }
         } else {

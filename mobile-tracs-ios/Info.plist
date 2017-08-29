@@ -25,6 +25,10 @@
 		<dict>
 			<key>CFBundleURLName</key>
 			<string>edu.txstate.mobile.tracs</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>edu.txstate.mobile.tracs</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>

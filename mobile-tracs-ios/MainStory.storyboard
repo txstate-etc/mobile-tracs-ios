@@ -16,7 +16,7 @@
             <objects>
                 <navigationController storyboardIdentifier="SitesNavigation" autoresizesArchivedViewToFullSize="NO" id="JTq-CF-JZy" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="All Sites" id="Jn3-s1-fvO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="zfN-ly-dHh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="zfN-ly-dHh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -41,7 +41,7 @@
                         <viewControllerLayoutGuide type="top" id="Sfd-ZM-aa5"/>
                         <viewControllerLayoutGuide type="bottom" id="88w-Lr-AX0"/>
                     </layoutGuides>
-                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="KoR-K8-JeK">
+                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" id="KoR-K8-JeK">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -115,8 +115,8 @@
                                                     <rect key="frame" x="8" y="8" width="359" height="99"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Course/Project Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cmu-OR-ucH">
-                                                            <rect key="frame" x="8" y="0.0" width="152" height="42"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <rect key="frame" x="8" y="0.0" width="296" height="42"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -155,6 +155,7 @@
                                                         <constraint firstItem="Cmu-OR-ucH" firstAttribute="height" secondItem="ICs-aT-hV2" secondAttribute="height" multiplier="0.75" id="6Xv-fl-1Yb"/>
                                                         <constraint firstItem="ICs-aT-hV2" firstAttribute="leading" secondItem="yAe-kP-tbu" secondAttribute="leading" id="7lO-aH-tzs"/>
                                                         <constraint firstAttribute="trailing" secondItem="9lF-Sp-UAd" secondAttribute="trailing" constant="4" id="HB6-Nt-PRs"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Cmu-OR-ucH" secondAttribute="trailing" constant="55" id="KBU-3D-KDl"/>
                                                         <constraint firstItem="9lF-Sp-UAd" firstAttribute="centerY" secondItem="F8D-Hb-zql" secondAttribute="centerY" constant="1.5" id="UDU-fu-b0K"/>
                                                         <constraint firstItem="Cmu-OR-ucH" firstAttribute="leading" secondItem="yAe-kP-tbu" secondAttribute="leading" constant="8" id="WVN-2L-Kbg"/>
                                                         <constraint firstItem="F8D-Hb-zql" firstAttribute="centerY" secondItem="Cmu-OR-ucH" secondAttribute="centerY" id="ckZ-Gr-XWB"/>
@@ -651,7 +652,7 @@
             <objects>
                 <navigationController storyboardIdentifier="SettingsNavigation" autoresizesArchivedViewToFullSize="NO" id="4mi-en-hYm" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" id="NMd-Wr-lJf"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="OS0-ee-cBN">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="OS0-ee-cBN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -673,7 +674,7 @@
             <objects>
                 <navigationController storyboardIdentifier="AnnouncementNavigation" autoresizesArchivedViewToFullSize="NO" id="Hg7-G4-QMp" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Announcements" id="lDB-Xc-eSr"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="M4m-ne-Laz">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="M4m-ne-Laz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>

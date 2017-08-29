@@ -198,41 +198,38 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionName: Sections? = Sections(rawValue: section)
         var rowCount: Int = 0
-        if let sectionName = sectionName {
-            switch sectionName {
-            case .workspace:
-                rowCount = 1
-                break
-            case .courses:
-                rowCount = coursesites.count
-                break
-            case .projects:
-                rowCount = projectsites.count
-                break
-            }
+        switch section {
+        case 0:
+            rowCount = 1
+            break
+        case 1:
+            rowCount = coursesites.count <= 0 ? projectsites.count : coursesites.count
+            break
+        case 2:
+            rowCount = projectsites.count
+            break
+        default:
+            rowCount = 0
+            break
         }
         return rowCount
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let sectionName: Sections? = Sections(rawValue: section)
         var headerTitle: String = ""
         var header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "siteheader") as? SiteViewHeader
-        if let sectionName = sectionName {
-            switch sectionName {
-            case .courses:
-                headerTitle = "COURSES"
+            switch section {
+            case 1:
+                headerTitle = coursesites.count <= 0 ? "PROJECTS" : "COURSES"
                 break
-            case .projects:
+            case 2:
                 headerTitle = "PROJECTS"
                 break
             default:
                 header = nil
                 break
             }
-        }
         let headerFontSize = UIFont.preferredFont(forTextStyle: .body).pointSize * 0.75
         header?.content.backgroundColor = SiteColor.headerBackground
         header?.title.textColor = SiteColor.headerText
@@ -243,18 +240,15 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let sectionName: Sections? = Sections(rawValue: section)
         var headerHeight = CGFloat(UIFont.preferredFont(forTextStyle: .body).pointSize * 1.0 + 15.0)
-        if let sectionName = sectionName {
-            switch sectionName {
-            case .courses:
-                break
-            case .projects:
-                break
-            default:
-                headerHeight = CGFloat(0)
-                break
-            }
+        switch section {
+        case 1:
+            break
+        case 2:
+            break
+        default:
+            headerHeight = CGFloat(0)
+            break
         }
         
         return headerHeight
@@ -273,43 +267,38 @@ class CourseListController: UIViewController, UITableViewDelegate, UITableViewDa
         let chevY: CGFloat = chevX
         let chevronSize = CGSize(width: chevX, height: chevY)
         
-        let sectionName: Sections? = Sections(rawValue: indexPath.section)
+        let section = indexPath.section
         var cell: UITableViewCell?
-        if let sectionName = sectionName {
-            let cellType: String = sectionName == .workspace ? "workspace" : "courselist"
-            cell = tableView.dequeueReusableCell(withIdentifier: cellType)!
-            switch sectionName {
-            case .workspace:
-                let buttonImage = UIImage.fontAwesomeIcon(name: .ellipsisH, textColor: SiteColor.workspaceText, size: CGSize(width: 20, height: 20))
-                let wscell = (cell as! WorkspaceCell)
-                wscell.moreButton.tintColor = SiteColor.workspaceText
-                wscell.site = workspace
-                wscell.moreButton.setImage(buttonImage, for: .normal)
-                wscell.moreButton.isUserInteractionEnabled = false
-                wscell.moreButton.setTitleColor(SiteColor.workspaceText, for: .normal)
-                wscell.contentView.backgroundColor = SiteColor.workspaceBackground
-                wscell.titleLabel.font = UIFont.boldSystemFont(ofSize: wscell.titleLabel.font.pointSize)
-                break
-            case .courses:
-                let courseCell = cell as! CourseCell
-                courseCell.rightChevron.image = UIImage.fontAwesomeIcon(name: .chevronRight, textColor: SiteColor.courseText, size: chevronSize)
-                courseCell.badgeCounts = unseenBySite[(coursesites[indexPath.row]).id] ?? [:]
-                courseCell.site = coursesites[indexPath.row]
-                courseCell.siteWord.textColor = SiteColor.courseText
-                courseCell.contentView.backgroundColor = SiteColor.courseBackground
-                courseCell.delegate = self
-                break
-            case .projects:
-                let projectCell = cell as! CourseCell
-                projectCell.rightChevron.image = UIImage.fontAwesomeIcon(name: .chevronRight, textColor: SiteColor.projectText, size: chevronSize)
-                projectCell.badgeCounts = unseenBySite[(projectsites[indexPath.row]).id] ?? [:]
-                projectCell.site = projectsites[indexPath.row]
-                projectCell.siteWord.textColor = SiteColor.projectText
-                projectCell.contentView.backgroundColor = SiteColor.projectBackground
-                projectCell.delegate = self
-                break
-            }
+        let cellType: String = indexPath.section == 0 ? "workspace" : "courselist"
+        cell = tableView.dequeueReusableCell(withIdentifier: cellType)!
+        if section == 0 {
+            let buttonImage = UIImage.fontAwesomeIcon(name: .ellipsisH, textColor: SiteColor.workspaceText, size: CGSize(width: 20, height: 20))
+            let wscell = (cell as! WorkspaceCell)
+            wscell.moreButton.tintColor = SiteColor.workspaceText
+            wscell.site = workspace
+            wscell.moreButton.setImage(buttonImage, for: .normal)
+            wscell.moreButton.isUserInteractionEnabled = false
+            wscell.moreButton.setTitleColor(SiteColor.workspaceText, for: .normal)
+            wscell.contentView.backgroundColor = SiteColor.workspaceBackground
+            wscell.titleLabel.font = UIFont.boldSystemFont(ofSize: wscell.titleLabel.font.pointSize)
+        } else if section == 1 && coursesites.count > 0 {
+            let courseCell = cell as! CourseCell
+            courseCell.rightChevron.image = UIImage.fontAwesomeIcon(name: .chevronRight, textColor: SiteColor.courseText, size: chevronSize)
+            courseCell.badgeCounts = unseenBySite[(coursesites[indexPath.row]).id] ?? [:]
+            courseCell.site = coursesites[indexPath.row]
+            courseCell.siteWord.textColor = SiteColor.courseText
+            courseCell.contentView.backgroundColor = SiteColor.courseBackground
+            courseCell.delegate = self
+        } else if (section == 1 && coursesites.count <= 0) || section == 2 {
+            let projectCell = cell as! CourseCell
+            projectCell.rightChevron.image = UIImage.fontAwesomeIcon(name: .chevronRight, textColor: SiteColor.projectText, size: chevronSize)
+            projectCell.badgeCounts = unseenBySite[(projectsites[indexPath.row]).id] ?? [:]
+            projectCell.site = projectsites[indexPath.row]
+            projectCell.siteWord.textColor = SiteColor.projectText
+            projectCell.contentView.backgroundColor = SiteColor.projectBackground
+            projectCell.delegate = self
         }
+        
         cell?.selectionStyle = UITableViewCellSelectionStyle.none
         return cell!
     }

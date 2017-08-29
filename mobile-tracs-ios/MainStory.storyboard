@@ -282,23 +282,22 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ujE-nt-64J">
-                                                    <rect key="frame" x="8" y="11" width="310" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ujE-nt-64J">
+                                                    <rect key="frame" x="8" y="12" width="299" height="19.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kWS-lz-ANt">
-                                                    <rect key="frame" x="318" y="6" width="51" height="31"/>
+                                                    <rect key="frame" x="316" y="6.5" width="51" height="31"/>
                                                 </switch>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ujE-nt-64J" firstAttribute="leading" secondItem="4bh-gb-etW" secondAttribute="leadingMargin" id="0sc-Zv-saL"/>
-                                                <constraint firstItem="ujE-nt-64J" firstAttribute="top" secondItem="4bh-gb-etW" secondAttribute="topMargin" constant="3" id="EDR-2z-YhN"/>
-                                                <constraint firstItem="kWS-lz-ANt" firstAttribute="leading" secondItem="ujE-nt-64J" secondAttribute="trailing" priority="999" id="Pol-v0-0Vj"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="ujE-nt-64J" secondAttribute="bottom" constant="3.5" id="QHB-aq-kIz"/>
+                                                <constraint firstItem="ujE-nt-64J" firstAttribute="centerY" secondItem="4bh-gb-etW" secondAttribute="centerY" id="6bi-v9-bcN"/>
                                                 <constraint firstItem="kWS-lz-ANt" firstAttribute="centerY" secondItem="4bh-gb-etW" secondAttribute="centerY" id="Sei-pJ-fCa"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="kWS-lz-ANt" secondAttribute="trailing" id="Vhu-uW-Wui"/>
+                                                <constraint firstAttribute="trailing" secondItem="kWS-lz-ANt" secondAttribute="trailing" constant="10" id="Vhu-uW-Wui"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="ujE-nt-64J" secondAttribute="trailing" constant="60" id="Vo2-DC-elz"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>

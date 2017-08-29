@@ -72,6 +72,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return section == 0 ? "Notification Types" : "Sites"
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return CGFloat(UIFont.preferredFont(forTextStyle: .callout).pointSize * 2.5)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:SettingsCell = tableView.dequeueReusableCell(withIdentifier: "settings", for: indexPath) as! SettingsCell
         if cell.delegate == nil { cell.delegate = self }

@@ -107,6 +107,7 @@ class NotificationViewController: UIViewController, UITableViewDelegate, UITable
                     }
                 }
             }
+            IntegrationClient.registerIfNecessary();
         }
     }
     

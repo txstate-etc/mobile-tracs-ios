@@ -503,24 +503,7 @@ class Utils {
     static func deviceIsLocked() -> Bool {
         if #available(iOS 9, *) {
             return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
-        } //else if #available(iOS 8, *) {
-//            let secret = "Device has passcode set?".data(using: String.Encoding.utf8, allowLossyConversion: false)
-//            let attributes:[String:Any] = [
-//                kSecClass as String: kSecClassGenericPassword as String,
-//                kSecAttrService as String: "LocalDeviceServices",
-//                kSecAttrAccount as String: "NoAccount",
-//                kSecValueData as String: secret!,
-//                kSecAttrAccessible as String: kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
-//            ]
-//            
-//            let status = SecItemAdd(attributes as CFDictionary, nil)
-//            if status == 0 {
-//                SecItemDelete(attributes as CFDictionary)
-//                return true
-//            }
-//            
-//            return false
-//        }
+        }
         return false
     }
     

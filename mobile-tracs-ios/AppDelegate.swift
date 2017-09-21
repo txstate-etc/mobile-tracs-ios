@@ -29,34 +29,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // register for push notifications
         if #available(iOS 10, *) {
             let center = UNUserNotificationCenter.current()
-            center.requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
-                if error == nil && granted { application.registerForRemoteNotifications() }
-            }
+            center.requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in }
             center.delegate = self
         } else {
             let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             application.registerUserNotificationSettings(settings)
-            application.registerForRemoteNotifications()
         }
-        if IntegrationClient.deviceToken.isEmpty {
-            IntegrationClient.deviceToken = (Utils.grab("deviceToken") as? String) ?? ""
-        }
-        if IntegrationClient.deviceToken.isEmpty {
-            IntegrationClient.deviceToken = Utils.randomHexString(length:32)
-            Utils.save(IntegrationClient.deviceToken, withKey: "deviceToken")
-        }
-        if let lastregisteredtoken = Utils.grab("lastregisteredtoken") as? String {
-            if IntegrationClient.deviceToken != lastregisteredtoken {
-                Utils.removeCredentials()
-            }
-        }
-
+        
+        application.registerForRemoteNotifications()
         //Set a custom user agent so that UIWebView and URLSession dataTasks will match
         UserDefaults.standard.register(defaults: ["UserAgent": Utils.userAgent])
-
-        
-        
-        
         return true
     }
 
@@ -94,6 +76,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         IntegrationClient.deviceToken = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
         Utils.save(IntegrationClient.deviceToken, withKey: "deviceToken")
         NSLog("deviceToken: %@", IntegrationClient.deviceToken)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        IntegrationClient.deviceToken = Utils.randomHexString(length:32)
+        Utils.save(IntegrationClient.deviceToken, withKey: "deviceToken")
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {

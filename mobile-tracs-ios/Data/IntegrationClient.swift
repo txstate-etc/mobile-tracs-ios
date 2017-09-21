@@ -37,6 +37,11 @@ class IntegrationClient {
                         
                     })
                 }
+            } else if reg.token != IntegrationClient.deviceToken {
+                NSLog("New Device Token: " + IntegrationClient.deviceToken)
+                NSLog("Old Device Token: " + reg.token!)
+                unregister()
+                register(userId: Utils.netid(), password: Utils.password(), { (success) in } )
             }
         }
     }
@@ -72,6 +77,7 @@ class IntegrationClient {
                             // save the registration details so that we don't have to do this often
                             Utils.save(reg.toJSONObject(), withKey: "registration")
                         } else {
+                            NSLog((reg.toJSON())!)
                             NSLog("error saving registration: %@", data as? String ?? "")
                         }
                         completion(success)
